@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 常考实验规范操作</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 操作网格布局 */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 操作卡片样式 */
+        .operation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 操作图片容器 */
+        .operation-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .operation-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 操作信息 */
+        .operation-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .operation-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .operation-card:hover .operation-details {
+            max-height: 400px;
+            padding: 15px 10px;
+        }
+        
+        .operation-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .operation-details strong {
+            color: #764ba2;
+        }
+        
+        .operation-details ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .operation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='operations.html'">返回</button>
+            <h1>化学实验基本操作 - 常考实验规范操作</h1>
+            <p class="subtitle">掌握高考高频考点的实验操作规范与核心要领</p>
+        </header>
+        
+        <div class="operation-grid">
+            <!-- 1.容量瓶的检漏 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    容量瓶检漏操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>容量瓶的检漏</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>容量瓶、蒸馏水、烧杯</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>加水至标：向容量瓶中加入适量蒸馏水，至刻度线下方1-2cm处</li>
+                            <li>塞紧瓶塞：用食指按住瓶塞，将容量瓶倒置180°</li>
+                            <li>观察检漏：静置2分钟，观察瓶塞处是否有水渗出</li>
+                            <li>旋转复检：将瓶塞旋转180°，再次倒置检漏，确保无渗漏</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>检漏合格后方可进行定容操作，渗漏的容量瓶禁止使用。</p>
+                        <button class="audio-button" onclick="playAudio('容量瓶的检漏操作要领：向容量瓶中加入适量蒸馏水，至刻度线下方1-2厘米处；用食指按住瓶塞，将容量瓶倒置180度；静置2分钟，观察瓶塞处是否有水渗出；将瓶塞旋转180度，再次倒置检漏，确保无渗漏。检漏合格后方可进行定容操作，渗漏的容量瓶禁止使用。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2.滴定管检漏 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    滴定管检漏操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>滴定管检漏</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>酸式/碱式滴定管、蒸馏水、烧杯</p>
+                        <p><strong>酸式滴定管操作要领：</strong></p>
+                        <ul>
+                            <li>关闭活塞：关闭滴定管活塞，加入蒸馏水至0刻度线以上</li>
+                            <li>静置观察：直立静置2分钟，观察活塞处是否漏水</li>
+                            <li>旋转复检：旋转活塞180°，再静置2分钟，确认无渗漏</li>
+                        </ul>
+                        <p><strong>碱式滴定管操作要领：</strong></p>
+                        <ul>
+                            <li>夹紧橡胶管：夹紧碱式滴定管橡胶管，加水至0刻度线以上</li>
+                            <li>静置观察：静置2分钟，观察橡胶管与玻璃珠处是否漏水</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>漏水的滴定管需涂抹凡士林（酸式）或更换橡胶管（碱式）。</p>
+                        <button class="audio-button" onclick="playAudio('滴定管检漏操作要领：酸式滴定管先关闭活塞，加入蒸馏水至0刻度线以上，直立静置2分钟，观察活塞处是否漏水，再旋转活塞180度，静置2分钟确认无渗漏；碱式滴定管夹紧橡胶管，加水至0刻度线以上，静置2分钟，观察橡胶管与玻璃珠处是否漏水。漏水的滴定管需涂抹凡士林（酸式）或更换橡胶管（碱式）。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3.滴定管排气泡 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    滴定管排气泡操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>滴定管排气泡</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>酸式/碱式滴定管、待装液、烧杯</p>
+                        <p><strong>酸式滴定管排气泡：</strong></p>
+                        <ul>
+                            <li>倾斜滴定管：将滴定管倾斜30°-45°，打开活塞</li>
+                            <li>快速放液：让液体快速流出，带出尖嘴处气泡</li>
+                            <li>调整液面：气泡排尽后，调整液面至0刻度线或以下</li>
+                        </ul>
+                        <p><strong>碱式滴定管排气泡：</strong></p>
+                        <ul>
+                            <li>捏住玻璃珠：用手指捏住橡胶管内玻璃珠上方</li>
+                            <li>挤压放液：使橡胶管形成空隙，液体快速流出排出气泡</li>
+                            <li>检查确认：观察尖嘴处无气泡残留，调整液面</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>气泡未排尽会导致滴定体积测量误差。</p>
+                        <button class="audio-button" onclick="playAudio('滴定管排气泡操作要领：酸式滴定管倾斜30至45度，打开活塞，让液体快速流出带出尖嘴处气泡，气泡排尽后调整液面至0刻度线或以下；碱式滴定管用手指捏住橡胶管内玻璃珠上方，挤压放液使橡胶管形成空隙，液体快速流出排出气泡，观察尖嘴处无气泡残留后调整液面。气泡未排尽会导致滴定体积测量误差。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 4.分液操作 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    分液操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>分液操作</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>分液漏斗、铁架台、铁圈、烧杯</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>静置分层：将混合液倒入分液漏斗，静置至分层完全（禁止振荡时旋塞朝上）</li>
+                            <li>打开上口：打开分液漏斗上口塞子（或使凹槽对准小孔），保证内外气压相通</li>
+                            <li>缓慢放液：将漏斗下端紧靠烧杯内壁，打开活塞，下层液体从下口放出</li>
+                            <li>及时关闭：上层液体从上口倒出，禁止从下口放出，防止交叉污染</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>放液时眼睛注视液面，避免上层液体随下层流出。</p>
+                        <button class="audio-button" onclick="playAudio('分液操作要领：将混合液倒入分液漏斗，静置至分层完全，禁止振荡时旋塞朝上；打开分液漏斗上口塞子或使凹槽对准小孔，保证内外气压相通；将漏斗下端紧靠烧杯内壁，打开活塞，下层液体从下口放出；上层液体从上口倒出，禁止从下口放出，防止交叉污染。放液时眼睛注视液面，避免上层液体随下层流出。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 5.试纸使用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    试纸使用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>试纸使用</h3>
+                    <div class="operation-details">
+                        <p><strong>常见试纸：</strong>pH试纸、石蕊试纸、淀粉KI试纸、品红试纸等</p>
+                        <p><strong>通用操作要领：</strong></p>
+                        <ul>
+                            <li>取纸规范：用镊子夹取试纸，禁止用手直接接触</li>
+                            <li>润湿要求：除pH试纸外，其他试纸需先润湿（如检验气体）</li>
+                            <li>检测操作：将试纸放在玻璃片/表面皿上，用玻璃棒蘸取待测液点在试纸中央</li>
+                            <li>读数计时：pH试纸显色后立即与标准比色卡对比，禁止长时间浸泡</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>试纸使用后及时丢弃，不可重复使用。</p>
+                        <button class="audio-button" onclick="playAudio('试纸使用操作要领：用镊子夹取试纸，禁止用手直接接触；除pH试纸外，其他试纸需先润湿，如检验气体；将试纸放在玻璃片或表面皿上，用玻璃棒蘸取待测液点在试纸中央；pH试纸显色后立即与标准比色卡对比，禁止长时间浸泡。试纸使用后及时丢弃，不可重复使用。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 6.沉淀洗涤与检验是否洗涤干净 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    沉淀洗涤操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>沉淀洗涤与检验是否洗涤干净</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>漏斗、烧杯、玻璃棒、蒸馏水、试管、试剂</p>
+                        <p><strong>沉淀洗涤要领：</strong></p>
+                        <ul>
+                            <li>加洗涤液：向漏斗中加入蒸馏水至浸没沉淀，静置让洗涤液自然流下</li>
+                            <li>重复操作：重复洗涤2-3次，每次待洗涤液流尽后再加新洗涤液</li>
+                            <li>洗涤原则：选用溶解度小、不溶解沉淀的洗涤剂（如蒸馏水、乙醇）</li>
+                        </ul>
+                        <p><strong>洗涤干净检验要领：</strong></p>
+                        <ul>
+                            <li>取洗涤液：取最后一次洗涤液少量于试管中</li>
+                            <li>加检验试剂：加入能与杂质离子反应的试剂（如Cl⁻加AgNO₃）</li>
+                            <li>判断标准：无明显现象（如无沉淀、无颜色变化），说明洗涤干净</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>洗涤时玻璃棒不能搅拌沉淀，防止滤纸破损。</p>
+                        <button class="audio-button" onclick="playAudio('沉淀洗涤与检验是否洗涤干净操作要领：沉淀洗涤时向漏斗中加入蒸馏水至浸没沉淀，静置让洗涤液自然流下，重复洗涤2-3次，每次待洗涤液流尽后再加新洗涤液，选用溶解度小、不溶解沉淀的洗涤剂；检验洗涤干净时取最后一次洗涤液少量于试管中，加入能与杂质离子反应的试剂，如氯离子加硝酸银，无明显现象如无沉淀、无颜色变化，说明洗涤干净。洗涤时玻璃棒不能搅拌沉淀，防止滤纸破损。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 7.浓硫酸的稀释 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    浓硫酸稀释操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>浓硫酸的稀释</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>烧杯、玻璃棒、浓硫酸、蒸馏水</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>选对容器：在烧杯中进行（禁止在量筒/容量瓶中稀释）</li>
+                            <li>酸入水原则：将浓硫酸沿烧杯内壁缓慢倒入水中，禁止水倒入浓硫酸</li>
+                            <li>不断搅拌：边倒边用玻璃棒搅拌，及时散热，防止局部过热</li>
+                            <li>冷却转移：稀释后冷却至室温，再转移至指定容器（如需）</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>若不慎将水倒入浓硫酸，立即用大量水冲洗（实验室需用碳酸氢钠溶液处理）。</p>
+                        <button class="audio-button" onclick="playAudio('浓硫酸的稀释操作要领：在烧杯中进行，禁止在量筒或容量瓶中稀释；将浓硫酸沿烧杯内壁缓慢倒入水中，禁止水倒入浓硫酸；边倒边用玻璃棒搅拌，及时散热，防止局部过热；稀释后冷却至室温，再转移至指定容器。若不慎将水倒入浓硫酸，立即用大量水冲洗，实验室需用碳酸氢钠溶液处理。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 8.滴定终点半滴操作 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    滴定终点半滴操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>滴定终点半滴操作</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>滴定管、锥形瓶、玻璃棒/洗瓶</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>接近终点：当滴定至接近终点（颜色开始变化），减慢滴定速度</li>
+                            <li>控制半滴：关闭滴定管活塞，使尖嘴处悬挂半滴溶液（不滴落）</li>
+                            <li>转移半滴：用锥形瓶内壁轻靠滴定管尖嘴，将半滴溶液沾到锥形瓶内</li>
+                            <li>冲洗混匀：用洗瓶向锥形瓶内加少量蒸馏水，冲洗内壁，振荡混匀</li>
+                            <li>判断终点：若溶液颜色突变且30秒内不恢复，即为滴定终点</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>半滴操作是减小滴定误差的关键，禁止将半滴溶液吹入锥形瓶。</p>
+                        <button class="audio-button" onclick="playAudio('滴定终点半滴操作要领：当滴定至接近终点，颜色开始变化时，减慢滴定速度；关闭滴定管活塞，使尖嘴处悬挂半滴溶液不滴落；用锥形瓶内壁轻靠滴定管尖嘴，将半滴溶液沾到锥形瓶内；用洗瓶向锥形瓶内加少量蒸馏水，冲洗内壁，振荡混匀；若溶液颜色突变且30秒内不恢复，即为滴定终点。半滴操作是减小滴定误差的关键，禁止将半滴溶液吹入锥形瓶。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权 -->
+        <footer>
+            © 2026 高中化学实验基础学习系统 - 版权所有
+        </footer>
+    </div>
+    
+    <script>
+        // 语音播放功能
+        function playAudio(text) {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'zh-CN';
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            
+            window.speechSynthesis.speak(speech);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '播放中...';
+            
+            speech.onend = function() {
+                button.textContent = originalText;
+            };
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                const cards = document.querySelectorAll('.operation-card');
+                cards.forEach(card => {
+                    card.addEventListener('focus', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('blur', function() {
+                        this.classList.remove('hover');
+                    });
+                });
+            }
+        });
+        
+        document.querySelectorAll('.operation-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>

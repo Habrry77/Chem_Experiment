@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- 返回按钮（置顶层级，确保可点击） -->
+            <button class="back-btn" onclick="window.location.href='2.2.html'">返回首页</button>
+            <h1>高中化学实验基础学习系统</h1>
+        </header>
+        
+        <main>
+            <div id="game-container">
+                <div id="score-board">
+                    <div>得分: <span id="score">0</span></div>
+                    <div>剩余题目: <span id="remaining">20</span></div>
+                </div>
+                
+                <div id="question-area">
+                    <div id="image-container">
+                        <img id="instrument-image" src="" alt="实验仪器">
+                    </div>
+                    <div id="input-area">
+                        <input type="text" id="answer-input" placeholder="请输入仪器名称">
+                        <button id="submit-btn">提交答案</button>
+                    </div>
+                    <div id="feedback"></div>
+                    <button id="next-btn" style="display: none;">下一题</button>
+                </div>
+            </div>
+            
+            <div id="result-screen" style="display: none;">
+                <h2 id="result-title"></h2>
+                <p id="result-message"></p>
+                <button id="restart-btn">重新开始</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2026 高中化学实验基础学习系统</p>
+        </footer>
+    </div>
+    
+    <script src="../../js/script.js"></script>
+</body>
+</html>

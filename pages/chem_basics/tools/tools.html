@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 - 新增相对定位，为返回按钮占位 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; /* 关键：让返回按钮基于header定位 */
+            padding-left: 80px; /* 小屏避免按钮遮挡标题 */
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 仪器网格布局 */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 仪器卡片样式 */
+        .equipment-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .equipment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 仪器图片容器 */
+        .equipment-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .equipment-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 仪器信息 */
+        .equipment-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .equipment-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .equipment-card:hover .equipment-details {
+            max-height: 300px;
+            padding: 15px 10px;
+        }
+        
+        .equipment-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .equipment-details strong {
+            color: #764ba2;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            /* 小屏调整返回按钮位置 */
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- 新增返回按钮 -->
+            <button class="back-btn" onclick="window.location.href='../chem_basics.html'">返回</button>
+            <h1>常用化学实验仪器的识别与使用</h1>
+            <p class="subtitle">掌握各类仪器的用途和使用注意事项</p>
+        </header>
+        
+        <div class="equipment-grid">
+            <!-- 烧杯 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                     <img src="https://cdn.phototourl.com/uploads/2026-03-09-21af9c44-7822-4467-8b9c-324ccc0d711d.png" alt="烧杯">
+                </div>
+                <div class="equipment-info">
+                    <h3>烧杯</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于配制溶液、溶解物质、加热液体等。</p>
+                        <p><strong>注意事项：</strong>加热时需垫石棉网，不能直接加热。</p>
+                        <p><strong>规格特点：</strong>有50mL、100mL、250mL、500mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('烧杯是一种常见的化学实验仪器，主要用于配制溶液、溶解物质和加热液体。使用时需要注意，加热时需垫石棉网，不能直接加热。常见规格有50毫升、100毫升、250毫升和500毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 试管 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-eb7a2048-0292-4be8-8381-b21bbc7ba035.png" alt="试管">
+                </div>
+                <div class="equipment-info">
+                    <h3>试管</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于少量试剂的反应容器，可直接加热。</p>
+                        <p><strong>注意事项：</strong>加热时试管口不能对着人，液体体积不超过试管容积的1/3。</p>
+                        <p><strong>规格特点：</strong>有10mL、15mL、20mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('试管是用于少量试剂反应的容器，可以直接加热。使用时注意加热时试管口不能对着人，液体体积不超过试管容积的三分之一。常见规格有10毫升、15毫升和20毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 分液漏斗 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-12850b26-4f9d-415c-bd9a-945a08bf70e1.png" alt="分液漏斗">
+                </div>
+                <div class="equipment-info">
+                    <h3>分液漏斗</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于分离互不相溶的液体，也可用于向反应器中滴加液体。</p>
+                        <p><strong>注意事项：</strong>使用前需检查是否漏水，分液时下层液体从下口放出，上层液体从上口倒出。</p>
+                        <p><strong>规格特点：</strong>有60mL、125mL、250mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('分液漏斗用于分离互不相溶的液体，也可用于向反应器中滴加液体。使用前需检查是否漏水，分液时下层液体从下口放出，上层液体从上口倒出。常见规格有60毫升、125毫升和250毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 普通漏斗 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-9de8c209-c087-4ac7-af01-7e7e12fa70d8.png" alt="普通漏斗">
+                </div>
+                <div class="equipment-info">
+                    <h3>普通漏斗</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于过滤和向小口容器中转移液体。</p>
+                        <p><strong>注意事项：</strong>过滤时需用滤纸，滤纸边缘应低于漏斗边缘。</p>
+                        <p><strong>规格特点：</strong>按口径大小分类，有不同规格。</p>
+                        <button class="audio-button" onclick="playAudio('普通漏斗用于过滤和向小口容器中转移液体。过滤时需用滤纸，滤纸边缘应低于漏斗边缘。规格按口径大小分类，有不同尺寸。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 长颈漏斗 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-e85b8925-4a40-4cee-95f7-cc9d656600af.png" alt="长颈漏斗">
+                </div>
+                <div class="equipment-info">
+                    <h3>长颈漏斗</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于向反应器中添加液体，防止气体逸出。</p>
+                        <p><strong>注意事项：</strong>使用时漏斗颈应插入液面以下，形成液封。</p>
+                        <p><strong>规格特点：</strong>漏斗颈较长，便于形成液封。</p>
+                        <button class="audio-button" onclick="playAudio('长颈漏斗用于向反应器中添加液体，防止气体逸出。使用时漏斗颈应插入液面以下，形成液封。其特点是漏斗颈较长，便于形成液封。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 恒压滴液漏斗 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-dadd5b5b-b031-49cd-88da-dd24ca1edf2a.png" alt="恒压滴液漏斗">
+                </div>
+                <div class="equipment-info">
+                    <h3>恒压滴液漏斗</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于向反应体系中滴加液体，可保持滴加过程中压力恒定。</p>
+                        <p><strong>注意事项：</strong>使用前需检查是否漏气，滴加速度应适中。</p>
+                        <p><strong>规格特点：</strong>有侧管与反应体系连通，保持压力平衡。</p>
+                        <button class="audio-button" onclick="playAudio('恒压滴液漏斗用于向反应体系中滴加液体，可保持滴加过程中压力恒定。使用前需检查是否漏气，滴加速度应适中。其特点是有侧管与反应体系连通，保持压力平衡。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 布氏漏斗 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-f35ba0f7-46bf-4d45-829a-6224c483a9ad.png" alt="布氏漏斗">
+                </div>
+                <div class="equipment-info">
+                    <h3>布氏漏斗</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于减压过滤，加快过滤速度。</p>
+                        <p><strong>注意事项：</strong>需与抽滤瓶配套使用，过滤前需润湿滤纸。</p>
+                        <p><strong>规格特点：</strong>底部有许多小孔，与抽滤瓶配套使用。</p>
+                        <button class="audio-button" onclick="playAudio('布氏漏斗用于减压过滤，加快过滤速度。需与抽滤瓶配套使用，过滤前需润湿滤纸。其特点是底部有许多小孔，与抽滤瓶配套使用。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 锥形瓶 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-25ff6894-14e2-43b7-9042-5f72abf65039.png" alt="锥形瓶">
+                </div>
+                <div class="equipment-info">
+                    <h3>锥形瓶</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于滴定实验，也可用于加热和反应容器。</p>
+                        <p><strong>注意事项：</strong>加热时需垫石棉网，振荡时用手握住瓶颈。</p>
+                        <p><strong>规格特点：</strong>有50mL、100mL、250mL、500mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('锥形瓶用于滴定实验，也可用于加热和反应容器。加热时需垫石棉网，振荡时用手握住瓶颈。常见规格有50毫升、100毫升、250毫升和500毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 容量瓶 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-450da832-bae3-4dcb-988f-c5d1321374e5.png" alt="容量瓶">
+                </div>
+                <div class="equipment-info">
+                    <h3>容量瓶</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于准确配制一定体积、一定浓度的溶液。</p>
+                        <p><strong>注意事项：</strong>不能加热，不能用于溶解固体，配制溶液时需用玻璃棒引流。</p>
+                        <p><strong>规格特点：</strong>有50mL、100mL、250mL、500mL、1000mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('容量瓶用于准确配制一定体积、一定浓度的溶液。不能加热，不能用于溶解固体，配制溶液时需用玻璃棒引流。常见规格有50毫升、100毫升、250毫升、500毫升和1000毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 碘量瓶 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-704c6c59-fda1-4daf-a715-2cf0b3c43b3e.png" alt="碘量瓶">
+                </div>
+                <div class="equipment-info">
+                    <h3>碘量瓶</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于碘量法等需要防止碘挥发的滴定实验。</p>
+                        <p><strong>注意事项：</strong>使用时需塞紧瓶塞，可加少量水封。</p>
+                        <p><strong>规格特点：</strong>瓶口有磨口塞，瓶塞顶部有一小孔。</p>
+                        <button class="audio-button" onclick="playAudio('碘量瓶用于碘量法等需要防止碘挥发的滴定实验。使用时需塞紧瓶塞，可加少量水封。其特点是瓶口有磨口塞，瓶塞顶部有一小孔。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 酸式滴定管 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-060383c0-4f3a-4867-8464-6b3a788c1bc1.png" alt="酸式滴定管">
+                </div>
+                <div class="equipment-info">
+                    <h3>酸式滴定管</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于盛放酸性溶液或氧化性溶液的滴定。</p>
+                        <p><strong>注意事项：</strong>不能盛放碱性溶液，使用前需检查是否漏水，排气泡。</p>
+                        <p><strong>规格特点：</strong>有25mL、50mL等规格，下端有玻璃活塞。</p>
+                        <button class="audio-button" onclick="playAudio('酸式滴定管用于盛放酸性溶液或氧化性溶液的滴定。不能盛放碱性溶液，使用前需检查是否漏水，排气泡。常见规格有25毫升和50毫升等，下端有玻璃活塞。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 碱式滴定管 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-3ecf5bda-bf76-4c83-80ed-7e57b0156c47.png" alt="碱式滴定管">
+                </div>
+                <div class="equipment-info">
+                    <h3>碱式滴定管</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于盛放碱性溶液的滴定。</p>
+                        <p><strong>注意事项：</strong>不能盛放酸性或氧化性溶液，使用前需检查是否漏水，排气泡。</p>
+                        <p><strong>规格特点：</strong>有25mL、50mL等规格，下端有橡胶管和玻璃珠。</p>
+                        <button class="audio-button" onclick="playAudio('碱式滴定管用于盛放碱性溶液的滴定。不能盛放酸性或氧化性溶液，使用前需检查是否漏水，排气泡。常见规格有25毫升和50毫升等，下端有橡胶管和玻璃珠。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 球形冷凝管 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-d11b4300-166a-4bd9-aa58-f565a83cea1d.png" alt="球形冷凝管">
+                </div>
+                <div class="equipment-info">
+                    <h3>球形冷凝管</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于回流操作，使蒸气冷凝回流。</p>
+                        <p><strong>注意事项：</strong>冷却水应下进上出，使用时需与烧瓶配套。</p>
+                        <p><strong>规格特点：</strong>内管为球形，冷却面积大，冷却效果好。</p>
+                        <button class="audio-button" onclick="playAudio('球形冷凝管用于回流操作，使蒸气冷凝回流。冷却水应下进上出，使用时需与烧瓶配套。其特点是内管为球形，冷却面积大，冷却效果好。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 直形冷凝管 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-6380a0f0-d85a-4849-a8e2-d8b00a90c640.png" alt="直形冷凝管">
+                </div>
+                <div class="equipment-info">
+                    <h3>直形冷凝管</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于蒸馏操作，使蒸气冷凝为液体。</p>
+                        <p><strong>注意事项：</strong>冷却水应下进上出，使用时需与蒸馏烧瓶配套。</p>
+                        <p><strong>规格特点：</strong>内管为直形，适合蒸馏低沸点物质。</p>
+                        <button class="audio-button" onclick="playAudio('直形冷凝管用于蒸馏操作，使蒸气冷凝为液体。冷却水应下进上出，使用时需与蒸馏烧瓶配套。其特点是内管为直形，适合蒸馏低沸点物质。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 圆底烧瓶 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-a39c3329-7220-4604-add0-37567c8c2821.png" alt="圆底烧瓶">
+                </div>
+                <div class="equipment-info">
+                    <h3>圆底烧瓶</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于加热液体，进行化学反应。</p>
+                        <p><strong>注意事项：</strong>加热时需垫石棉网，不能直接加热。</p>
+                        <p><strong>规格特点：</strong>底部为圆形，受热均匀，有50mL、100mL、250mL、500mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('圆底烧瓶用于加热液体，进行化学反应。加热时需垫石棉网，不能直接加热。其特点是底部为圆形，受热均匀，常见规格有50毫升、100毫升、250毫升和500毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 蒸馏烧瓶 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-f357b875-e1c2-4a8f-9062-0a99b3157111.png" alt="蒸馏烧瓶">
+                </div>
+                <div class="equipment-info">
+                    <h3>蒸馏烧瓶</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于蒸馏操作，分离沸点不同的液体混合物。</p>
+                        <p><strong>注意事项：</strong>加热时需垫石棉网，温度计水银球应位于支管口处。</p>
+                        <p><strong>规格特点：</strong>有支管，用于连接冷凝管，有50mL、100mL、250mL、500mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('蒸馏烧瓶用于蒸馏操作，分离沸点不同的液体混合物。加热时需垫石棉网，温度计水银球应位于支管口处。其特点是有支管，用于连接冷凝管，常见规格有50毫升、100毫升、250毫升和500毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 三颈烧瓶 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-4652592a-e256-40df-8bb4-57417527e16a.png" alt="三颈烧瓶">
+                </div>
+                <div class="equipment-info">
+                    <h3>三颈烧瓶</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于需要同时添加多种试剂或连接多种仪器的反应。</p>
+                        <p><strong>注意事项：</strong>加热时需垫石棉网，各瓶口应配相应的塞子。</p>
+                        <p><strong>规格特点：</strong>有三个瓶口，可同时连接多种仪器，有100mL、250mL、500mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('三颈烧瓶用于需要同时添加多种试剂或连接多种仪器的反应。加热时需垫石棉网，各瓶口应配相应的塞子。其特点是有三个瓶口，可同时连接多种仪器，常见规格有100毫升、250毫升和500毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 坩埚 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-a2258a31-6a39-4851-a460-acf5391c4806.png" alt="坩埚">
+                </div>
+                <div class="equipment-info">
+                    <h3>坩埚</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于灼烧固体物质。</p>
+                        <p><strong>注意事项：</strong>使用时需用坩埚钳夹持，高温时不能骤冷。</p>
+                        <p><strong>规格特点：</strong>有瓷质、石英、铂等材质，有不同大小规格。</p>
+                        <button class="audio-button" onclick="playAudio('坩埚用于灼烧固体物质。使用时需用坩埚钳夹持，高温时不能骤冷。材质有瓷质、石英、铂等，有不同大小规格。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 蒸发皿 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-7feecae1-f0be-4459-962d-9fba4385d79a.png" alt="蒸发皿">
+                </div>
+                <div class="equipment-info">
+                    <h3>蒸发皿</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于蒸发液体，浓缩溶液。</p>
+                        <p><strong>注意事项：</strong>可直接加热，蒸发时应不断搅拌。</p>
+                        <p><strong>规格特点：</strong>有瓷质、玻璃等材质，有不同大小规格。</p>
+                        <button class="audio-button" onclick="playAudio('蒸发皿用于蒸发液体，浓缩溶液。可直接加热，蒸发时应不断搅拌。材质有瓷质、玻璃等，有不同大小规格。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 量筒 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-78a6e8ed-241e-4b57-be69-e79b8f2f0781.png" alt="量筒">
+                </div>
+                <div class="equipment-info">
+                    <h3>量筒</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于粗略量取液体体积。</p>
+                        <p><strong>注意事项：</strong>不能加热，不能用于溶解固体，读数时视线应与凹液面最低处相切。</p>
+                        <p><strong>规格特点：</strong>有10mL、25mL、50mL、100mL、250mL、500mL等多种规格。</p>
+                        <button class="audio-button" onclick="playAudio('量筒用于粗略量取液体体积。不能加热，不能用于溶解固体，读数时视线应与凹液面最低处相切。常见规格有10毫升、25毫升、50毫升、100毫升、250毫升和500毫升等。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 酒精灯 -->
+            <div class="equipment-card">
+                <div class="equipment-image">
+                    <img src="https://cdn.phototourl.com/uploads/2026-03-10-2d5c5fa4-2cde-4bed-b6b0-eff1651af6c1.png" alt="酒精灯">
+                </div>
+                <div class="equipment-info">
+                    <h3>酒精灯</h3>
+                    <div class="equipment-details">
+                        <p><strong>用途：</strong>用于加热实验仪器。</p>
+                        <p><strong>注意事项：</strong>使用时不能向燃着的酒精灯添加酒精，不能用燃着的酒精灯点燃另一个酒精灯，熄灭时用灯帽盖灭。</p>
+                        <p><strong>规格特点：</strong>有不同大小规格，常用的为150mL。</p>
+                        <button class="audio-button" onclick="playAudio('酒精灯用于加热实验仪器。使用时不能向燃着的酒精灯添加酒精，不能用燃着的酒精灯点燃另一个酒精灯，熄灭时用灯帽盖灭。常见规格为150毫升。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 语音播放功能
+        function playAudio(text) {
+            // 停止之前的语音
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            // 创建语音实例
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'zh-CN';
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            
+            // 播放语音
+            window.speechSynthesis.speak(speech);
+            
+            // 视觉反馈
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '播放中...';
+            
+            speech.onend = function() {
+                button.textContent = originalText;
+            };
+        }
+        
+        // 键盘导航支持
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                // 确保卡片获得焦点时也能触发悬停效果
+                const cards = document.querySelectorAll('.equipment-card');
+                cards.forEach(card => {
+                    card.addEventListener('focus', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('blur', function() {
+                        this.classList.remove('hover');
+                    });
+                });
+            }
+        });
+        
+        // 为所有卡片添加 tabindex 属性，支持键盘导航
+        document.querySelectorAll('.equipment-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>

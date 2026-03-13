@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 药品的取用</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 操作网格布局 */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 操作卡片样式 */
+        .operation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 操作图片容器 */
+        .operation-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .operation-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 操作信息 */
+        .operation-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .operation-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .operation-card:hover .operation-details {
+            max-height: 400px;
+            padding: 15px 10px;
+        }
+        
+        .operation-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .operation-details strong {
+            color: #764ba2;
+        }
+        
+        .operation-details ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .operation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='operations.html'">返回</button>
+            <h1>化学实验基本操作 - 药品的取用</h1>
+            <p class="subtitle">掌握固体、液体及特殊药品的取用方法和注意事项</p>
+        </header>
+        
+        <div class="operation-grid">
+            <!-- 粉末状固体药品取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    粉末状固体药品取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>粉末状固体药品取用</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>药匙、纸槽</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>一斜：将试管倾斜</li>
+                            <li>二送：用药匙或纸槽将药品送至试管底部</li>
+                            <li>三直立：将试管直立，使药品全部落入管底</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>避免药品沾在试管壁上，取用后及时盖好瓶塞，多余药品不能放回原瓶。</p>
+                        <button class="audio-button" onclick="playAudio('粉末状固体药品取用，使用药匙或纸槽进行操作。操作要领为一斜、二送、三直立：首先将试管倾斜，然后用药匙或纸槽将药品送至试管底部，最后将试管直立，使药品全部落入管底。注意避免药品沾在试管壁上，取用后及时盖好瓶塞，多余药品不能放回原瓶。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 块状固体药品取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    块状固体药品取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>块状固体药品取用</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>镊子</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>一横：将容器横放</li>
+                            <li>二放：用镊子将块状药品放在容器口</li>
+                            <li>三慢竖：慢慢竖起容器，使药品缓缓滑至底部</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>防止块状药品打破容器底部，取用腐蚀性固体需戴防护手套。</p>
+                        <button class="audio-button" onclick="playAudio('块状固体药品取用，使用镊子进行操作。操作要领为一横、二放、三慢竖：首先将容器横放，然后用镊子将块状药品放在容器口，最后慢慢竖起容器，使药品缓缓滑至底部。注意防止块状药品打破容器底部，取用腐蚀性固体需戴防护手套。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 液体药品倾倒取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    液体药品倾倒取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>液体药品倾倒取用</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>试剂瓶、烧杯/试管</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>瓶塞倒放：防止瓶塞被污染</li>
+                            <li>标签向手心：防止腐蚀标签</li>
+                            <li>瓶口紧挨：防止液体洒落</li>
+                            <li>缓缓倒入：控制液体流速</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>倒完后立即盖好瓶塞，标签朝外放回原处。</p>
+                        <button class="audio-button" onclick="playAudio('液体药品倾倒取用操作要领：瓶塞倒放，防止瓶塞被污染；标签向手心，防止腐蚀标签；瓶口紧挨容器口，防止液体洒落；缓缓倒入，控制液体流速。倒完后立即盖好瓶塞，标签朝外放回原处。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 液体药品滴加取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    液体药品滴加取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>液体药品滴加取用</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>胶头滴管</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>垂直悬空：滴管垂直于容器上方，不伸入容器内</li>
+                            <li>逐滴加入：控制滴加速度，观察反应现象</li>
+                            <li>不交叉使用：不同药品使用不同滴管</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>滴瓶专用滴管不用清洗，普通滴管使用后立即清洗。</p>
+                        <button class="audio-button" onclick="playAudio('液体药品滴加取用，使用胶头滴管操作。操作要领：滴管垂直悬空于容器上方，不伸入容器内；逐滴加入，控制滴加速度，观察反应现象；不同药品使用不同滴管，不交叉使用。滴瓶专用滴管不用清洗，普通滴管使用后立即清洗。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 液体药品量取取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    液体药品量取取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>液体药品量取取用</h3>
+                    <div class="operation-details">
+                        <p><strong>操作工具：</strong>量筒、胶头滴管</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>选择量程：选用与所量液体体积相近的量筒</li>
+                            <li>水平放置：量筒放在水平桌面上</li>
+                            <li>视线水平：读数时视线与凹液面最低处保持水平</li>
+                            <li>滴管定容：接近刻度时用胶头滴管滴加至刻度线</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>量筒不能加热，不能用于溶解固体或稀释溶液。</p>
+                        <button class="audio-button" onclick="playAudio('液体药品量取取用，使用量筒和胶头滴管操作。操作要领：选用与所量液体体积相近的量筒；量筒放在水平桌面上；读数时视线与凹液面最低处保持水平；接近刻度时用胶头滴管滴加至刻度线。注意量筒不能加热，不能用于溶解固体或稀释溶液。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 易潮解药品取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    易潮解药品取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>易潮解药品取用</h3>
+                    <div class="operation-details">
+                        <p><strong>常见药品：</strong>NaOH、CaCl₂、MgCl₂等</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>快速操作：减少药品暴露在空气中的时间</li>
+                            <li>干燥器具：取用工具和容器必须干燥</li>
+                            <li>密封保存：取用后立即密封，防止吸潮</li>
+                            <li>称量环境：最好在干燥箱或通风干燥处称量</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>称量时使用烧杯，不能直接放在称量纸上。</p>
+                        <button class="audio-button" onclick="playAudio('易潮解药品如氢氧化钠、氯化钙、氯化镁等的取用操作要领：快速操作，减少药品暴露在空气中的时间；取用工具和容器必须干燥；取用后立即密封，防止吸潮；最好在干燥箱或通风干燥处称量。称量时使用烧杯，不能直接放在称量纸上。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 易燃易爆药品取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    易燃易爆药品取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>易燃易爆药品取用</h3>
+                    <div class="operation-details">
+                        <p><strong>常见药品：</strong>白磷、钠、钾、乙醇、乙醚等</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>远离火源：操作区域禁止有明火</li>
+                            <li>控制用量：严格按照实验用量取用</li>
+                            <li>专用器具：使用专用工具，避免产生静电</li>
+                            <li>低温操作：易挥发易燃液体在低温下取用</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>钠、钾保存在煤油中，白磷保存在水中，取用后立即放回原瓶。</p>
+                        <button class="audio-button" onclick="playAudio('易燃易爆药品如白磷、钠、钾、乙醇、乙醚等的取用操作要领：操作区域远离火源，禁止有明火；严格按照实验用量取用；使用专用工具，避免产生静电；易挥发易燃液体在低温下取用。钠、钾保存在煤油中，白磷保存在水中，取用后立即放回原瓶。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 有毒有害药品取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    有毒有害药品取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>有毒有害药品取用</h3>
+                    <div class="operation-details">
+                        <p><strong>常见药品：</strong>重金属盐、氰化物、溴水、汞等</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>防护装备：佩戴手套、护目镜、口罩</li>
+                            <li>通风操作：在通风橱中进行取用操作</li>
+                            <li>精准称量：严格控制用量，避免浪费</li>
+                            <li>废液处理：多余药品和废液按规定处理</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>操作后及时清洗双手，实验服单独清洗。</p>
+                        <button class="audio-button" onclick="playAudio('有毒有害药品如重金属盐、氰化物、溴水、汞等的取用操作要领：佩戴手套、护目镜、口罩等防护装备；在通风橱中进行取用操作；严格控制用量，避免浪费；多余药品和废液按规定处理。操作后及时清洗双手，实验服单独清洗。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 腐蚀性药品取用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    腐蚀性药品取用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>腐蚀性药品取用</h3>
+                    <div class="operation-details">
+                        <p><strong>常见药品：</strong>浓H₂SO₄、浓HNO₃、浓HCl、NaOH溶液等</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>防护措施：戴耐酸碱手套、护目镜、防护服</li>
+                            <li>稀释原则：浓硫酸稀释"酸入水，不断搅"</li>
+                            <li>倾倒方式：沿容器壁缓缓倾倒，防止溅出</li>
+                            <li>应急处理：准备好中和剂和冲洗设备</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>不慎接触立即用大量清水冲洗，酸灼伤可用碳酸氢钠溶液处理。</p>
+                        <button class="audio-button" onclick="playAudio('腐蚀性药品如浓硫酸、浓硝酸、浓盐酸、氢氧化钠溶液等的取用操作要领：佩戴耐酸碱手套、护目镜、防护服；浓硫酸稀释遵循酸入水，不断搅的原则；沿容器壁缓缓倾倒，防止溅出；准备好中和剂和冲洗设备。不慎接触立即用大量清水冲洗，酸灼伤可用碳酸氢钠溶液处理。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 药品取用基本原则 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    药品取用安全规范示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>药品取用基本原则</h3>
+                    <div class="operation-details">
+                        <p><strong>安全性原则：</strong>人身安全优先，做好防护措施</p>
+                        <p><strong>节约性原则：</strong>按需取用，杜绝浪费</p>
+                        <p><strong>纯净性原则：</strong>防止药品交叉污染</p>
+                        <p><strong>规范性原则：</strong>严格按照操作规范执行</p>
+                        <p><strong>环保性原则：</strong>剩余药品按规定处理，不随意丢弃</p>
+                        <p><strong>核心要求：</strong>取用前核对标签，确认无误后方可使用，实验后及时清理台面。</p>
+                        <button class="audio-button" onclick="playAudio('药品取用需遵循五大基本原则：安全性原则，人身安全优先，做好防护措施；节约性原则，按需取用，杜绝浪费；纯净性原则，防止药品交叉污染；规范性原则，严格按照操作规范执行；环保性原则，剩余药品按规定处理，不随意丢弃。核心要求是取用前核对标签，确认无误后方可使用，实验后及时清理台面。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权 -->
+        <footer>
+            © 2026 高中化学实验基础学习系统 - 版权所有
+        </footer>
+    </div>
+    
+    <script>
+        // 语音播放功能
+        function playAudio(text) {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'zh-CN';
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            
+            window.speechSynthesis.speak(speech);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '播放中...';
+            
+            speech.onend = function() {
+                button.textContent = originalText;
+            };
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                const cards = document.querySelectorAll('.operation-card');
+                cards.forEach(card => {
+                    card.addEventListener('focus', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('blur', function() {
+                        this.classList.remove('hover');
+                    });
+                });
+            }
+        });
+        
+        document.querySelectorAll('.operation-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>

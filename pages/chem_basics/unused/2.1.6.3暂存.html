@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 必做实验</title>
+    <style>
+        /* 核心样式：确保footer固定在底部 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%; /* 让页面高度占满视口 */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* 垂直排列内容 */
+        }
+
+        main {
+            flex: 1; /* 让main占满除header和footer外的所有空间 */
+            padding: 20px;
+        }
+
+        /* 基础样式美化 */
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative; /* 为返回按钮定位做准备 */
+        }
+
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .module {
+            margin: 20px 0;
+        }
+
+        .module-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #34495e;
+            text-align: center;
+        }
+
+        /* 卡片布局：适配19个卡片，4列/2列/1列响应式 */
+        .game-container {
+            display: flex;
+            gap: 20px; /* 卡片之间的间距 */
+            width: 100%;
+            max-width: 1600px; /* 放宽最大宽度，适配更多卡片 */
+            margin: 0 auto; /* 居中显示 */
+            flex-wrap: wrap; /* 小屏幕自动换行 */
+            justify-content: center; /* 卡片居中排列，避免最后一行对齐问题 */
+        }
+
+        .game-card {
+            border: 1px solid #ddd;
+            padding: 25px 15px;
+            border-radius: 8px;
+            width: calc(25% - 15px); /* 大屏4个卡片/行 */
+            text-align: center;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* 卡片内元素样式 */
+        .game-image {
+            margin-bottom: 15px;
+            height: 150px; /* 适当缩小图片高度，适配更多卡片 */
+            background-color: #e9ecef;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        .game-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .game-card h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .game-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* 兼容按钮和超链接样式 */
+        .play-btn, .card-link {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none; /* 去掉超链接下划线 */
+            display: inline-block; /* 保证padding生效 */
+        }
+
+        .play-btn:hover, .card-link:hover {
+            background-color: #2980b9;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1400px) {
+            .game-card {
+                width: calc(33.33% - 13px); /* 中大屏3个卡片/行 */
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .game-card {
+                width: calc(50% - 10px); /* 中等屏幕2个卡片/行 */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-card {
+                width: 100%; /* 小屏幕1个卡片/行 */
+                margin-bottom: 20px;
+            }
+            .back-btn {
+                position: static; /* 小屏幕取消绝对定位 */
+                transform: none;
+                margin-bottom: 10px;
+            }
+            .header {
+                padding: 15px;
+            }
+            .game-image {
+                height: 180px; /* 手机端恢复图片高度 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部区域：包含返回按钮 -->
+    <header class="header">
+        <!-- 返回按钮：点击跳转到菜单页 -->
+        <button class="back-btn" onclick="window.location.href='menu.html'">返回</button>
+        <h1 class="main-title">高中化学实验基础学习系统</h1>
+        <p class="subtitle">必做实验专题 - 掌握新课标要求的核心实验操作与原理</p>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main>
+        <section class="module" id="interactive-module">
+            <h2 class="module-title">高中化学新课标必做实验梳理</h2>
+            <div class="module-content">
+                <div class="game-container">
+                    <!-- 1. 配制一定物质的量浓度的溶液 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            配制一定物质的量浓度溶液装置示意图（此处替换为实际图片）
+                        </div>
+                        <h4>配制一定物质的量浓度的溶液</h4>
+                        <p>掌握容量瓶使用、溶液配制步骤及误差分析</p>
+                        <a href="2.1.6.3.1.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 2. 铁及其化合物的性质 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            铁及其化合物性质实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>铁及其化合物的性质</h4>
+                        <p>探究Fe²⁺、Fe³⁺的检验及相互转化规律</p>
+                        <a href="2.1.6.3.2.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 3. 不同价态含硫物质的转化 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            含硫物质价态转化实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>不同价态含硫物质的转化</h4>
+                        <p>探究S²⁻、SO₂、H₂SO₄的相互转化及氧化性还原性</p>
+                        <a href="2.1.6.3.3.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 4. 用化学沉淀法去除粗盐中的杂质离子 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            粗盐提纯实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>去除粗盐中的杂质离子</h4>
+                        <p>掌握沉淀法除Ca²⁺、Mg²⁺、SO₄²⁻的步骤及试剂选择</p>
+                        <a href="2.1.6.3.4.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 5. 同周期、同主族元素性质的递变 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            元素性质递变实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>元素性质的递变规律</h4>
+                        <p>探究同周期/主族元素金属性、非金属性递变</p>
+                        <a href="2.1.6.3.5.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 6. 化学反应速率的影响因素 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            反应速率影响因素实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>化学反应速率的影响因素</h4>
+                        <p>探究温度、浓度、催化剂对反应速率的影响</p>
+                        <a href="2.1.6.3.6.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 7. 化学能转化成电能 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            原电池实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>化学能转化成电能</h4>
+                        <p>搭建原电池装置，理解原电池工作原理</p>
+                        <a href="2.1.6.3.7.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 8. 搭建球棍模型认识有机物分子结构 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            有机物球棍模型示意图（此处替换为实际图片）
+                        </div>
+                        <h4>有机物分子结构球棍模型</h4>
+                        <p>搭建常见有机物模型，理解空间结构特点</p>
+                        <a href="2.1.6.3.8.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 9. 乙醇、乙酸的主要性质 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            乙醇乙酸性质实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>乙醇、乙酸的主要性质</h4>
+                        <p>探究乙醇的催化氧化、乙酸的酸性及酯化反应</p>
+                        <a href="2.1.6.3.9.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 10. 简单的电镀实验 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            电镀实验装置示意图（此处替换为实际图片）
+                        </div>
+                        <h4>简单的电镀实验</h4>
+                        <p>掌握电镀原理，完成镀铜/镀锌简单实验</p>
+                        <a href="2.1.6.3.10.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 11. 制作简单的燃料电池 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            燃料电池实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>制作简单的燃料电池</h4>
+                        <p>搭建氢氧/乙醇燃料电池，理解工作原理</p>
+                        <a href="2.1.6.3.11.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 12. 探究影响化学平衡移动的因素 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            化学平衡移动实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>影响化学平衡移动的因素</h4>
+                        <p>探究浓度、温度对化学平衡的影响</p>
+                        <a href="2.1.6.3.12.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 13. 强酸与强碱的中和滴定 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            中和滴定实验装置示意图（此处替换为实际图片）
+                        </div>
+                        <h4>强酸与强碱的中和滴定</h4>
+                        <p>掌握滴定管使用、滴定操作及数据处理</p>
+                        <a href="2.1.6.3.13.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 14. 盐类水解的应用 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            盐类水解应用实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>盐类水解的应用</h4>
+                        <p>探究FeCl₃水解、泡沫灭火器原理等水解应用</p>
+                        <a href="2.1.6.3.14.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 15. 简单配合物的制备 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            配合物制备实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>简单配合物的制备</h4>
+                        <p>制备Fe(SCN)₃、银氨溶液等配合物，理解配位键</p>
+                        <a href="2.1.6.3.15.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 16. 乙酸乙酯的制备与性质 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            乙酸乙酯制备实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>乙酸乙酯的制备与性质</h4>
+                        <p>掌握酯化反应装置及乙酸乙酯的水解性质</p>
+                        <a href="2.1.6.3.16.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 17. 有机化合物中常见官能团的检验 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            官能团检验实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>常见官能团的检验</h4>
+                        <p>掌握羟基、羧基、醛基等官能团的检验方法</p>
+                        <a href="2.1.6.3.17.html" class="card-link">开始学习</a>
+                    </div>
+                    <!-- 18. 糖类的性质 -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            糖类性质实验示意图（此处替换为实际图片）
+                        </div>
+                        <h4>糖类的性质</h4>
+                        <p>探究葡萄糖、淀粉、纤维素的特征反应</p>
+                        <a href="2.1.6.3.18.html" class="card-link">开始学习</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部区域 -->
+    <footer class="footer">
+        <p>© 2026 高中化学实验基础学习系统 - 版权所有</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

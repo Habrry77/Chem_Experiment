@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 物质的加热</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 操作网格布局 */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 操作卡片样式 */
+        .operation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 操作图片容器 */
+        .operation-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .operation-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 操作信息 */
+        .operation-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .operation-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .operation-card:hover .operation-details {
+            max-height: 400px;
+            padding: 15px 10px;
+        }
+        
+        .operation-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .operation-details strong {
+            color: #764ba2;
+        }
+        
+        .operation-details ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .operation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='operations.html'">返回</button>
+            <h1>化学实验基本操作 - 物质的加热</h1>
+            <p class="subtitle">掌握试管、烧杯、蒸发皿等仪器的加热方法和注意事项</p>
+        </header>
+        
+        <div class="operation-grid">
+            <!-- 试管直接加热 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    试管直接加热操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>试管直接加热</h3>
+                    <div class="operation-details">
+                        <p><strong>加热工具：</strong>酒精灯、酒精喷灯</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>液体量：不超过试管容积的1/3</li>
+                            <li>预热：先均匀预热，再集中加热</li>
+                            <li>角度：试管与桌面成45°角，管口不对人</li>
+                            <li>振荡：加热液体时不断振荡，防止暴沸</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>加热固体时试管口略向下倾斜，防止冷凝水倒流炸裂试管。</p>
+                        <button class="audio-button" onclick="playAudio('试管直接加热，使用酒精灯或酒精喷灯操作。操作要领：液体量不超过试管容积的1/3；先均匀预热，再集中加热；试管与桌面成45°角，管口不对人；加热液体时不断振荡，防止暴沸。加热固体时试管口略向下倾斜，防止冷凝水倒流炸裂试管。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 烧杯水浴加热 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    烧杯水浴加热操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>烧杯水浴加热</h3>
+                    <div class="operation-details">
+                        <p><strong>加热工具：</strong>水浴锅、酒精灯、烧杯、石棉网</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>水量：水浴锅加水至2/3，不超过烧杯液面</li>
+                            <li>固定：烧杯用铁架台固定，底部垫石棉网</li>
+                            <li>温度：水浴温度控制在≤100℃，受热均匀</li>
+                            <li>搅拌：加热时用玻璃棒不断搅拌液体</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>水浴锅加水不能过满，防止沸腾溢出；烧杯不能直接接触锅底。</p>
+                        <button class="audio-button" onclick="playAudio('烧杯水浴加热，使用水浴锅、酒精灯、烧杯、石棉网操作。操作要领：水浴锅加水至2/3，不超过烧杯液面；烧杯用铁架台固定，底部垫石棉网；水浴温度控制在≤100℃，受热均匀；加热时用玻璃棒不断搅拌液体。水浴锅加水不能过满，防止沸腾溢出；烧杯不能直接接触锅底。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 蒸发皿加热蒸发 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    蒸发皿加热蒸发操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>蒸发皿加热蒸发</h3>
+                    <div class="operation-details">
+                        <p><strong>加热工具：</strong>酒精灯、三脚架、泥三角</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>液体量：不超过蒸发皿容积的2/3</li>
+                            <li>搅拌：加热过程中持续搅拌，防止局部过热</li>
+                            <li>停火：出现大量固体时停止加热，利用余热蒸干</li>
+                            <li>转移：热蒸发皿用坩埚钳夹持，放在石棉网上冷却</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>不能骤冷，防止蒸发皿炸裂；不能用手直接接触热蒸发皿。</p>
+                        <button class="audio-button" onclick="playAudio('蒸发皿加热蒸发，使用酒精灯、三脚架、泥三角操作。操作要领：液体量不超过蒸发皿容积的2/3；加热过程中持续搅拌，防止局部过热；出现大量固体时停止加热，利用余热蒸干；热蒸发皿用坩埚钳夹持，放在石棉网上冷却。不能骤冷，防止蒸发皿炸裂；不能用手直接接触热蒸发皿。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 烧瓶加热蒸馏 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    烧瓶加热蒸馏操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>烧瓶加热蒸馏</h3>
+                    <div class="operation-details">
+                        <p><strong>加热工具：</strong>酒精灯、石棉网、铁架台、冷凝管</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>液体量：烧瓶内液体占容积1/3~2/3</li>
+                            <li>沸石：加热前加入沸石，防止暴沸</li>
+                            <li>冷凝：冷凝管下口进水，上口出水</li>
+                            <li>温度：控制加热温度，收集对应馏分</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>蒸馏过程中不能蒸干液体；装置气密性需提前检查。</p>
+                        <button class="audio-button" onclick="playAudio('烧瓶加热蒸馏，使用酒精灯、石棉网、铁架台、冷凝管操作。操作要领：烧瓶内液体占容积1/3~2/3；加热前加入沸石，防止暴沸；冷凝管下口进水，上口出水；控制加热温度，收集对应馏分。蒸馏过程中不能蒸干液体；装置气密性需提前检查。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 锥形瓶加热 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    锥形瓶加热操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>锥形瓶加热</h3>
+                    <div class="operation-details">
+                        <p><strong>加热工具：</strong>酒精灯、石棉网、铁架台</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>铺垫：必须垫石棉网加热，禁止直接加热</li>
+                            <li>液体量：不超过容积的1/2，防止溅出</li>
+                            <li>固定：用铁夹固定瓶颈上部，保持稳定</li>
+                            <li>振荡：加热时可适当振荡，使受热均匀</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>常用于滴定实验加热，加热后不能立即用冷水冲洗。</p>
+                        <button class="audio-button" onclick="playAudio('锥形瓶加热，使用酒精灯、石棉网、铁架台操作。操作要领：必须垫石棉网加热，禁止直接加热；液体量不超过容积的1/2，防止溅出；用铁夹固定瓶颈上部，保持稳定；加热时可适当振荡，使受热均匀。常用于滴定实验加热，加热后不能立即用冷水冲洗。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 坩埚加热固体 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    坩埚加热固体操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>坩埚加热固体</h3>
+                    <div class="operation-details">
+                        <p><strong>加热工具：</strong>酒精喷灯、三脚架、泥三角</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>装样：固体样品平铺在坩埚底部，不宜过多</li>
+                            <li>预热：先小火预热，再高温加热</li>
+                            <li>夹持：用坩埚钳夹持，避免接触坩埚底部</li>
+                            <li>冷却：加热后放在干燥器中冷却，防止吸潮</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>瓷坩埚不能加热碱性固体；高温操作需佩戴防护眼镜。</p>
+                        <button class="audio-button" onclick="playAudio('坩埚加热固体，使用酒精喷灯、三脚架、泥三角操作。操作要领：固体样品平铺在坩埚底部，不宜过多；先小火预热，再高温加热；用坩埚钳夹持，避免接触坩埚底部；加热后放在干燥器中冷却，防止吸潮。瓷坩埚不能加热碱性固体；高温操作需佩戴防护眼镜。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 试管夹使用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    试管夹使用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>试管夹使用</h3>
+                    <div class="operation-details">
+                        <p><strong>适用场景：</strong>试管加热时的固定夹持</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>夹持位置：夹在试管中上部（距管口1/3处）</li>
+                            <li>夹持方法：从试管底部往上套，禁止从管口套入</li>
+                            <li>手握位置：手握试管夹长柄，不按短柄</li>
+                            <li>调整角度：加热时可调整试管夹角度，改变加热方向</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>加热后试管夹需冷却后再清洗，防止变形。</p>
+                        <button class="audio-button" onclick="playAudio('试管夹使用，适用于试管加热时的固定夹持。操作要领：夹在试管中上部（距管口1/3处）；从试管底部往上套，禁止从管口套入；手握试管夹长柄，不按短柄；加热时可调整试管夹角度，改变加热方向。加热后试管夹需冷却后再清洗，防止变形。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 酒精灯使用 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    酒精灯使用操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>酒精灯使用</h3>
+                    <div class="operation-details">
+                        <p><strong>燃料：</strong>工业酒精（乙醇含量≥95%）</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>添加酒精：不超过容积2/3，不少于1/4，禁止向燃着的酒精灯加酒精</li>
+                            <li>点燃：用火柴点燃，禁止用燃着的酒精灯引燃</li>
+                            <li>加热：用外焰加热，外焰温度最高</li>
+                            <li>熄灭：用灯帽盖灭，禁止用嘴吹灭</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>酒精洒出燃烧时，用湿抹布盖灭；长期不用时倒出剩余酒精。</p>
+                        <button class="audio-button" onclick="playAudio('酒精灯使用，燃料为工业酒精（乙醇含量≥95%）。操作要领：添加酒精不超过容积2/3，不少于1/4，禁止向燃着的酒精灯加酒精；用火柴点燃，禁止用燃着的酒精灯引燃；用外焰加热，外焰温度最高；用灯帽盖灭，禁止用嘴吹灭。酒精洒出燃烧时，用湿抹布盖灭；长期不用时倒出剩余酒精。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 水浴加热控温 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    水浴加热控温操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>水浴加热控温</h3>
+                    <div class="operation-details">
+                        <p><strong>控温工具：</strong>温度计、恒温水浴锅</p>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>测温位置：温度计水银球浸入水中，不接触容器</li>
+                            <li>控温范围：室温~100℃，常用50~90℃</li>
+                            <li>恒温操作：温度达到设定值时调小火力，保持恒温</li>
+                            <li>安全操作：高温水浴需加盖，防止水分过快蒸发</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>需精准控温时使用恒温水浴锅，定期校准温度计。</p>
+                        <button class="audio-button" onclick="playAudio('水浴加热控温，使用温度计、恒温水浴锅操作。操作要领：温度计水银球浸入水中，不接触容器；控温范围为室温~100℃，常用50~90℃；温度达到设定值时调小火力，保持恒温；高温水浴需加盖，防止水分过快蒸发。需精准控温时使用恒温水浴锅，定期校准温度计。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 加热操作基本原则 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    加热操作安全规范示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>加热操作基本原则</h3>
+                    <div class="operation-details">
+                        <p><strong>预热原则：</strong>玻璃仪器加热前必须预热，防止骤热炸裂</p>
+                        <p><strong>均匀原则：</strong>受热均匀，防止局部过热导致液体暴沸或仪器损坏</p>
+                        <p><strong>安全原则：</strong>加热时容器口不对人，高温仪器不直接接触冷桌面</p>
+                        <p><strong>适配原则：</strong>不同仪器选择合适的加热方式（直接/水浴/油浴）</p>
+                        <p><strong>应急原则：</strong>准备好灭火器材和防护用品，应对突发情况</p>
+                        <p><strong>核心要求：</strong>加热过程中全程监护，禁止擅自离开实验台。</p>
+                        <button class="audio-button" onclick="playAudio('加热操作需遵循五大基本原则：预热原则，玻璃仪器加热前必须预热，防止骤热炸裂；均匀原则，受热均匀，防止局部过热导致液体暴沸或仪器损坏；安全原则，加热时容器口不对人，高温仪器不直接接触冷桌面；适配原则，不同仪器选择合适的加热方式（直接/水浴/油浴）；应急原则，准备好灭火器材和防护用品，应对突发情况。核心要求是加热过程中全程监护，禁止擅自离开实验台。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权 -->
+        <footer>
+            © 2026 高中化学实验基础学习系统 - 版权所有
+        </footer>
+    </div>
+    
+    <script>
+        // 语音播放功能
+        function playAudio(text) {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'zh-CN';
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            
+            window.speechSynthesis.speak(speech);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '播放中...';
+            
+            speech.onend = function() {
+                button.textContent = originalText;
+            };
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                const cards = document.querySelectorAll('.operation-card');
+                cards.forEach(card => {
+                    card.addEventListener('focus', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('blur', function() {
+                        this.classList.remove('hover');
+                    });
+                });
+            }
+        });
+        
+        document.querySelectorAll('.operation-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>
