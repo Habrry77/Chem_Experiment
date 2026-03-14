@@ -19,8 +19,6 @@
         body {
             display: flex;
             flex-direction: column; /* 垂直排列内容 */
-            /* 给固定按钮留出空间，避免遮挡 */
-            padding-bottom: 120px;
         }
 
         main {
@@ -140,59 +138,6 @@
                 margin-bottom: 20px;
             }
         }
-
-        /* 新用户奖励按钮样式 - 核心新增部分 */
-        .reward-container {
-            position: fixed; /* 固定在右下角，不随页面滚动 */
-            bottom: 30px;    /* 距离底部30px */
-            right: 30px;     /* 距离右侧30px */
-            z-index: 9999;   /* 确保在最上层，不被其他元素遮挡 */
-            text-align: center;
-        }
-
-        .reward-text {
-            font-size: 18px;
-            font-weight: bold;
-            color: #e74c3c; /* 红色醒目 */
-            margin-bottom: 8px;
-            text-shadow: 0 0 2px #fff; /* 增加文字阴影，提升可读性 */
-        }
-
-        .reward-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            background: linear-gradient(to right, #ff6b6b, #e74c3c); /* 渐变红色，更醒目 */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4); /* 红色阴影，增强视觉效果 */
-            transition: all 0.3s ease;
-            text-decoration: none; /* 去掉a标签下划线 */
-            display: inline-block;
-        }
-
-        .reward-btn:hover {
-            transform: scale(1.05); /* 鼠标悬浮放大，增加交互感 */
-            box-shadow: 0 6px 16px rgba(231, 76, 60, 0.6);
-            background: linear-gradient(to right, #ff5252, #c0392b);
-        }
-
-        /* 小屏幕适配奖励按钮 */
-        @media (max-width: 768px) {
-            .reward-text {
-                font-size: 16px;
-            }
-            .reward-btn {
-                padding: 12px 24px;
-                font-size: 16px;
-            }
-            .reward-container {
-                bottom: 20px;
-                right: 20px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -234,13 +179,6 @@
     <footer class="footer">
         <p>© 2026 高中化学实验基础学习系统 - 版权所有</p>
     </footer>
-
-    <!-- 新用户奖励按钮 - 核心新增部分 -->
-    <div class="reward-container">
-        <div class="reward-text">新用户使用奖励100元</div>
-        <!-- 替换 href 中的链接为你要跳转的网页地址 -->
-        <a href="https://www.bilibili.com/video/BV1GJ411x7h7/?spm_id_from=333.337.search-card.all.click" class="reward-btn">点击领取</a>
-    </div>
 
     <script src="script.js"></script>
 </body>
