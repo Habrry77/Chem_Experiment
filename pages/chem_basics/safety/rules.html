@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 化学实验安全</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 操作网格布局 */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 操作卡片样式 */
+        .operation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 操作图片容器 */
+        .operation-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .operation-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 操作信息 */
+        .operation-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .operation-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .operation-card:hover .operation-details {
+            max-height: 400px;
+            padding: 15px 10px;
+        }
+        
+        .operation-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .operation-details strong {
+            color: #764ba2;
+        }
+        
+        .operation-details ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .operation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <button class="back-btn" onclick="window.location.href='safety.html'">返回</button>
+        <h1>化学实验基础 - 化学实验安全</h1>
+        <p class="subtitle">掌握实验安全规范，防范实验事故发生</p>
+    </header>
+
+    <div class="operation-grid">
+        <!-- 1. 实验室安全守则 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                实验室安全守则示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>实验室安全守则</h3>
+                <div class="operation-details">
+                    <p><strong>核心要求：</strong></p>
+                    <ul>
+                        <li>进入实验室穿实验服、戴防护眼镜，禁止穿拖鞋/凉鞋</li>
+                        <li>禁止在实验室饮食、饮水、吸烟，避免试剂入口</li>
+                        <li>实验前预习流程，了解试剂危险性和应急处理方法</li>
+                        <li>严格按操作规程实验，未经允许不得擅自更改步骤</li>
+                        <li>实验结束后清理台面，关闭水电、通风设备</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>遵守实验室管理制度，服从老师指导。</p>
+                    <button class="audio-button" onclick="playAudio('实验室安全守则：穿实验服戴防护眼镜，禁止饮食吸烟，预习实验流程，按规程操作，结束后清理台面。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 常见危险试剂使用安全 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                危险试剂使用安全示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>危险试剂使用安全</h3>
+                <div class="operation-details">
+                    <p><strong>常见危险试剂：</strong>强酸、强碱、有毒、易燃、易爆试剂</p>
+                    <p><strong>操作要点：</strong></p>
+                    <ul>
+                        <li>强酸/强碱：佩戴橡胶手套，稀释酸时"酸入水"并搅拌</li>
+                        <li>有毒试剂：在通风橱操作，戴防毒面具/手套，废液单独处理</li>
+                        <li>易燃试剂：远离火源，用防爆设备，禁止明火加热</li>
+                        <li>易爆试剂：轻拿轻放，避免撞击/震动，限量取用</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>危险试剂取用需双人复核，做好防护。</p>
+                    <button class="audio-button" onclick="playAudio('危险试剂使用：强酸强碱戴手套，酸入水稀释；有毒试剂通风橱操作；易燃试剂远离火源；易爆试剂轻拿轻放。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 实验事故预防 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                实验事故预防示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>实验事故预防</h3>
+                <div class="operation-details">
+                    <p><strong>常见事故类型：</strong>火灾、爆炸、中毒、腐蚀、烫伤、割伤</p>
+                    <p><strong>预防措施：</strong></p>
+                    <ul>
+                        <li>火灾：清理易燃物，配备灭火器，禁止违规用电</li>
+                        <li>爆炸：控制反应温度/压强，避免气体聚集，禁止混合禁忌试剂</li>
+                        <li>中毒：通风良好，规范操作，避免试剂接触皮肤/呼吸道</li>
+                        <li>腐蚀/烫伤：戴防护用品，正确使用加热设备</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>定期检查实验设备，及时更换老化器材。</p>
+                    <button class="audio-button" onclick="playAudio('实验事故预防：清理易燃物防火灾，控温降压防爆炸，通风操作防中毒，戴防护品防腐蚀烫伤。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 火灾应急处理 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                火灾应急处理示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>火灾应急处理</h3>
+                <div class="operation-details">
+                    <p><strong>不同火情处理：</strong></p>
+                    <ul>
+                        <li>小范围失火：用湿布/沙土覆盖，或使用对应灭火器</li>
+                        <li>有机溶剂着火：用干粉/二氧化碳灭火器，禁止用水浇</li>
+                        <li>金属钠/钾着火：用沙土覆盖，禁止用水/泡沫灭火器</li>
+                        <li>电器着火：先切断电源，用二氧化碳/干粉灭火器</li>
+                        <li>衣物着火：就地打滚灭火，禁止奔跑</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>火势扩大立即撤离并报警。</p>
+                    <button class="audio-button" onclick="playAudio('火灾处理：有机溶剂着火用干粉灭火器，金属着火用沙土，电器着火先断电，衣物着火就地打滚。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 化学灼伤处理 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                化学灼伤处理示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>化学灼伤处理</h3>
+                <div class="operation-details">
+                    <p><strong>不同灼伤处理：</strong></p>
+                    <ul>
+                        <li>酸灼伤：立即用大量清水冲洗，再涂3%-5% NaHCO₃溶液</li>
+                        <li>碱灼伤：立即用大量清水冲洗，再涂2%硼酸溶液</li>
+                        <li>溴灼伤：先用酒精冲洗，再用水冲洗，涂甘油</li>
+                        <li>氢氟酸灼伤：立即用大量水冲洗，涂葡萄糖酸钙软膏</li>
+                        <li>眼睛灼伤：立即用洗眼器冲洗，边冲边转动眼球，及时就医</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>严重灼伤立即就医，保留试剂标签。</p>
+                    <button class="audio-button" onclick="playAudio('化学灼伤处理：酸灼伤冲水洗涂碳酸氢钠，碱灼伤冲水洗涂硼酸，溴灼伤用酒精洗，眼睛灼伤用洗眼器冲洗。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 中毒急救 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                中毒急救示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>中毒急救</h3>
+                <div class="operation-details">
+                    <p><strong>不同中毒类型：</strong>吸入中毒、皮肤接触中毒、误食中毒</p>
+                    <p><strong>急救措施：</strong></p>
+                    <ul>
+                        <li>吸入中毒：立即转移至通风处，保持呼吸道通畅，必要时吸氧</li>
+                        <li>皮肤接触：立即用大量清水冲洗污染部位，脱去污染衣物</li>
+                        <li>误食中毒：
+                            <ul>
+                                <li>腐蚀性毒物：禁止催吐，喝牛奶/蛋清保护消化道</li>
+                                <li>非腐蚀性毒物：立即催吐，保留呕吐物样本</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p><strong>注意事项：</strong>所有中毒情况均需及时送医，告知毒物类型。</p>
+                    <button class="audio-button" onclick="playAudio('中毒急救：吸入中毒移通风处，皮肤接触清水冲，误食腐蚀性毒物喝牛奶，非腐蚀性催吐，均需及时就医。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. 实验废液处理 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                实验废液处理示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>实验废液处理</h3>
+                <div class="operation-details">
+                    <p><strong>处理原则：</strong>分类收集、集中处理、达标排放</p>
+                    <p><strong>操作要点：</strong></p>
+                    <ul>
+                        <li>酸性/碱性废液：分别收集，中和至中性后排放</li>
+                        <li>含重金属废液：加入沉淀剂（如NaOH、Na₂S），沉淀后过滤</li>
+                        <li>有机废液：分类收集，交由专业机构处理，禁止随意倾倒</li>
+                        <li>有毒废液：单独标记，按危废处理规范处置</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>禁止将不同类型废液混合，防止反应产生危险。</p>
+                    <button class="audio-button" onclick="playAudio('废液处理：酸碱废液中和排放，含重金属废液沉淀，有机废液分类收集，有毒废液按危废处理。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. 实验室逃生与救援 -->
+        <div class="operation-card">
+            <div class="operation-image">
+                实验室逃生与救援示意图（此处替换为实际图片）
+            </div>
+            <div class="operation-info">
+                <h3>实验室逃生与救援</h3>
+                <div class="operation-details">
+                    <p><strong>核心要点：</strong></p>
+                    <ul>
+                        <li>熟悉实验室逃生路线、应急出口、消防器材位置</li>
+                        <li>发生重大事故：立即撤离，按下紧急报警按钮，拨打救援电话</li>
+                        <li>救援原则：先保证自身安全，再实施救援，禁止盲目施救</li>
+                        <li>撤离时：用湿毛巾捂住口鼻，低姿前行，避免乘坐电梯</li>
+                        <li>事故报告：准确说明事故地点、类型、伤亡情况</li>
+                    </ul>
+                    <p><strong>注意事项：</strong>定期参加应急演练，掌握基本救援技能。</p>
+                    <button class="audio-button" onclick="playAudio('逃生救援：熟悉逃生路线，事故时撤离报警，救援先保自身安全，撤离捂口鼻低姿前行。')">播放语音</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 高中化学实验基础学习系统 - 版权所有
+    </footer>
+</div>
+
+<script>
+    // 语音播放功能
+    function playAudio(text) {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+        }
+
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = text;
+        speech.lang = 'zh-CN';
+        speech.rate = 0.9;
+        speech.pitch = 1;
+
+        window.speechSynthesis.speak(speech);
+
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = '播放中...';
+
+        speech.onend = function () {
+            button.textContent = originalText;
+        };
+    }
+</script>
+</body>
+</html>

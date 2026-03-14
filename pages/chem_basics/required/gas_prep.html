@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 常见气体制备方法</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 操作网格布局 */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 操作卡片样式 */
+        .operation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 操作图片容器 */
+        .operation-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .operation-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 操作信息 */
+        .operation-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .operation-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .operation-card:hover .operation-details {
+            max-height: 600px;
+            padding: 15px 10px;
+        }
+        
+        .operation-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .operation-details strong {
+            color: #764ba2;
+        }
+        
+        .operation-details ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .operation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='required.html'">返回</button>
+            <h1>化学实验基本操作 - 常见气体制备方法</h1>
+            <p class="subtitle">掌握高考高频考点的气体制备原理、装置与注意事项</p>
+        </header>
+        
+        <div class="operation-grid">
+            <!-- 1.氢气(H₂)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氢气制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氢气(H₂)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>反应原理：</strong>Zn + H₂SO₄(稀) = ZnSO₄ + H₂↑</p>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>发生装置：固液不加热型（启普发生器/简易固液装置）</li>
+                            <li>收集装置：排水法（首选）、向下排空气法</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>药品选择：锌粒（不用纯锌，反应太慢）+ 稀硫酸（不用盐酸，易挥发）</li>
+                            <li>验纯操作：收集一小试管气体，拇指堵住管口，移近酒精灯火焰，爆鸣声小则纯净</li>
+                            <li>注意通风：氢气易燃易爆，实验时远离火源</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>点燃氢气前必须验纯；不能使用浓硫酸或硝酸制备。</p>
+                        <button class="audio-button" onclick="playAudio('氢气制备操作要领：反应原理为锌和稀硫酸反应生成硫酸锌和氢气；发生装置采用固液不加热型，收集用排水法或向下排空气法；药品选择锌粒加稀硫酸，不用纯锌和盐酸；收集后需验纯，方法是收集一小试管气体，拇指堵住管口，移近酒精灯火焰，爆鸣声小则纯净；实验时注意通风，远离火源，点燃前必须验纯，不能使用浓硫酸或硝酸制备。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2.氧气(O₂)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氧气制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氧气(O₂)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>主要反应原理：</strong></p>
+                        <ul>
+                            <li>加热固体制备：2KMnO₄ △ K₂MnO₄ + MnO₂ + O₂↑</li>
+                            <li>固液不加热：2H₂O₂ MnO₂ 2H₂O + O₂↑</li>
+                        </ul>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>加热型：固固加热型发生装置 + 排水法/向上排空气法收集</li>
+                            <li>不加热型：固液不加热型发生装置 + 排水法/向上排空气法收集</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>加热高锰酸钾：试管口略向下倾斜，管口放棉花，先预热再集中加热</li>
+                            <li>收集时机：排水法待气泡连续均匀冒出时再收集</li>
+                            <li>验满方法：带火星木条伸到集气瓶口，木条复燃则满</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>加热法制氧气结束后先移导管后熄灯，防止倒吸。</p>
+                        <button class="audio-button" onclick="playAudio('氧气制备操作要领：主要反应原理有加热高锰酸钾分解，或二氧化锰催化过氧化氢分解；加热型采用固固加热型发生装置，不加热型用固液不加热型，收集均可用排水法或向上排空气法；加热高锰酸钾时试管口略向下倾斜，管口放棉花，先预热再集中加热；排水法收集需待气泡连续均匀冒出时再收集；验满用带火星木条伸到集气瓶口，木条复燃则满；加热法制氧气结束后先移导管后熄灯，防止倒吸。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3.二氧化碳(CO₂)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    二氧化碳制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>二氧化碳(CO₂)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>反应原理：</strong>CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑</p>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>发生装置：固液不加热型（启普发生器/简易装置）</li>
+                            <li>收集装置：向上排空气法（能溶于水，不能用排水法）</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>药品选择：大理石/石灰石 + 稀盐酸（不用稀硫酸，生成CaSO₄微溶覆盖表面）</li>
+                            <li>验满方法：燃着的木条伸到集气瓶口，木条熄灭则满</li>
+                            <li>净化处理：若含HCl杂质，用饱和NaHCO₃溶液洗气</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>不能用碳酸钠粉末，反应速率太快不易控制。</p>
+                        <button class="audio-button" onclick="playAudio('二氧化碳制备操作要领：反应原理为碳酸钙和稀盐酸反应生成氯化钙、水和二氧化碳；发生装置采用固液不加热型，收集用向上排空气法，不能用排水法；药品选择大理石或石灰石加稀盐酸，不用稀硫酸，因为生成硫酸钙微溶覆盖表面；验满用燃着的木条伸到集气瓶口，木条熄灭则满；若气体含氯化氢杂质，用饱和碳酸氢钠溶液洗气；不能用碳酸钠粉末，反应速率太快不易控制。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 4.氯气(Cl₂)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氯气制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氯气(Cl₂)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>反应原理：</strong>MnO₂ + 4HCl(浓) △ MnCl₂ + Cl₂↑ + 2H₂O</p>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>发生装置：固液加热型（圆底烧瓶+分液漏斗）</li>
+                            <li>净化装置：饱和食盐水（除HCl）→ 浓硫酸（除水）</li>
+                            <li>收集装置：向上排空气法/排饱和食盐水法</li>
+                            <li>尾气处理：NaOH溶液吸收</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>实验条件：必须用浓盐酸，加热</li>
+                            <li>验满方法：湿润的淀粉KI试纸放瓶口，试纸变蓝则满</li>
+                            <li>安全防护：在通风橱中进行，氯气有毒</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>尾气必须处理，防止污染空气；多余氯气用NaOH溶液吸收。</p>
+                        <button class="audio-button" onclick="playAudio('氯气制备操作要领：反应原理为二氧化锰和浓盐酸加热反应生成氯化锰、氯气和水；发生装置采用固液加热型，净化用饱和食盐水除氯化氢、浓硫酸除水，收集用向上排空气法或排饱和食盐水法，尾气用氢氧化钠溶液吸收；必须用浓盐酸并加热；验满用湿润的淀粉碘化钾试纸放瓶口，试纸变蓝则满；实验需在通风橱中进行，氯气有毒；尾气必须处理，防止污染空气。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 5.氨气(NH₃)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氨气制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氨气(NH₃)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>反应原理：</strong>2NH₄Cl + Ca(OH)₂ △ CaCl₂ + 2NH₃↑ + 2H₂O</p>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>发生装置：固固加热型（大试管）</li>
+                            <li>干燥装置：碱石灰（不能用浓硫酸、无水CaCl₂）</li>
+                            <li>收集装置：向下排空气法（管口塞棉花，防止对流）</li>
+                            <li>尾气处理：稀硫酸吸收</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>试管要求：试管口略向下倾斜，防止冷凝水倒吸</li>
+                            <li>验满方法：湿润的红色石蕊试纸放瓶口，试纸变蓝则满</li>
+                            <li>干燥剂选择：只能用碱性干燥剂</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>不能用NH₄NO₃或NH₄HCO₃，易分解产生杂质气体。</p>
+                        <button class="audio-button" onclick="playAudio('氨气制备操作要领：反应原理为氯化铵和氢氧化钙加热反应生成氯化钙、氨气和水；发生装置采用固固加热型，干燥用碱石灰，不能用浓硫酸或无水氯化钙，收集用向下排空气法，管口塞棉花防止对流，尾气用稀硫酸吸收；试管口略向下倾斜，防止冷凝水倒吸；验满用湿润的红色石蕊试纸放瓶口，试纸变蓝则满；不能用硝酸铵或碳酸氢铵，易分解产生杂质气体。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 6.二氧化硫(SO₂)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    二氧化硫制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>二氧化硫(SO₂)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>反应原理：</strong>Na₂SO₃ + H₂SO₄(较浓) = Na₂SO₄ + SO₂↑ + H₂O</p>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>发生装置：固液不加热型（圆底烧瓶+分液漏斗）</li>
+                            <li>净化装置：浓硫酸（除水）</li>
+                            <li>收集装置：向上排空气法（易溶于水，不能用排水法）</li>
+                            <li>尾气处理：NaOH溶液吸收</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>药品选择：亚硫酸钠固体 + 较浓硫酸</li>
+                            <li>验满方法：湿润的品红试纸放瓶口，试纸褪色则满</li>
+                            <li>安全防护：在通风橱中进行，SO₂有毒且有刺激性气味</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>尾气必须处理，防止污染空气；SO₂具有漂白性和还原性。</p>
+                        <button class="audio-button" onclick="playAudio('二氧化硫制备操作要领：反应原理为亚硫酸钠和较浓硫酸反应生成硫酸钠、二氧化硫和水；发生装置采用固液不加热型，净化用浓硫酸，收集用向上排空气法，不能用排水法，尾气用氢氧化钠溶液吸收；药品选择亚硫酸钠固体加较浓硫酸；验满用湿润的品红试纸放瓶口，试纸褪色则满；实验需在通风橱中进行，二氧化硫有毒且有刺激性气味；尾气必须处理，防止污染空气，二氧化硫具有漂白性和还原性。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 7.乙炔(C₂H₂)制备 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    乙炔制备实验装置图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>乙炔(C₂H₂)的制备</h3>
+                    <div class="operation-details">
+                        <p><strong>反应原理：</strong>CaC₂ + 2H₂O = Ca(OH)₂ + C₂H₂↑</p>
+                        <p><strong>实验装置：</strong></p>
+                        <ul>
+                            <li>发生装置：固液不加热型（用分液漏斗控制加水速率）</li>
+                            <li>净化装置：CuSO₄溶液（除H₂S、PH₃等杂质）</li>
+                            <li>收集装置：排水法（微溶于水，不用排空气法）</li>
+                        </ul>
+                        <p><strong>操作要领：</strong></p>
+                        <ul>
+                            <li>反应控制：用饱和食盐水代替水，减慢反应速率</li>
+                            <li>验纯操作：乙炔易燃易爆，点燃前必须验纯</li>
+                            <li>杂质去除：电石中含杂质，生成的乙炔需用CuSO₄溶液净化</li>
+                        </ul>
+                        <p><strong>注意事项：</strong>不能用启普发生器（反应剧烈且CaC₂易结块）；远离火源。</p>
+                        <button class="audio-button" onclick="playAudio('乙炔制备操作要领：反应原理为碳化钙和水反应生成氢氧化钙和乙炔；发生装置采用固液不加热型，用分液漏斗控制加水速率，净化用硫酸铜溶液除硫化氢、磷化氢等杂质，收集用排水法；用饱和食盐水代替水，减慢反应速率；乙炔易燃易爆，点燃前必须验纯；电石中含杂质，生成的乙炔需净化；不能用启普发生器，因为反应剧烈且碳化钙易结块，实验时远离火源。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权 -->
+        <footer>
+            © 2026 高中化学实验基础学习系统 - 版权所有
+        </footer>
+    </div>
+    
+    <script>
+        // 语音播放功能
+        function playAudio(text) {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'zh-CN';
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            
+            window.speechSynthesis.speak(speech);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '播放中...';
+            
+            speech.onend = function() {
+                button.textContent = originalText;
+            };
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                const cards = document.querySelectorAll('.operation-card');
+                cards.forEach(card => {
+                    card.addEventListener('focus', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('blur', function() {
+                        this.classList.remove('hover');
+                    });
+                });
+            }
+        });
+        
+        document.querySelectorAll('.operation-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>

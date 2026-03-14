@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统 - 常见离子检验</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* 标题样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 操作网格布局 */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* 操作卡片样式 */
+        .operation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 操作图片容器 */
+        .operation-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .operation-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 操作信息 */
+        .operation-info {
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        /* 详细信息 */
+        .operation-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+            padding: 0 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .operation-card:hover .operation-details {
+            max-height: 400px;
+            padding: 15px 10px;
+        }
+        
+        .operation-details p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .operation-details strong {
+            color: #764ba2;
+        }
+        
+        .operation-details ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 语音按钮 */
+        .audio-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .audio-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .audio-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .operation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin: 0 auto 15px;
+                width: fit-content;
+            }
+            
+            header {
+                padding: 15px;
+                padding-left: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='identification.html'">返回</button>
+            <h1>化学实验基本操作 - 常见离子检验</h1>
+            <p class="subtitle">掌握高中化学常见阴、阳离子的检验方法与现象</p>
+        </header>
+        
+        <div class="operation-grid">
+        
+            <!-- 氢离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氢离子检验操作示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氢离子（H⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>紫色石蕊试液、pH试纸、活泼金属</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>滴加紫色石蕊试液，溶液变红</li>
+                            <li>用pH试纸检验，pH＜7</li>
+                            <li>加入锌粒/铁粉，产生无色气泡</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明溶液中含有氢离子</p>
+                        <p><strong>注意：</strong>酸性溶液均含H⁺，检验时排除强氧化性酸干扰。</p>
+                        <button class="audio-button" onclick="playAudio('氢离子的检验，可使用紫色石蕊试液、pH试纸或活泼金属。滴加石蕊试液变红，pH试纸检验pH小于7，加入锌粒或铁粉产生无色气泡，均可证明含有氢离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 氢氧根离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氢氧根离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氢氧根离子（OH⁻）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>酚酞试液、紫色石蕊、pH试纸</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>滴加酚酞，溶液变红</li>
+                            <li>滴加石蕊，溶液变蓝</li>
+                            <li>pH试纸检验，pH＞7</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明溶液中含有氢氧根离子</p>
+                        <p><strong>注意：</strong>强碱弱酸盐溶液也显碱性，需结合其他离子判断。</p>
+                        <button class="audio-button" onclick="playAudio('氢氧根离子的检验，可用酚酞、石蕊或pH试纸。酚酞变红，石蕊变蓝，pH大于7，均可证明溶液中含有氢氧根离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 铵根离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    铵根离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>铵根离子（NH₄⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>NaOH溶液、湿润红色石蕊试纸</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>取样，加入浓NaOH溶液，加热</li>
+                            <li>将湿润红色石蕊试纸靠近试管口</li>
+                            <li>试纸变蓝，产生刺激性气味气体</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有NH₄⁺</p>
+                        <p><strong>注意：</strong>必须加热，氨气才会逸出。</p>
+                        <button class="audio-button" onclick="playAudio('铵根离子检验：取样加氢氧化钠溶液加热，用湿润红色石蕊试纸靠近管口，试纸变蓝，有刺激性气味，证明含铵根离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 铁离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    铁离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>铁离子（Fe³⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>KSCN溶液、NaOH溶液</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>加KSCN溶液，溶液变为血红色</li>
+                            <li>加NaOH溶液，产生红褐色沉淀</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有Fe³⁺</p>
+                        <p><strong>注意：</strong>血红色为特征现象，灵敏度高。</p>
+                        <button class="audio-button" onclick="playAudio('铁离子检验：加硫氰化钾溶液变血红色，或加氢氧化钠产生红褐色沉淀，均可证明含有三价铁离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 亚铁离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    亚铁离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>亚铁离子（Fe²⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>K₃[Fe(CN)₆]、NaOH、氯水+KSCN</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>加铁氰化钾，产生蓝色沉淀</li>
+                            <li>加NaOH，先白→灰绿→红褐色沉淀</li>
+                            <li>先加KSCN无现象，再加氯水变红</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有Fe²⁺</p>
+                        <p><strong>注意：</strong>Fe²⁺易被氧化，检验要快速。</p>
+                        <button class="audio-button" onclick="playAudio('亚铁离子检验：加铁氰化钾产生蓝色沉淀，或加氢氧化钠出现白灰绿红褐色变化，均可证明含二价铁离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 铜离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    铜离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>铜离子（Cu²⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>NaOH溶液</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>溶液呈蓝色</li>
+                            <li>加NaOH溶液，产生蓝色絮状沉淀</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有Cu²⁺</p>
+                        <p><strong>注意：</strong>浓度高时为蓝绿色。</p>
+                        <button class="audio-button" onclick="playAudio('铜离子检验：溶液本身呈蓝色，加入氢氧化钠产生蓝色絮状沉淀，证明含有铜离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 氯离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    氯离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>氯离子（Cl⁻）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>AgNO₃溶液、稀硝酸</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>先加稀硝酸酸化，排除干扰</li>
+                            <li>再加AgNO₃溶液</li>
+                            <li>产生不溶于稀硝酸的白色沉淀</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有Cl⁻</p>
+                        <p><strong>注意：</strong>必须酸化，排除CO₃²⁻干扰。</p>
+                        <button class="audio-button" onclick="playAudio('氯离子检验：先加稀硝酸酸化，再加硝酸银溶液，产生不溶于硝酸的白色沉淀，证明含氯离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 硫酸根离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    硫酸根离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>硫酸根离子（SO₄²⁻）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>稀盐酸、BaCl₂溶液</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>先加稀盐酸酸化，排除干扰</li>
+                            <li>再加BaCl₂溶液</li>
+                            <li>产生不溶于酸的白色沉淀</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有SO₄²⁻</p>
+                        <p><strong>注意：</strong>不能先加BaCl₂，防止Ag⁺干扰。</p>
+                        <button class="audio-button" onclick="playAudio('硫酸根离子检验：先加稀盐酸酸化，再加氯化钡溶液，产生不溶于酸的白色沉淀，证明含硫酸根离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 碳酸根离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    碳酸根离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>碳酸根离子（CO₃²⁻）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>稀盐酸、澄清石灰水</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>加稀盐酸，产生无色无味气体</li>
+                            <li>将气体通入澄清石灰水</li>
+                            <li>石灰水变浑浊</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有CO₃²⁻</p>
+                        <p><strong>注意：</strong>排除SO₃²⁻干扰，SO₂有刺激性气味。</p>
+                        <button class="audio-button" onclick="playAudio('碳酸根离子检验：加稀盐酸产生无色无味气体，通入澄清石灰水变浑浊，证明含碳酸根离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 钙离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    钙离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>钙离子（Ca²⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验试剂：</strong>Na₂CO₃溶液、焰色反应</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>加Na₂CO₃溶液，产生白色沉淀</li>
+                            <li>焰色反应为砖红色</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有Ca²⁺</p>
+                        <p><strong>注意：</strong>焰色反应为特征判断。</p>
+                        <button class="audio-button" onclick="playAudio('钙离子检验：加碳酸钠溶液产生白色沉淀，焰色反应呈砖红色，证明含有钙离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 钠离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    钠离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>钠离子（Na⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验方法：</strong>焰色反应</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>铂丝蘸取溶液在酒精灯火焰灼烧</li>
+                            <li>火焰呈黄色</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有Na⁺</p>
+                        <p><strong>注意：</strong>观察时要透过蓝色钴玻璃排除钾干扰。</p>
+                        <button class="audio-button" onclick="playAudio('钠离子检验用焰色反应，火焰呈黄色，证明含有钠离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 钾离子检验 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    钾离子检验示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>钾离子（K⁺）的检验</h3>
+                    <div class="operation-details">
+                        <p><strong>检验方法：</strong>焰色反应</p>
+                        <p><strong>操作方法：</strong></p>
+                        <ul>
+                            <li>铂丝蘸取溶液灼烧</li>
+                            <li>透过蓝色钴玻璃，火焰呈紫色</li>
+                        </ul>
+                        <p><strong>结论：</strong>证明含有K⁺</p>
+                        <p><strong>注意：</strong>必须透过蓝色钴玻璃观察。</p>
+                        <button class="audio-button" onclick="playAudio('钾离子检验用焰色反应，透过蓝色钴玻璃看到紫色火焰，证明含有钾离子。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 离子检验总原则 -->
+            <div class="operation-card">
+                <div class="operation-image">
+                    离子检验规范示意图（此处替换为实际图片）
+                </div>
+                <div class="operation-info">
+                    <h3>离子检验基本原则</h3>
+                    <div class="operation-details">
+                        <p><strong>先排除干扰：</strong>酸化、碱化、除杂</p>
+                        <p><strong>特征现象：</strong>颜色、沉淀、气体、焰色</p>
+                        <p><strong>操作顺序：</strong>取样→加试剂→观现象→得结论</p>
+                        <p><strong>环保安全：</strong>重金属、有毒试剂规范处理</p>
+                        <button class="audio-button" onclick="playAudio('离子检验基本原则：先排除干扰，观察特征现象，按取样加试剂观现象得结论步骤进行，注意环保安全。')">播放语音</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- 底部版权 -->
+        <footer>
+            © 2026 高中化学实验基础学习系统 - 版权所有
+        </footer>
+    </div>
+    
+    <script>
+        // 语音播放功能
+        function playAudio(text) {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'zh-CN';
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            
+            window.speechSynthesis.speak(speech);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '播放中...';
+            
+            speech.onend = function() {
+                button.textContent = originalText;
+            };
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                const cards = document.querySelectorAll('.operation-card');
+                cards.forEach(card => {
+                    card.addEventListener('focus', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('blur', function() {
+                        this.classList.remove('hover');
+                    });
+                });
+            }
+        });
+        
+        document.querySelectorAll('.operation-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>

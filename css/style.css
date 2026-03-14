@@ -1,0 +1,256 @@
+/* 全局样式重置+基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    /* 关键：确保按钮点击区域不被遮挡 */
+    position: relative;
+    z-index: 1;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 头部渐变栏+返回按钮 */
+header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 返回按钮（置顶层级，确保可点击） */
+.back-btn {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* 关键：提高层级，避免被遮挡 */
+    z-index: 999;
+}
+
+.back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+/* 游戏容器 */
+#game-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 得分面板 */
+#score-board {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+#score-board div {
+    background: #f0f5ff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* 题目区域 */
+#question-area {
+    text-align: center;
+}
+
+/* 图片容器 */
+#image-container {
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin: 0 auto 20px;
+    background-color: #f8f8f8;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#instrument-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 输入区域 */
+#input-area {
+    margin: 20px 0;
+}
+
+#answer-input {
+    width: 70%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    outline: none;
+    margin-right: 10px;
+}
+
+#answer-input:focus {
+    border-color: #667eea;
+}
+
+/* 答案正确/错误样式 */
+#answer-input.correct {
+    border-color: #28a745;
+    background-color: #f0fff4;
+}
+
+#answer-input.incorrect {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+/* 所有按钮统一样式（确保可点击） */
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* 关键：移除默认禁用样式，确保点击区域有效 */
+    pointer-events: auto;
+    z-index: 10;
+}
+
+#submit-btn {
+    background-color: #667eea;
+    color: white;
+}
+
+#next-btn {
+    background-color: #764ba2;
+    color: white;
+    margin-top: 10px;
+}
+
+#restart-btn {
+    background-color: #28a745;
+    color: white;
+    font-size: 1.1rem;
+    padding: 15px 30px;
+    margin-top: 20px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 反馈信息 */
+#feedback {
+    height: 30px;
+    line-height: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#feedback.correct {
+    color: #28a745;
+}
+
+#feedback.incorrect {
+    color: #dc3545;
+}
+
+/* 结果页面 */
+#result-screen {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+#result-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+#result-message {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* 页脚 */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .back-btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        left: 15px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    #answer-input {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    #image-container {
+        height: 200px;
+    }
+}
