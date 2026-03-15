@@ -97,7 +97,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        /* 操作图片容器 */
+        /* 操作图片容器 - 重点优化 */
         .operation-image {
             width: 100%;
             height: 200px;
@@ -110,12 +110,49 @@
             font-size: 14px;
             text-align: center;
             padding: 20px;
+            position: relative;
+        }
+        
+        /* 图片加载中状态 */
+        .image-loading::after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #667eea;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* 图片加载失败提示 */
+        .image-error {
+            color: #e74c3c;
+            font-size: 16px;
+        }
+        
+        .image-error::before {
+            content: "❌";
+            display: block;
+            font-size: 30px;
+            margin-bottom: 10px;
         }
         
         .operation-image img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+        
+        /* 图片加载完成 */
+        .operation-image img.loaded {
+            opacity: 1;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* 操作信息 */
@@ -238,8 +275,9 @@
         <div class="operation-grid">
             <!-- 1.氢气(H₂)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氢气制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-h2">
+                    <!-- 替换为实际图片路径，建议使用相对路径或CDN地址 -->
+                    <img src="../../../images/biaoqian/H2.png" alt="氢气制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>氢气(H₂)的制备</h3>
@@ -257,15 +295,15 @@
                             <li>注意通风：氢气易燃易爆，实验时远离火源</li>
                         </ul>
                         <p><strong>注意事项：</strong>点燃氢气前必须验纯；不能使用浓硫酸或硝酸制备。</p>
-                        <button class="audio-button" onclick="playAudio('氢气制备操作要领：反应原理为锌和稀硫酸反应生成硫酸锌和氢气；发生装置采用固液不加热型，收集用排水法或向下排空气法；药品选择锌粒加稀硫酸，不用纯锌和盐酸；收集后需验纯，方法是收集一小试管气体，拇指堵住管口，移近酒精灯火焰，爆鸣声小则纯净；实验时注意通风，远离火源，点燃前必须验纯，不能使用浓硫酸或硝酸制备。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氢气制备操作要领：反应原理为锌和稀硫酸反应生成硫酸锌和氢气；发生装置采用固液不加热型，收集用排水法或向下排空气法；药品选择锌粒加稀硫酸，不用纯锌和盐酸；收集后需验纯，方法是收集一小试管气体，拇指堵住管口，移近酒精灯火焰，爆鸣声小则纯净；实验时注意通风，远离火源，点燃前必须验纯，不能使用浓硫酸或硝酸制备。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 2.氧气(O₂)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氧气制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-o2">
+                    <img src="../../../images/biaoqian/O2.png" alt="氧气制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>氧气(O₂)的制备</h3>
@@ -287,15 +325,15 @@
                             <li>验满方法：带火星木条伸到集气瓶口，木条复燃则满</li>
                         </ul>
                         <p><strong>注意事项：</strong>加热法制氧气结束后先移导管后熄灯，防止倒吸。</p>
-                        <button class="audio-button" onclick="playAudio('氧气制备操作要领：主要反应原理有加热高锰酸钾分解，或二氧化锰催化过氧化氢分解；加热型采用固固加热型发生装置，不加热型用固液不加热型，收集均可用排水法或向上排空气法；加热高锰酸钾时试管口略向下倾斜，管口放棉花，先预热再集中加热；排水法收集需待气泡连续均匀冒出时再收集；验满用带火星木条伸到集气瓶口，木条复燃则满；加热法制氧气结束后先移导管后熄灯，防止倒吸。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氧气制备操作要领：主要反应原理有加热高锰酸钾分解，或二氧化锰催化过氧化氢分解；加热型采用固固加热型发生装置，不加热型用固液不加热型，收集均可用排水法或向上排空气法；加热高锰酸钾时试管口略向下倾斜，管口放棉花，先预热再集中加热；排水法收集需待气泡连续均匀冒出时再收集；验满用带火星木条伸到集气瓶口，木条复燃则满；加热法制氧气结束后先移导管后熄灯，防止倒吸。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 3.二氧化碳(CO₂)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    二氧化碳制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-co2">
+                    <img src="../../../images/biaoqian/CO2.png" alt="二氧化碳制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>二氧化碳(CO₂)的制备</h3>
@@ -313,15 +351,15 @@
                             <li>净化处理：若含HCl杂质，用饱和NaHCO₃溶液洗气</li>
                         </ul>
                         <p><strong>注意事项：</strong>不能用碳酸钠粉末，反应速率太快不易控制。</p>
-                        <button class="audio-button" onclick="playAudio('二氧化碳制备操作要领：反应原理为碳酸钙和稀盐酸反应生成氯化钙、水和二氧化碳；发生装置采用固液不加热型，收集用向上排空气法，不能用排水法；药品选择大理石或石灰石加稀盐酸，不用稀硫酸，因为生成硫酸钙微溶覆盖表面；验满用燃着的木条伸到集气瓶口，木条熄灭则满；若气体含氯化氢杂质，用饱和碳酸氢钠溶液洗气；不能用碳酸钠粉末，反应速率太快不易控制。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '二氧化碳制备操作要领：反应原理为碳酸钙和稀盐酸反应生成氯化钙、水和二氧化碳；发生装置采用固液不加热型，收集用向上排空气法，不能用排水法；药品选择大理石或石灰石加稀盐酸，不用稀硫酸，因为生成硫酸钙微溶覆盖表面；验满用燃着的木条伸到集气瓶口，木条熄灭则满；若气体含氯化氢杂质，用饱和碳酸氢钠溶液洗气；不能用碳酸钠粉末，反应速率太快不易控制。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 4.氯气(Cl₂)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氯气制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-cl2">
+                    <img src="../../../images/biaoqian/Cl2.png" alt="氯气制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>氯气(Cl₂)的制备</h3>
@@ -341,15 +379,15 @@
                             <li>安全防护：在通风橱中进行，氯气有毒</li>
                         </ul>
                         <p><strong>注意事项：</strong>尾气必须处理，防止污染空气；多余氯气用NaOH溶液吸收。</p>
-                        <button class="audio-button" onclick="playAudio('氯气制备操作要领：反应原理为二氧化锰和浓盐酸加热反应生成氯化锰、氯气和水；发生装置采用固液加热型，净化用饱和食盐水除氯化氢、浓硫酸除水，收集用向上排空气法或排饱和食盐水法，尾气用氢氧化钠溶液吸收；必须用浓盐酸并加热；验满用湿润的淀粉碘化钾试纸放瓶口，试纸变蓝则满；实验需在通风橱中进行，氯气有毒；尾气必须处理，防止污染空气。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氯气制备操作要领：反应原理为二氧化锰和浓盐酸加热反应生成氯化锰、氯气和水；发生装置采用固液加热型，净化用饱和食盐水除氯化氢、浓硫酸除水，收集用向上排空气法或排饱和食盐水法，尾气用氢氧化钠溶液吸收；必须用浓盐酸并加热；验满用湿润的淀粉碘化钾试纸放瓶口，试纸变蓝则满；实验需在通风橱中进行，氯气有毒；尾气必须处理，防止污染空气。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 5.氨气(NH₃)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氨气制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-nh3">
+                    <img src="../../../images/biaoqian/NH3.png" alt="氨气制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>氨气(NH₃)的制备</h3>
@@ -369,15 +407,15 @@
                             <li>干燥剂选择：只能用碱性干燥剂</li>
                         </ul>
                         <p><strong>注意事项：</strong>不能用NH₄NO₃或NH₄HCO₃，易分解产生杂质气体。</p>
-                        <button class="audio-button" onclick="playAudio('氨气制备操作要领：反应原理为氯化铵和氢氧化钙加热反应生成氯化钙、氨气和水；发生装置采用固固加热型，干燥用碱石灰，不能用浓硫酸或无水氯化钙，收集用向下排空气法，管口塞棉花防止对流，尾气用稀硫酸吸收；试管口略向下倾斜，防止冷凝水倒吸；验满用湿润的红色石蕊试纸放瓶口，试纸变蓝则满；不能用硝酸铵或碳酸氢铵，易分解产生杂质气体。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氨气制备操作要领：反应原理为氯化铵和氢氧化钙加热反应生成氯化钙、氨气和水；发生装置采用固固加热型，干燥用碱石灰，不能用浓硫酸或无水氯化钙，收集用向下排空气法，管口塞棉花防止对流，尾气用稀硫酸吸收；试管口略向下倾斜，防止冷凝水倒吸；验满用湿润的红色石蕊试纸放瓶口，试纸变蓝则满；不能用硝酸铵或碳酸氢铵，易分解产生杂质气体。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 6.二氧化硫(SO₂)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    二氧化硫制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-so2">
+                    <img src="../../../images/biaoqian/SO2.png" alt="二氧化硫制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>二氧化硫(SO₂)的制备</h3>
@@ -397,15 +435,15 @@
                             <li>安全防护：在通风橱中进行，SO₂有毒且有刺激性气味</li>
                         </ul>
                         <p><strong>注意事项：</strong>尾气必须处理，防止污染空气；SO₂具有漂白性和还原性。</p>
-                        <button class="audio-button" onclick="playAudio('二氧化硫制备操作要领：反应原理为亚硫酸钠和较浓硫酸反应生成硫酸钠、二氧化硫和水；发生装置采用固液不加热型，净化用浓硫酸，收集用向上排空气法，不能用排水法，尾气用氢氧化钠溶液吸收；药品选择亚硫酸钠固体加较浓硫酸；验满用湿润的品红试纸放瓶口，试纸褪色则满；实验需在通风橱中进行，二氧化硫有毒且有刺激性气味；尾气必须处理，防止污染空气，二氧化硫具有漂白性和还原性。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '二氧化硫制备操作要领：反应原理为亚硫酸钠和较浓硫酸反应生成硫酸钠、二氧化硫和水；发生装置采用固液不加热型，净化用浓硫酸，收集用向上排空气法，不能用排水法，尾气用氢氧化钠溶液吸收；药品选择亚硫酸钠固体加较浓硫酸；验满用湿润的品红试纸放瓶口，试纸褪色则满；实验需在通风橱中进行，二氧化硫有毒且有刺激性气味；尾气必须处理，防止污染空气，二氧化硫具有漂白性和还原性。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 7.乙炔(C₂H₂)制备 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    乙炔制备实验装置图（此处替换为实际图片）
+                <div class="operation-image" id="img-c2h2">
+                    <img src="../../../images/biaoqian/C2H2.png" alt="乙炔制备实验装置图" onload="imageLoaded(this)" onerror="imageError(this)">
                 </div>
                 <div class="operation-info">
                     <h3>乙炔(C₂H₂)的制备</h3>
@@ -424,7 +462,7 @@
                             <li>杂质去除：电石中含杂质，生成的乙炔需用CuSO₄溶液净化</li>
                         </ul>
                         <p><strong>注意事项：</strong>不能用启普发生器（反应剧烈且CaC₂易结块）；远离火源。</p>
-                        <button class="audio-button" onclick="playAudio('乙炔制备操作要领：反应原理为碳化钙和水反应生成氢氧化钙和乙炔；发生装置采用固液不加热型，用分液漏斗控制加水速率，净化用硫酸铜溶液除硫化氢、磷化氢等杂质，收集用排水法；用饱和食盐水代替水，减慢反应速率；乙炔易燃易爆，点燃前必须验纯；电石中含杂质，生成的乙炔需净化；不能用启普发生器，因为反应剧烈且碳化钙易结块，实验时远离火源。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '乙炔制备操作要领：反应原理为碳化钙和水反应生成氢氧化钙和乙炔；发生装置采用固液不加热型，用分液漏斗控制加水速率，净化用硫酸铜溶液除硫化氢、磷化氢等杂质，收集用排水法；用饱和食盐水代替水，减慢反应速率；乙炔易燃易爆，点燃前必须验纯；电石中含杂质，生成的乙炔需净化；不能用启普发生器，因为反应剧烈且碳化钙易结块，实验时远离火源。')">播放语音</button>
                     </div>
                 </div>
             </div>
@@ -437,8 +475,60 @@
     </div>
     
     <script>
-        // 语音播放功能
-        function playAudio(text) {
+        // 页面加载时初始化图片状态
+        document.addEventListener('DOMContentLoaded', function() {
+            const allImages = document.querySelectorAll('.operation-image img');
+            allImages.forEach(img => {
+                // 标记加载中状态
+                img.parentElement.classList.add('image-loading');
+            });
+        });
+        
+        // 图片加载完成处理函数
+        function imageLoaded(img) {
+            const parent = img.parentElement;
+            parent.classList.remove('image-loading');
+            img.classList.add('loaded');
+        }
+        
+        // 图片加载失败处理函数
+        function imageError(img) {
+            const parent = img.parentElement;
+            parent.classList.remove('image-loading');
+            parent.classList.add('image-error');
+            
+            // 显示友好的错误提示
+            const gasName = img.alt.replace('制备实验装置图', '').replace('的', '');
+            parent.innerHTML = `图片加载失败<br>请检查${gasName}装置图路径是否正确`;
+            
+            // 可选：添加重新加载按钮
+            const reloadBtn = document.createElement('button');
+            reloadBtn.textContent = '重新加载';
+            reloadBtn.style.marginTop = '10px';
+            reloadBtn.style.padding = '5px 10px';
+            reloadBtn.style.border = '1px solid #e74c3c';
+            reloadBtn.style.borderRadius = '5px';
+            reloadBtn.style.background = 'white';
+            reloadBtn.style.color = '#e74c3c';
+            reloadBtn.style.cursor = 'pointer';
+            reloadBtn.onclick = function() {
+                parent.classList.remove('image-error');
+                parent.classList.add('image-loading');
+                parent.innerHTML = '';
+                
+                // 重新创建图片元素
+                const newImg = document.createElement('img');
+                newImg.src = img.src + '?t=' + new Date().getTime(); // 防止缓存
+                newImg.alt = img.alt;
+                newImg.onload = imageLoaded;
+                newImg.onerror = imageError;
+                parent.appendChild(newImg);
+            };
+            parent.appendChild(reloadBtn);
+        }
+        
+        // 修复语音播放功能（解决event.target问题）
+        function playAudio(button, text) {
             if (window.speechSynthesis.speaking) {
                 window.speechSynthesis.cancel();
             }
@@ -451,12 +541,19 @@
             
             window.speechSynthesis.speak(speech);
             
-            const button = event.target;
             const originalText = button.textContent;
             button.textContent = '播放中...';
             
             speech.onend = function() {
                 button.textContent = originalText;
+            };
+            
+            // 语音播放出错处理
+            speech.onerror = function() {
+                button.textContent = '播放失败';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
             };
         }
         
