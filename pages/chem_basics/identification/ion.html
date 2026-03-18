@@ -82,7 +82,7 @@
             margin-top: 30px;
         }
         
-        /* 操作卡片样式 */
+        /* 操作卡片样式 - 移除图片区域相关样式 */
         .operation-card {
             background: white;
             border-radius: 10px;
@@ -97,28 +97,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        /* 操作图片容器 */
-        .operation-image {
-            width: 100%;
-            height: 200px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .operation-image img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        /* 操作信息 */
+        /* 移除图片容器样式，直接保留操作信息 */
         .operation-info {
             padding: 20px;
         }
@@ -127,21 +106,22 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: #667eea;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
         
-        /* 详细信息 */
+        /* 详细信息 - 调整默认显示，优化交互 */
         .operation-details {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease;
             margin-top: 15px;
-            padding: 0 10px;
-            border-top: 1px solid #eee;
+            padding: 0 5px;
         }
         
         .operation-card:hover .operation-details {
-            max-height: 400px;
-            padding: 15px 10px;
+            max-height: 600px;
+            padding: 5px;
         }
         
         .operation-details p {
@@ -239,9 +219,6 @@
         
             <!-- 氢离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氢离子检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氢离子（H⁺）的检验</h3>
                     <div class="operation-details">
@@ -254,16 +231,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明溶液中含有氢离子</p>
                         <p><strong>注意：</strong>酸性溶液均含H⁺，检验时排除强氧化性酸干扰。</p>
-                        <button class="audio-button" onclick="playAudio('氢离子的检验，可使用紫色石蕊试液、pH试纸或活泼金属。滴加石蕊试液变红，pH试纸检验pH小于7，加入锌粒或铁粉产生无色气泡，均可证明含有氢离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氢离子的检验，可使用紫色石蕊试液、pH试纸或活泼金属。滴加石蕊试液变红，pH试纸检验pH小于7，加入锌粒或铁粉产生无色气泡，均可证明含有氢离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 氢氧根离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氢氧根离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氢氧根离子（OH⁻）的检验</h3>
                     <div class="operation-details">
@@ -276,16 +250,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明溶液中含有氢氧根离子</p>
                         <p><strong>注意：</strong>强碱弱酸盐溶液也显碱性，需结合其他离子判断。</p>
-                        <button class="audio-button" onclick="playAudio('氢氧根离子的检验，可用酚酞、石蕊或pH试纸。酚酞变红，石蕊变蓝，pH大于7，均可证明溶液中含有氢氧根离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氢氧根离子的检验，可用酚酞、石蕊或pH试纸。酚酞变红，石蕊变蓝，pH大于7，均可证明溶液中含有氢氧根离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 铵根离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    铵根离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>铵根离子（NH₄⁺）的检验</h3>
                     <div class="operation-details">
@@ -298,16 +269,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有NH₄⁺</p>
                         <p><strong>注意：</strong>必须加热，氨气才会逸出。</p>
-                        <button class="audio-button" onclick="playAudio('铵根离子检验：取样加氢氧化钠溶液加热，用湿润红色石蕊试纸靠近管口，试纸变蓝，有刺激性气味，证明含铵根离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '铵根离子检验：取样加氢氧化钠溶液加热，用湿润红色石蕊试纸靠近管口，试纸变蓝，有刺激性气味，证明含铵根离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 铁离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    铁离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>铁离子（Fe³⁺）的检验</h3>
                     <div class="operation-details">
@@ -319,16 +287,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有Fe³⁺</p>
                         <p><strong>注意：</strong>血红色为特征现象，灵敏度高。</p>
-                        <button class="audio-button" onclick="playAudio('铁离子检验：加硫氰化钾溶液变血红色，或加氢氧化钠产生红褐色沉淀，均可证明含有三价铁离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '铁离子检验：加硫氰化钾溶液变血红色，或加氢氧化钠产生红褐色沉淀，均可证明含有三价铁离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 亚铁离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    亚铁离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>亚铁离子（Fe²⁺）的检验</h3>
                     <div class="operation-details">
@@ -341,16 +306,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有Fe²⁺</p>
                         <p><strong>注意：</strong>Fe²⁺易被氧化，检验要快速。</p>
-                        <button class="audio-button" onclick="playAudio('亚铁离子检验：加铁氰化钾产生蓝色沉淀，或加氢氧化钠出现白灰绿红褐色变化，均可证明含二价铁离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '亚铁离子检验：加铁氰化钾产生蓝色沉淀，或加氢氧化钠出现白灰绿红褐色变化，均可证明含二价铁离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 铜离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    铜离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>铜离子（Cu²⁺）的检验</h3>
                     <div class="operation-details">
@@ -362,16 +324,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有Cu²⁺</p>
                         <p><strong>注意：</strong>浓度高时为蓝绿色。</p>
-                        <button class="audio-button" onclick="playAudio('铜离子检验：溶液本身呈蓝色，加入氢氧化钠产生蓝色絮状沉淀，证明含有铜离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '铜离子检验：溶液本身呈蓝色，加入氢氧化钠产生蓝色絮状沉淀，证明含有铜离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 氯离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氯离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氯离子（Cl⁻）的检验</h3>
                     <div class="operation-details">
@@ -384,16 +343,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有Cl⁻</p>
                         <p><strong>注意：</strong>必须酸化，排除CO₃²⁻干扰。</p>
-                        <button class="audio-button" onclick="playAudio('氯离子检验：先加稀硝酸酸化，再加硝酸银溶液，产生不溶于硝酸的白色沉淀，证明含氯离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氯离子检验：先加稀硝酸酸化，再加硝酸银溶液，产生不溶于硝酸的白色沉淀，证明含氯离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 硫酸根离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    硫酸根离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>硫酸根离子（SO₄²⁻）的检验</h3>
                     <div class="operation-details">
@@ -406,16 +362,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有SO₄²⁻</p>
                         <p><strong>注意：</strong>不能先加BaCl₂，防止Ag⁺干扰。</p>
-                        <button class="audio-button" onclick="playAudio('硫酸根离子检验：先加稀盐酸酸化，再加氯化钡溶液，产生不溶于酸的白色沉淀，证明含硫酸根离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '硫酸根离子检验：先加稀盐酸酸化，再加氯化钡溶液，产生不溶于酸的白色沉淀，证明含硫酸根离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 碳酸根离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    碳酸根离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>碳酸根离子（CO₃²⁻）的检验</h3>
                     <div class="operation-details">
@@ -428,16 +381,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有CO₃²⁻</p>
                         <p><strong>注意：</strong>排除SO₃²⁻干扰，SO₂有刺激性气味。</p>
-                        <button class="audio-button" onclick="playAudio('碳酸根离子检验：加稀盐酸产生无色无味气体，通入澄清石灰水变浑浊，证明含碳酸根离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '碳酸根离子检验：加稀盐酸产生无色无味气体，通入澄清石灰水变浑浊，证明含碳酸根离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 钙离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    钙离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>钙离子（Ca²⁺）的检验</h3>
                     <div class="operation-details">
@@ -449,16 +399,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有Ca²⁺</p>
                         <p><strong>注意：</strong>焰色反应为特征判断。</p>
-                        <button class="audio-button" onclick="playAudio('钙离子检验：加碳酸钠溶液产生白色沉淀，焰色反应呈砖红色，证明含有钙离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '钙离子检验：加碳酸钠溶液产生白色沉淀，焰色反应呈砖红色，证明含有钙离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 钠离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    钠离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>钠离子（Na⁺）的检验</h3>
                     <div class="operation-details">
@@ -470,16 +417,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有Na⁺</p>
                         <p><strong>注意：</strong>观察时要透过蓝色钴玻璃排除钾干扰。</p>
-                        <button class="audio-button" onclick="playAudio('钠离子检验用焰色反应，火焰呈黄色，证明含有钠离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '钠离子检验用焰色反应，火焰呈黄色，证明含有钠离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 钾离子检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    钾离子检验示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>钾离子（K⁺）的检验</h3>
                     <div class="operation-details">
@@ -491,16 +435,13 @@
                         </ul>
                         <p><strong>结论：</strong>证明含有K⁺</p>
                         <p><strong>注意：</strong>必须透过蓝色钴玻璃观察。</p>
-                        <button class="audio-button" onclick="playAudio('钾离子检验用焰色反应，透过蓝色钴玻璃看到紫色火焰，证明含有钾离子。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '钾离子检验用焰色反应，透过蓝色钴玻璃看到紫色火焰，证明含有钾离子。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 离子检验总原则 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    离子检验规范示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>离子检验基本原则</h3>
                     <div class="operation-details">
@@ -508,7 +449,7 @@
                         <p><strong>特征现象：</strong>颜色、沉淀、气体、焰色</p>
                         <p><strong>操作顺序：</strong>取样→加试剂→观现象→得结论</p>
                         <p><strong>环保安全：</strong>重金属、有毒试剂规范处理</p>
-                        <button class="audio-button" onclick="playAudio('离子检验基本原则：先排除干扰，观察特征现象，按取样加试剂观现象得结论步骤进行，注意环保安全。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '离子检验基本原则：先排除干扰，观察特征现象，按取样加试剂观现象得结论步骤进行，注意环保安全。')">播放语音</button>
                     </div>
                 </div>
             </div>
@@ -522,8 +463,8 @@
     </div>
     
     <script>
-        // 语音播放功能
-        function playAudio(text) {
+        // 修复语音播放功能（解决event.target兼容性问题）
+        function playAudio(button, text) {
             if (window.speechSynthesis.speaking) {
                 window.speechSynthesis.cancel();
             }
@@ -536,12 +477,19 @@
             
             window.speechSynthesis.speak(speech);
             
-            const button = event.target;
             const originalText = button.textContent;
             button.textContent = '播放中...';
             
             speech.onend = function() {
                 button.textContent = originalText;
+            };
+            
+            // 语音播放出错处理
+            speech.onerror = function() {
+                button.textContent = '播放失败';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
             };
         }
         

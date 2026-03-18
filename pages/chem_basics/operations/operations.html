@@ -13,30 +13,37 @@
         }
 
         html, body {
-            height: 100%;
+            height: 100%; /* 让页面高度占满视口 */
+            overflow-x: hidden;
         }
 
         body {
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* 垂直排列内容 */
+            background-color: #f5f7fa;
             font-family: "Microsoft Yahei", sans-serif;
         }
 
         main {
-            flex: 1;
-            padding: 20px;
-            background-color: #f5f7fa;
+            flex: 1; /* 让main占满除header和footer外的所有空间 */
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        /* 头部样式 */
+        /* 基础样式美化 */
         .header {
             background-color: #2c3e50;
             color: white;
             padding: 20px;
             text-align: center;
-            position: relative;
+            position: relative; /* 为返回按钮定位做准备 */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
+        /* 返回按钮样式 */
         .back-btn {
             position: absolute;
             left: 20px;
@@ -49,101 +56,189 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .back-btn:hover {
             background-color: #2980b9;
+            transform: translateY(-50%) scale(1.05);
         }
 
         .module {
-            margin: 20px 0;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .module-title {
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #34495e;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #2c3e50;
             text-align: center;
             font-weight: 600;
+            letter-spacing: 1px;
         }
 
-        /* 容器：4个一行 */
-        .game-container {
+        /* 轮播容器核心样式 */
+        .carousel-container {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            justify-content: center;
+            height: 500px;
         }
 
-        /* 固定：大屏一行4个 */
-        .game-card {
-            border: 1px solid #ddd;
-            padding: 30px 20px;
-            border-radius: 8px;
-            width: calc(25% - 15px);
-            text-align: center;
-            background-color: #f8f9fa;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .game-image {
-            margin-bottom: 20px;
-            height: 180px;
-            background-color: #e9ecef;
-            border-radius: 4px;
+        /* 切换箭头样式 */
+        .carousel-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(52, 152, 219, 0.8);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            margin: 0 10px;
+        }
+
+        .carousel-arrow:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        /* 卡片容器：控制卡片排列 */
+        .cards-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% - 120px);
+            height: 100%;
+            position: relative;
+        }
+
+        /* 通用卡片样式 */
+        .carousel-card {
+            position: absolute;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            text-align: center;
             overflow: hidden;
         }
 
-        .game-image img {
+        /* 中间大卡片样式 */
+        .carousel-card.active {
+            width: 50%;
+            height: 100%;
+            z-index: 5;
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        /* 左侧小卡片 */
+        .carousel-card.left {
+            width: 20%;
+            height: 80%;
+            z-index: 3;
+            opacity: 0.8;
+            transform: translateX(-120%) scale(0.9);
+        }
+
+        /* 右侧小卡片 */
+        .carousel-card.right {
+            width: 20%;
+            height: 80%;
+            z-index: 3;
+            opacity: 0.8;
+            transform: translateX(120%) scale(0.9);
+        }
+
+        /* 更外侧的小卡片（仅显示部分） */
+        .carousel-card.left-out {
+            width: 20%;
+            height: 80%;
+            z-index: 2;
+            opacity: 0.6;
+            transform: translateX(-240%) scale(0.8);
+        }
+
+        .carousel-card.right-out {
+            width: 20%;
+            height: 80%;
+            z-index: 2;
+            opacity: 0.6;
+            transform: translateX(240%) scale(0.8);
+        }
+
+        /* 卡片内元素样式 */
+        .card-image {
+            width: 100%;
+            height: 60%;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-image img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            transition: all 0.3s ease;
         }
 
-        .game-card h4 {
-            font-size: 18px;
+        .carousel-card h4 {
+            font-size: 22px;
             margin-bottom: 15px;
             color: #2c3e50;
             font-weight: 600;
         }
 
-        .game-card p {
-            font-size: 14px;
+        .carousel-card p {
+            font-size: 16px;
             color: #666;
             margin-bottom: 25px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        .play-btn, .card-link {
-            padding: 10px 20px;
-            font-size: 15px;
+        /* 按钮样式 */
+        .play-btn {
+            padding: 12px 30px;
+            font-size: 18px;
             background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            width: 100%;
+            margin-top: 10px;
+            width: 80%;
         }
 
-        .play-btn:hover, .card-link:hover {
+        .play-btn:hover {
             background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
 
         .footer {
@@ -152,18 +247,42 @@
             text-align: center;
             padding: 15px;
             width: 100%;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
 
-        /* 响应式 */
-        @media (max-width: 992px) {
-            .game-card {
-                width: calc(50% - 10px);
+        /* 响应式适配 */
+        @media (max-width: 1200px) {
+            .carousel-container {
+                height: 450px;
+            }
+            .carousel-card.active {
+                width: 60%;
+            }
+            .carousel-card.left, .carousel-card.right, .carousel-card.left-out, .carousel-card.right-out {
+                width: 25%;
+                height: 75%;
             }
         }
 
         @media (max-width: 768px) {
-            .game-card {
-                width: 100%;
+            .carousel-container {
+                height: 400px;
+            }
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            .carousel-card.active {
+                width: 80%;
+            }
+            .carousel-card.left, .carousel-card.right {
+                width: 0;
+                height: 0;
+                opacity: 0;
+            }
+            .carousel-card.left-out, .carousel-card.right-out {
+                display: none;
             }
             .back-btn {
                 position: static;
@@ -173,88 +292,232 @@
             .header {
                 padding: 15px;
             }
+            .module-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-
+    <!-- 顶部区域：包含返回按钮 -->
     <header class="header">
-        <button class="back-btn" onclick="window.location.href='../chem_basics.html'">返回</button>
+        <!-- 返回按钮：点击跳转到菜单页 -->
+        <button class="back-btn" id="backBtn">返回</button>
         <h1 class="main-title">高中化学实验基础学习系统</h1>
         <p class="subtitle">掌握化学实验基本操作，提升科学探究能力</p>
     </header>
 
+    <!-- 主内容区域 -->
     <main>
         <section class="module" id="interactive-module">
             <h2 class="module-title">常考化学实验的基本操作</h2>
-            <div class="module-content">
-                <div class="game-container">
-                    <!-- 第一排4个 -->
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20lab%20simulation%20game&image_size=square" alt="实验模拟">
+            <div class="carousel-container">
+                <!-- 左箭头 -->
+                <button class="carousel-arrow left-arrow" id="leftArrow">◀</button>
+                
+                <!-- 卡片容器 -->
+                <div class="cards-wrapper" id="cardsWrapper">
+                    <!-- 卡片1：药品的取用 -->
+                    <div class="carousel-card active" data-link="handing.html" data-img="../../../images/biaoqian/handing.jpeg">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/handing.jpeg" alt="药品的取用">
                         </div>
-                        <h4>药品的取用</h4>
-                        <p> </p>
-                        <a href="handing.html" class="card-link">开始学习</a>
+                        <h4>1.药品的取用</h4>
+                        <p>掌握固体、液体药品的正确取用方法和注意事项</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20instrument%20quiz&image_size=square" alt="仪器识别">
+                    
+                    <!-- 卡片2：物质的加热 -->
+                    <div class="carousel-card right" data-link="heating.html" data-img="../../../images/biaoqian/heating.jpeg">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/heating.jpeg" alt="物质的加热">
                         </div>
-                        <h4>物质的加热</h4>
-                        <p> </p>
-                        <a href="heating.html" class="card-link">开始学习</a>
+                        <h4>2.物质的加热</h4>
+                        <p>熟练掌握酒精灯、水浴等不同加热方式的操作规范</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20experiment%20steps%20puzzle&image_size=square" alt="步骤排序">
+                    
+                    <!-- 卡片3：物质的溶解 -->
+                    <div class="carousel-card right-out" data-link="dissolving.html" data-img="../../../images/biaoqian/dissolving.jpeg">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/dissolving.jpeg" alt="物质的溶解">
                         </div>
-                        <h4>物质的溶解</h4>
-                        <p> </p>
-                        <a href="dissolving.html" class="card-link">开始学习</a>
+                        <h4>3.物质的溶解</h4>
+                        <p>了解加速溶解的方法及不同物质溶解的注意事项</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20experiment%20steps%20puzzle&image_size=square" alt="步骤排序">
+                    
+                    <!-- 卡片4：装置的气密性检查 -->
+                    <div class="carousel-card left-out" data-link="leak_test.html" data-img="../../../images/biaoqian/leak_test.jpeg">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/leak_test.jpeg" alt="装置的气密性检查">
                         </div>
-                        <h4>装置的气密性检查</h4>
-                        <p> </p>
-                        <a href="leak_test.html" class="card-link">开始学习</a>
+                        <h4>4.装置的气密性检查</h4>
+                        <p>掌握多种气密性检查方法的原理和操作步骤</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-
-                    <!-- 第二排4个 -->
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20filtration%20experiment&image_size=square" alt="过滤操作">
+                    
+                    <!-- 卡片5：仪器的洗涤 -->
+                    <div class="carousel-card left" data-link="cleaning.html" data-img="../../../images/biaoqian/cleaning.png">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/cleaning.png" alt="仪器的洗涤">
                         </div>
-                        <h4>仪器的洗涤</h4>
-                        <p> </p>
-                        <a href="cleaning.html" class="card-link">开始学习</a>
+                        <h4>5.仪器的洗涤</h4>
+                        <p>掌握不同污染类型仪器的洗涤方法和洗净标准</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20distillation%20experiment&image_size=square" alt="蒸馏操作">
+                    
+                    <!-- 卡片6：仪器的安装与连接 -->
+                    <div class="carousel-card" data-link="assembly.html" data-img="../../../images/biaoqian/assembly.jpeg">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/assembly.jpeg" alt="仪器的安装与连接">
                         </div>
-                        <h4>仪器的安装与连接</h4>
-                        <p> </p>
-                        <a href="assembly.html" class="card-link">开始学习</a>
+                        <h4>6.仪器的安装与连接</h4>
+                        <p>了解实验装置组装的顺序和连接的注意事项</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-                    <div class="game-card">
-                        <div class="game-image">
-                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chemistry%20pH%20test%20experiment&image_size=square" alt="pH测试">
+                    
+                    <!-- 卡片7：常考实验规范操作 -->
+                    <div class="carousel-card" data-link="standard_ops.html" data-img="../../../images/biaoqian/2.1.4.png">
+                        <div class="card-image">
+                            <img src="../../../images/biaoqian/2.1.4.png" alt="常考实验规范操作">
                         </div>
-                        <h4>常考实验规范操作</h4>
-                        <p> </p>
-                        <a href="standard_ops.html" class="card-link">开始学习</a>
+                        <h4>7.常考实验规范操作</h4>
+                        <p>汇总高考高频考点的实验操作规范和易错点</p>
+                        <a href="javascript:;" class="play-btn">开始学习</a>
                     </div>
-              </div>
+                </div>
+                
+                <!-- 右箭头 -->
+                <button class="carousel-arrow right-arrow" id="rightArrow">▶</button>
+            </div>
         </section>
     </main>
 
+    <!-- 底部区域 -->
     <footer class="footer">
         <p>© 2026 高中化学实验基础学习系统 - 版权所有</p>
     </footer>
 
+    <script>
+        // 核心变量
+        const cards = document.querySelectorAll('.carousel-card');
+        const leftArrow = document.getElementById('leftArrow');
+        const rightArrow = document.getElementById('rightArrow');
+        const backBtn = document.getElementById('backBtn');
+        const playBtns = document.querySelectorAll('.play-btn');
+        
+        // 卡片状态数组（控制显示位置）
+        let cardStates = ['active', 'right', 'right-out', 'left-out', 'left'];
+        // 当前激活的卡片索引
+        let activeIndex = 0;
+        // 总卡片数
+        const cardCount = cards.length;
+
+        // 初始化：给额外的卡片补充初始状态
+        for (let i = 5; i < cardCount; i++) {
+            cards[i].classList.add(i === 5 ? 'right-out' : 'left-out');
+        }
+
+        // 更新卡片位置
+        function updateCardPositions(direction = 'right') {
+            // 重置所有卡片类名
+            cards.forEach(card => {
+                card.classList.remove('active', 'left', 'right', 'left-out', 'right-out');
+            });
+            
+            // 更新索引（循环）
+            if (direction === 'left') {
+                activeIndex = (activeIndex - 1 + cardCount) % cardCount;
+            } else {
+                activeIndex = (activeIndex + 1) % cardCount;
+            }
+            
+            // 重新分配状态
+            for (let i = 0; i < cardCount; i++) {
+                // 计算每个卡片的位置索引（循环）
+                const stateIndex = (i - activeIndex + cardCount) % cardCount;
+                let state = '';
+                
+                switch(stateIndex) {
+                    case 0: state = 'active'; break;
+                    case 1: state = 'right'; break;
+                    case 2: state = 'right-out'; break;
+                    case cardCount - 1: state = 'left'; break;
+                    case cardCount - 2: state = 'left-out'; break;
+                    default: 
+                        // 超出显示范围的卡片隐藏
+                        state = stateIndex > cardCount/2 ? 'left-out' : 'right-out';
+                        break;
+                }
+                
+                cards[i].classList.add(state);
+            }
+        }
+
+        // 箭头点击事件
+        leftArrow.addEventListener('click', () => {
+            updateCardPositions('left');
+        });
+
+        rightArrow.addEventListener('click', () => {
+            updateCardPositions('right');
+        });
+
+        // 键盘方向键控制
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                updateCardPositions('left');
+            } else if (e.key === 'ArrowRight') {
+                updateCardPositions('right');
+            } else if (e.key === 'Enter') {
+                // 回车打开当前激活卡片的链接
+                const activeCard = document.querySelector('.carousel-card.active');
+                if (activeCard) {
+                    const link = activeCard.dataset.link;
+                    // 直接跳转，无动画
+                    window.location.href = link;
+                }
+            }
+        });
+
+        // 卡片点击事件：点击卡片切换为激活状态
+        cards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                // 计算需要切换的方向
+                const diff = (index - activeIndex + cardCount) % cardCount;
+                const direction = diff <= cardCount/2 ? 'right' : 'left';
+                
+                // 逐步切换到目标卡片
+                let steps = diff <= cardCount/2 ? diff : cardCount - diff;
+                const interval = 100; // 每次切换间隔
+                
+                const stepInterval = setInterval(() => {
+                    updateCardPositions(direction);
+                    steps--;
+                    if (steps <= 0) {
+                        clearInterval(stepInterval);
+                    }
+                }, interval);
+            });
+        });
+
+        // 开始学习按钮点击事件
+        playBtns.forEach((btn, index) => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 阻止触发卡片点击事件
+                const card = btn.closest('.carousel-card');
+                const link = card.dataset.link;
+                // 直接跳转，无动画
+                window.location.href = link;
+            });
+        });
+
+        // 返回按钮点击事件（无动画）
+        backBtn.addEventListener('click', () => {
+            // 直接返回，无动画
+            window.location.href = '../chem_basics.html';
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+html, body {
+    height: 100%;
+    overflow: hidden; /* 禁止页面滚动 */
+}
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.4;
+    padding: 8px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    position: relative;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4285f4;
+    flex-shrink: 0;
+}
+.back-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 4px 10px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.back-btn:hover {
+    background-color: #3367d6;
+}
+h1 {
+    font-size: 16px;
+    margin-top: 4px;
+}
+#score-board {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin: 8px 0;
+}
+#score-board span {
+    font-weight: bold;
+    color: #4285f4;
+}
+#question-area {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* 关键：允许 flex 子项收缩 */
+}
+.question-box {
+    font-size: 15px;
+    padding: 8px;
+    border-left: 3px solid #4285f4;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+/* 图片一屏显示核心样式 */
+.question-image {
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+.question-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 完整显示不变形 */
+    max-height: 220px;    /* 强制限制图片高度，保证按钮可见 */
+}
+.no-image {
+    text-align: center;
+    padding: 10px;
+    color: #999;
+    font-size: 14px;
+}
+#answer-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0;
+    flex-shrink: 0;
+}
+.answer-btn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.correct-btn {
+    background-color: #34a853;
+    color: white;
+}
+.wrong-btn {
+    background-color: #ea4335;
+    color: white;
+}
+.feedback {
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    display: none;
+    font-size: 13px;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+.feedback.correct {
+    display: block;
+    background: #e6f4ea;
+    color: #2d8d46;
+    border: 1px solid #34a853;
+}
+.feedback.wrong {
+    display: block;
+    background: #fce8e6;
+    color: #d93025;
+    border: 1px solid #ea4335;
+}
+.next-btn {
+    width: 100%;
+    padding: 10px 0;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+#result-screen {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#restart-btn {
+    padding: 10px 24px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+.answer-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+        /* 移动端适配优化 */
+        @media (max-width:600px) {
+            #answer-buttons {
+                flex-direction:column;
+                gap:10px;
+            }
+            /* 移动端进一步降低图片最大高度，确保完整显示 */
+            .question-image img {
+                max-height: calc(100vh - 300px);
+            }
+            /* 移动端调整字体和内边距，节省空间 */
+            h1 {
+                font-size: 20px;
+            }
+            .question-box {
+                font-size: 18px;
+                padding: 10px;
+            }
+            #question-area {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='skill_training.html'">返回首页</button>
+            <h1>实验装置、操作正误判断</h1>
+        </header>
+
+        <main>
+            <div id="game-container">
+                <div id="score-board">
+                    <div>得分: <span id="score">0</span></div>
+                    <div>剩余题目: <span id="remaining">0</span></div>
+                </div>
+
+                <div id="question-area">
+                    <div id="question-text" class="question-box">
+                        <!-- 图片容器会动态插入到这里 -->
+                        <div id="question-img-container" class="question-image"></div>
+                        <div id="question-content"></div>
+                    </div>
+                    <div id="answer-buttons">
+                        <button id="btn-correct" class="answer-btn correct-btn">√ 正确</button>
+                        <button id="btn-wrong" class="answer-btn wrong-btn">× 错误</button>
+                    </div>
+                    <div id="feedback" class="feedback"></div>
+                    <button id="next-btn" class="next-btn" style="display:none;">下一题 →</button>
+                </div>
+            </div>
+
+            <div id="result-screen" style="display:none;">
+                <h2>答题完成！</h2>
+                <p id="result-message"></p>
+                <button id="restart-btn">重新开始</button>
+            </div>
+        </main>
+    </div>
+
+<script>
+// 修复后的题库结构（移除外层多余数组）
+// 说明：imgUrl 可替换为实际图片路径，或使用网络图片地址测试
+const questionBank = [
+    { 
+        id: 1, 
+        text: "加热", 
+        imgUrl: "../../images/zzcctaf/1.png", 
+        answer: true, 
+        analysis: "给试管中的物质加热时，液体体积不能超过试管容积的，且用酒精灯外焰加热，操作合理。" 
+    },
+    { 
+        id: 2, 
+        text: "定容", 
+        imgUrl: "../../images/zzcctaf/2.png", 
+        answer: false, 
+        analysis: "定容时，视线应与刻度线保持水平，操作错误。" 
+    },
+    { 
+        id: 3, 
+        text: "稀释", 
+        imgUrl: "../../images/zzcctaf/3.png", 
+        answer: false, 
+        analysis: "稀释浓硫酸应遵循“酸入水”的原则，操作错误。" 
+    },
+    { 
+        id: 4, 
+        text: "滴定", 
+        imgUrl: "../../images/zzcctaf/4.png", 
+        answer: false, 
+        analysis: "氢氧化钠溶液呈碱性，应放在碱式滴定管中进行滴定，装置使用错误。" 
+    },
+    { 
+        id: 5, 
+        text: "对铁钉进行预处理，并用铜氨溶液给铁钉镀铜。除油污不能达到实验目的的是", 
+        imgUrl: "../../images/zzcctaf/5.png", 
+        answer: false, 
+        analysis: "碳酸钠溶液为碱性，油污在碱性溶液中发生水解反应，同时加热可以增强碳酸钠溶液的碱性，可以达到除油污的目的。" 
+    },
+    { 
+        id: 6, 
+        text: "对铁钉进行预处理，并用铜氨溶液给铁钉镀铜。除铁锈操作不能达到实验目的的是", 
+        imgUrl: "../../images/zzcctaf/6.png", 
+        answer: false, 
+        analysis: "铁锈的主要成分为氧化铁，稀盐酸可以用来除去铁锈，可以达到实验目的。" 
+    },
+    { 
+        id: 7, 
+        text: "对铁钉进行预处理，并用铜氨溶液给铁钉镀铜。制铜氨溶液不能达到实验目的的是", 
+        imgUrl: "../../images/zzcctaf/7.png", 
+        answer: false, 
+        analysis: "硫酸铜溶液中滴加过量氨水，可以生成铜氨溶液，可以达到实验目的。" 
+    },
+    { 
+        id: 8, 
+        text: "对铁钉进行预处理，并用铜氨溶液给铁钉镀铜。铁钉镀铜操作不能达到实验目的的是", 
+        imgUrl: "../../images/zzcctaf/8.png", 
+        answer: true, 
+        analysis: "铁钉镀铜，需要电解装置，使Cu片与电源正极相连，铁钉与电源负极相连，图中无电源，故不能达到实验目的。" 
+    },
+    { 
+        id: 9, 
+        text: "溶解氯化钠固体", 
+        imgUrl: "../../images/zzcctaf/9.png", 
+        answer: false, 
+        analysis: "溶解氯化钠固体应该在烧杯中进行，为了加快溶解，可用玻璃棒搅拌，不能在试管中溶解。" 
+    },
+    { 
+        id: 10, 
+        text: "量取草酸溶液", 
+        imgUrl: "../../images/zzcctaf/10.png", 
+        answer: true, 
+        analysis: "滴定管能精确到两位小数，量取草酸溶液，要选择酸式滴定管，实验操作符合规范。" 
+    },
+    { 
+        id: 11, 
+        text: "收集二氧化碳气体", 
+        imgUrl: "../../images/zzcctaf/11.png", 
+        answer: false, 
+        analysis: "收集二氧化碳可用向上排空气法，但不能用瓶塞塞紧集气瓶，这样空气排不出去，而且易发生爆炸。" 
+    },
+    { 
+        id: 12, 
+        text: "观察钠与水的反应", 
+        imgUrl: "../../images/zzcctaf/12.png", 
+        answer: false, 
+        analysis: "钠与水的反应比较剧烈，而且产生的氢氧化钠有腐蚀性，不能把眼睛凑上去观察。" 
+    },
+    { 
+        id: 13, 
+        text: "图①装置用于二氧化锰和浓盐酸反应制氯气", 
+        imgUrl: "../../images/zzcctaf/13.png", 
+        answer: false, 
+        analysis: "图①装置没有加热装置，不适用于二氧化锰和浓盐酸反应制氯气，错误。" 
+    },
+    { 
+        id: 14, 
+        text: "图②装置用于标准酸溶液滴定未知碱溶液", 
+        imgUrl: "../../images/zzcctaf/14.png", 
+        answer: true, 
+        analysis: "利用酸式滴定管中装有的标准酸溶液滴定未知碱溶液，装置和操作正确。" 
+    },
+    { 
+        id: 15, 
+        text: "图③装置用于测定中和反应的反应热", 
+        imgUrl: "../../images/zzcctaf/15.png", 
+        answer: true, 
+        analysis: "图③装置用于测定中和反应的反应热，温度计测温度、玻璃搅拌器起搅拌作用，装置密封、隔热保温效果好，正确。" 
+    },
+    { 
+        id: 16, 
+        text: "图④装置用于制备乙酸乙酯", 
+        imgUrl: "../../images/zzcctaf/16.png", 
+        answer: true, 
+        analysis: "图④装置用于制备乙酸乙酯，导管末端不伸入液面下，利用饱和碳酸钠收集乙酸乙酯，正确。" 
+    },
+    { 
+        id: 17, 
+        text: "调控滴定速度", 
+        imgUrl: "../../images/zzcctaf/17.png", 
+        answer: true, 
+        analysis: "调控酸式滴定管的滴加速度，左手拇指、食指和中指轻轻向内扣住玻璃活塞，手心空握，所以操作符合规范。" 
+    },
+    { 
+        id: 18, 
+        text: "用pH试纸测定溶液pH", 
+        imgUrl: "../../images/zzcctaf/18.png", 
+        answer: false, 
+        analysis: "用pH试纸测定溶液pH不能将pH试纸伸入溶液中，操作不规范。" 
+    },
+    { 
+        id: 19, 
+        text: "加热试管中的液体", 
+        imgUrl: "../../images/zzcctaf/19.png", 
+        answer: false, 
+        analysis: "加热试管中的液体，试管中液体体积不能超过试管体积的三分之一，操作不规范。" 
+    },
+    { 
+        id: 20, 
+        text: "向试管中滴加溶液", 
+        imgUrl: "../../images/zzcctaf/20.png", 
+        answer: false, 
+        analysis: "向试管中滴加液体，胶头滴管应该在试管上方竖直悬空，操作不规范。" 
+    },
+    { 
+        id: 21, 
+        text: "配制NaOH溶液", 
+        imgUrl: "../../images/zzcctaf/21.png", 
+        answer: false, 
+        analysis: "配制一定物质的量浓度的溶液时，溶质要放在烧杯中溶解，不能直接放在容量瓶中溶解，不正确。" 
+    },
+    { 
+        id: 22, 
+        text: "实验室进行铁钉镀锌实验，铁钉除油污操作是否正确", 
+        imgUrl: "../../images/zzcctaf/22.png", 
+        answer: true, 
+        analysis: "油污的主要成分是油脂，油脂在碱性条件下可以发生水解反应生成可溶于水的甘油和高级脂肪酸盐，因此，铁钉放在NaOH溶液中加热后可以除去其表面的油污，正确。" 
+    },
+    { 
+        id: 23, 
+        text: "实验室进行铁钉镀锌实验，铁钉除锈操作是否正确", 
+        imgUrl: "../../images/zzcctaf/23.png", 
+        answer: true, 
+        analysis: "铁锈的主要成分是Fe2O3 · nH2O，其可溶于盐酸，因此，将铁钉放在盐酸中可以除去其表面的铁锈，正确。" 
+    },
+    { 
+        id: 24, 
+        text: "实验室进行铁钉镀锌实验，铁钉镀锌操作是否正确", 
+        imgUrl: "../../images/zzcctaf/24.png", 
+        answer: true, 
+        analysis: "该装置为电解池，铁钉与电源负极相连作阴极，锌片与电源的正极相连作阳极，电解质溶液为ZnCl2溶液，因此，该装置为电镀装置，可以实现铁钉上镀锌，正确。" 
+    },
+    { 
+        id: 25, 
+        text: "装置①可用于铜与浓硫酸反应并检验气态产物", 
+        imgUrl: "../../images/zzcctaf/25.png", 
+        answer: true, 
+        analysis: "铜与浓硫酸反应方程式为：Cu+2H2SO4(浓)=Δ=CuSO4+2H2O+SO2↑，可用装置①制取，气态产物为SO2，可利用SO2的漂白性进行检验，正确。" 
+    },
+    { 
+        id: 26, 
+        text: "图②标识表示易燃类物质", 
+        imgUrl: "../../images/zzcctaf/26.png", 
+        answer: true, 
+        analysis: "图②标识表示易燃类物质，正确。" 
+    },
+    { 
+        id: 27, 
+        text: "装置③可用于制取并收集氨气", 
+        imgUrl: "../../images/zzcctaf/27.png", 
+        answer: false, 
+        analysis: "NH3的密度比空气小，应用向下排空气法进行收集，错误。" 
+    },
+    { 
+        id: 28, 
+        text: "装置④可用于从碘水中萃取碘", 
+        imgUrl: "../../images/zzcctaf/28.png", 
+        answer: true, 
+        analysis: "萃取是利用物质在不同溶剂中溶解性的差异进行分离混合物，装置④可用于从碘水中萃取碘，正确。" 
+    },
+    { 
+        id: 29, 
+        text: "灼烧海带制海带灰", 
+        imgUrl: "../../images/zzcctaf/29.png", 
+        answer: false, 
+        analysis: "灼烧海带制海带灰应在坩埚中进行，并用玻璃棒搅拌，给坩埚加热时不需要使用石棉网或陶土网，错误。" 
+    },
+    { 
+        id: 30, 
+        text: "准确量取15.00mL稀盐酸", 
+        imgUrl: "../../images/zzcctaf/30.png", 
+        answer: true, 
+        analysis: "稀盐酸呈酸性，可用酸式滴定管量取15.00mL稀盐酸，正确。" 
+    },
+    { 
+        id: 31, 
+        text: "配制一定浓度的NaCl溶液", 
+        imgUrl: "../../images/zzcctaf/31.png", 
+        answer: true, 
+        analysis: "配制一定浓度的NaCl溶液时，需要将在烧杯中溶解得到的NaCl溶液通过玻璃棒引流转移到选定规格的容量瓶中，正确。" 
+    },
+    { 
+        id: 32, 
+        text: "使用电石和饱和食盐水制备C2H2", 
+        imgUrl: "../../images/zzcctaf/32.png", 
+        answer: true, 
+        analysis: "电石的主要成分CaC2与水发生反应CaC2+2H2O→Ca(OH)2+CH≡CH↑制取C2H2，该制气反应属于固体与液体常温制气反应，分液漏斗中盛放饱和食盐水，具支锥形瓶中盛放电石，正确。" 
+    },
+    { 
+        id: 33, 
+        text: "稀释浓硫酸", 
+        imgUrl: "../../images/zzcctaf/33.png", 
+        answer: true, 
+        analysis: "浓硫酸的密度比水的密度大，浓硫酸溶于水放热，故稀释浓硫酸时应将浓硫酸沿烧杯内壁缓慢倒入盛水的烧杯中，并用玻璃棒不断搅拌，合理。" 
+    },
+    { 
+        id: 34, 
+        text: "从提纯后的NaCl溶液获得NaCl晶体", 
+        imgUrl: "../../images/zzcctaf/34.png", 
+        answer: true, 
+        analysis: "NaCl的溶解度随温度升高变化不明显，从NaCl溶液中获得NaCl晶体采用蒸发结晶的方法，合理。" 
+    },
+    { 
+        id: 35, 
+        text: "配制一定物质的量浓度的KCl溶液", 
+        imgUrl: "../../images/zzcctaf/35.png", 
+        answer: false, 
+        analysis: "配制一定物质的量浓度的溶液时，玻璃棒引流低端应该在容量瓶刻度线以下；定容阶段，当液面在刻度线以下约1cm时，应改用胶头滴管滴加蒸馏水，不合理。" 
+    },
+    { 
+        id: 36, 
+        text: "1810年，化学家戴维首次确认“氯气”是一种新元素组成的单质。兴趣小组利用以下装置进行制备氯气。", 
+        imgUrl: "../../images/zzcctaf/36.png", 
+        answer: false, 
+        analysis: "利用浓盐酸和二氧化锰反应制氯气需要加热，图中缺少加热装置，且分液漏斗内应盛装浓盐酸，不能达到预期目的。" 
+    },
+    { 
+        id: 37, 
+        text: "1810年，化学家戴维首次确认“氯气”是一种新元素组成的单质。兴趣小组利用以下装置进行净化、干燥氯气。", 
+        imgUrl: "../../images/zzcctaf/37.png", 
+        answer: true, 
+        analysis: "实验室制得的氯气中有HCl杂质，可以通过饱和食盐水洗气除杂，再通过无水氯化钙干燥，可以达到净化、干燥Cl2的目的。" 
+    },
+    { 
+        id: 38, 
+        text: "1810年，化学家戴维首次确认“氯气”是一种新元素组成的单质。兴趣小组利用以下装置进行收集氯气。", 
+        imgUrl: "../../images/zzcctaf/38.png", 
+        answer: true, 
+        analysis: "氯气密度大于空气，可以用向上排空气法收集，可以达到预期目的。" 
+    },
+    { 
+        id: 39, 
+        text: "1810年，化学家戴维首次确认“氯气”是一种新元素组成的单质。兴趣小组利用以下装置进行验证氯气的氧化性实验。", 
+        imgUrl: "../../images/zzcctaf/39.png", 
+        answer: true, 
+        analysis: "H2可以在氯气中安静地燃烧，产生苍白色火焰，氯气将氢气氧化，验证了氯气的氧化性。" 
+    },
+    { 
+        id: 40, 
+        text: "重结晶法提纯苯甲酸选用玻璃仪器：①②③", 
+        imgUrl: "../../images/zzcctaf/40.png", 
+        answer: false, 
+        analysis: "粗苯甲酸中含有少量氯化钠和泥沙，需要利用重结晶来提纯苯甲酸，具体操作为加热溶解、趁热过滤和冷却结晶，此时利用的玻璃仪器有漏斗、烧杯、玻璃棒，装置选择不合理。" 
+    },
+    { 
+        id: 41, 
+        text: "蒸馏法分离CH2Cl2和CCl4选用玻璃仪器：③⑤⑥", 
+        imgUrl: "../../images/zzcctaf/41.png", 
+        answer: true, 
+        analysis: "蒸馏法需要用到温度计以测量蒸汽温度、蒸馏烧瓶用来盛装混合溶液、锥形瓶用于盛装收集到的馏分，选项装置选择合理。" 
+    },
+    { 
+        id: 42, 
+        text: "浓硫酸催化乙醇制备乙烯选用玻璃仪器：③⑤", 
+        imgUrl: "../../images/zzcctaf/42.png", 
+        answer: true, 
+        analysis: "浓硫酸催化制乙烯需要控制反应温度为170℃，需要利用温度计测量反应体系的温度，装置选择合理。" 
+    },
+    { 
+        id: 43, 
+        text: "酸碱滴定法测定NaOH溶液浓度选用玻璃仪器：④⑥", 
+        imgUrl: "../../images/zzcctaf/43.png", 
+        answer: true, 
+        analysis: "酸碱滴定法测定NaOH溶液浓度是用已知浓度的酸液滴定未知浓度的碱液，酸液盛装在酸式滴定管中，装置选择合理。" 
+    },
+    { 
+        id: 44, 
+        text: "图①装置可用于制取并收集氨气", 
+        imgUrl: "../../images/zzcctaf/44.png", 
+        answer: false, 
+        analysis: "氯化铵受热分解生成氨气和氯化氢，遇冷又化合生成氯化铵，则直接加热氯化铵无法制得氨气，实验室用加热氯化铵和氢氧化钙固体的方法制备氨气，错误。" 
+    },
+    { 
+        id: 45, 
+        text: "图②操作可排出盛有KMnO4溶液滴定管尖嘴内的气泡", 
+        imgUrl: "../../images/zzcctaf/45.png", 
+        answer: false, 
+        analysis: "高锰酸钾溶液具有强氧化性，会腐蚀橡胶管，所以高锰酸钾溶液应盛放在酸式滴定管在，不能盛放在碱式滴定管中，错误。" 
+    },
+    { 
+        id: 46, 
+        text: "图③操作俯视刻度线定容会导致所配溶液浓度偏大", 
+        imgUrl: "../../images/zzcctaf/46.png", 
+        answer: true, 
+        analysis: "配制一定物质的量浓度的溶液时，俯视刻度线定容会使溶液的体积偏小，导致所配溶液浓度偏大，正确；" 
+    },
+    { 
+        id: 47, 
+        text: "图④装置盐桥中阳离子向ZnSO4溶液中迁移", 
+        imgUrl: "../../images/zzcctaf/47.png", 
+        answer: false, 
+        analysis: "由图可知，锌铜原电池中，锌电极为原电池的负极，铜为正极，盐桥中阳离子向硫酸铜溶液中迁移，错误；" 
+    },
+    { 
+        id: 48, 
+        text: "制备CO2", 
+        imgUrl: "../../images/zzcctaf/48.png", 
+        answer: false, 
+        analysis: "Na2CO3固体比较稳定，受热不易分解，所以不能采用加热碳酸钠的方式制备二氧化碳，错误。" 
+    },
+    { 
+        id: 49, 
+        text: "分离乙醇和乙酸", 
+        imgUrl: "../../images/zzcctaf/49.png", 
+        answer: false, 
+        analysis: "乙醇和乙酸是互溶的，不能采用分液的方式分离，应采用蒸馏来分离，错误。" 
+    },
+    { 
+        id: 50, 
+        text: "验证SO2酸性", 
+        imgUrl: "../../images/zzcctaf/50.png", 
+        answer: false, 
+        analysis: "二氧化硫通入品红溶液中，可以验证其漂白性，不能验证酸性，错误。" 
+    },
+    { 
+        id: 51, 
+        text: "测量O2体积", 
+        imgUrl: "../../images/zzcctaf/51.png", 
+        answer: true, 
+        analysis: "测量氧气体积时，装置选择量气筒，测量时要恢复到室温，两边液面高度相等，正确。" 
+    },
+    { 
+        id: 52, 
+        text: "实验室制Cl2", 
+        imgUrl: "../../images/zzcctaf/52.png", 
+        answer: true, 
+        analysis: "MnO2固体加热条件下将HCl氧化为Cl2，固液加热的反应该装置可用于制备Cl2，正确。" 
+    },
+    { 
+        id: 53, 
+        text: "实验室收集C2H4", 
+        imgUrl: "../../images/zzcctaf/53.png", 
+        answer: true, 
+        analysis: "C2H4不溶于水，可选择排水收集，正确。" 
+    },
+    { 
+        id: 54, 
+        text: "验证NH3易溶于水且溶液呈碱性", 
+        imgUrl: "../../images/zzcctaf/54.png", 
+        answer: true, 
+        analysis: "挤压胶头滴管，水进入烧瓶将NH3溶解，烧瓶中气体大量减少压强急剧降低打开活塞水迅速被压入烧瓶中形成红色喷泉，红色喷泉证明NH3与水形成碱性物质，正确。" 
+    },
+    { 
+        id: 55, 
+        text: "除去CO2中混有的少量HCl", 
+        imgUrl: "../../images/zzcctaf/55.png", 
+        answer: false, 
+        analysis: "Na2CO3与HCl、CO2发生反应，不能达到除杂的目的，应该选用饱和NaHCO3溶液，错误。" 
+    },
+    { 
+        id: 56, 
+        text: "制备并检验为防止有害气体逸出，先放置浸溶液的棉团，再加热", 
+        imgUrl: "../../images/zzcctaf/56.png", 
+        answer: true, 
+        analysis: "铜与浓硫酸反应，生成二氧化硫，二氧化硫有毒会污染空气，二氧化硫属于酸性氧化物，可用氢氧化钠溶液吸收，所以为防止有害气体逸出，先放置浸溶液的棉团，再加热，正确。" 
+    },
+    { 
+        id: 57, 
+        text: "实验室制取实验结束时，先把导管移出水面，再熄灭酒精灯", 
+        imgUrl: "../../images/zzcctaf/57.png", 
+        answer: true, 
+        analysis: "实验室制备氧气时，为了防止水槽中的水倒吸，实验结束时，先把导管移出水面，再熄灭酒精灯，可避免试管炸裂，正确。" 
+    },
+    { 
+        id: 58, 
+        text: "分液先打开分液漏斗上方的玻璃塞，再打开下方的活塞", 
+        imgUrl: "../../images/zzcctaf/58.png", 
+        answer: true, 
+        analysis: "分液时，为了使液体顺利流下，需保持分液漏斗内部和外界大气压相等，所以分液时，先打开分液漏斗上方的玻璃塞，再打开下方的活塞，将下层液体从下口放出，再将上层液体从上口倒出，操作方法正确，正确。" 
+    },
+    { 
+        id: 59, 
+        text: "蒸馏冷却水从冷凝管①口通入，②口流出", 
+        imgUrl: "../../images/zzcctaf/59.png", 
+        answer: false, 
+        analysis: "蒸馏时，为了更好的冷凝效果，冷凝水应：“下进上出”，即②口通入，①口流出，操作方法错误，错误。" 
+    },
+    { 
+        id: 60, 
+        text: "制备、纯化丁酸乙酯的实验操作对应的回流装置", 
+        imgUrl: "../../images/zzcctaf/60.png", 
+        answer: true, 
+        analysis: "加热回流时选择圆底烧瓶和球形冷凝管，冷凝管起到冷凝回流的目的，正确。" 
+    },
+    { 
+        id: 61, 
+        text: "制备、纯化丁酸乙酯的实验操作对应的蒸馏装置", 
+        imgUrl: "../../images/zzcctaf/61.png", 
+        answer: false, 
+        analysis: "蒸馏时测定的是蒸汽的温度，温度计水银球应放在蒸馏烧瓶的支管口处，该装置温度计插入液体中，测定是液体的温度，装置不对，错误。" 
+    },
+    { 
+        id: 62, 
+        text: "制备、纯化丁酸乙酯的实验操作对应的分液装置", 
+        imgUrl: "../../images/zzcctaf/62.png", 
+        answer: true, 
+        analysis: "分液时，选择分液漏斗和烧杯，为了防止液体溅出，分液漏斗下端紧挨烧杯内壁，正确。" 
+    },
+    { 
+        id: 63, 
+        text: "制备、纯化丁酸乙酯的实验操作对应的干燥装置", 
+        imgUrl: "../../images/zzcctaf/63.png", 
+        answer: true, 
+        analysis: "有机液体干燥时，常加入无水氯化镁，无水硫酸钠等干燥剂，充分吸收水分后，过滤，可得干燥的有机液体，正确。" 
+    },
+    { 
+        id: 64, 
+        text: "除去中的HCl", 
+        imgUrl: "../../images/zzcctaf/64.png", 
+        answer: false, 
+        analysis: "碱石灰为NaOH和CaO的混合物，既能吸收HCl又能吸收Cl2，不能用碱石灰除去Cl2中的HCl，错误。" 
+    },
+    { 
+        id: 65, 
+        text: "制备少量NO避免其被氧化", 
+        imgUrl: "../../images/zzcctaf/65.png", 
+        answer: true, 
+        analysis: "铜丝和稀硝酸反应生成硝酸铜、NO和水，NO难溶于水，U形管左侧与大气隔绝，即NO存在于无氧环境中，正确。" 
+    },
+    { 
+        id: 66, 
+        text: "用乙醇萃取中的S", 
+        imgUrl: "../../images/zzcctaf/66.png", 
+        answer: false, 
+        analysis: "S微溶于酒精、易溶于CS2，不能用乙醇萃取CS2中的S，错误。" 
+    },
+    { 
+        id: 67, 
+        text: "制作简易氢氧燃料电池", 
+        imgUrl: "../../images/zzcctaf/67.png", 
+        answer: false, 
+        analysis: "关闭K1、打开K2时，该装置为电解池，锌为活性阳极，无氧气生成，阴极生成氢气，则打开K1、关闭K2时，不能形成氢氧燃料电池，错误。" 
+    },
+    { 
+        id: 68, 
+        text: "提纯NaCl粗品(含少量的Ca2+、Mg2+、K+和SO42-)得到NaCl纯品的方案如下，所用试剂为BaCl2溶液、Na2CO3溶液、盐酸和NaOH溶液。用过量的BaCl2溶液除去SO42-", 
+        imgUrl: "../../images/zzcctaf/68.png", 
+        answer: true, 
+        analysis: "除SO42-去用BaCl2溶液，过量的BaCl2可以使SO42-离子完全沉淀，多余Ba2+离子可以用Na2CO3除去，正确。" 
+    },
+    { 
+        id: 69, 
+        text: "提纯NaCl粗品(含少量的Ca2+、Mg2+、K+和SO42-)得到NaCl纯品的方案如下，所用试剂为BaCl2溶液、Na2CO3溶液、盐酸和NaOH溶液。Ca2+、Mg2+、SO42-通过生成沉淀后过滤除去", 
+        imgUrl: "../../images/zzcctaf/69.png", 
+        answer: true, 
+        analysis: "Ca2+ 、Mg2+分别用Na2CO3、NaOH、BaCl2溶液除去，生成CaCO3、Mg(OH)2、BaSO4沉淀，过滤除去，正确。" 
+    },
+    { 
+        id: 70, 
+        text: "提纯NaCl粗品(含少量的Ca2+、Mg2+、K+和SO42-)得到NaCl纯品的方案如下，所用试剂为BaCl2溶液、Na2CO3溶液、盐酸和NaOH溶液。4种试剂的使用顺序为BaCl2溶液、Na2CO3溶液、盐酸、NaOH溶液", 
+        imgUrl: "../../images/zzcctaf/70.png", 
+        answer: false, 
+        analysis: "四种试剂使用时Na2CO3要在BaCl2之后，盐酸放在过滤沉淀后再加入，防止生成的沉淀再溶解，错误。" 
+    },
+    { 
+        id: 71, 
+        text: "提纯NaCl粗品(含少量的Ca2+、Mg2+、K+和SO42-)得到NaCl纯品的方案如下，所用试剂为BaCl2溶液、Na2CO3溶液、盐酸和NaOH溶液。调pH后的滤液蒸发至大量固体析出，趁热过滤、洗涤、干燥后即得NaCl纯品", 
+        imgUrl: "../../images/zzcctaf/71.png", 
+        answer: true, 
+        analysis: "过滤后再加入HCl调节滤液的pH值，最后蒸发至大量固体析出，趁热过滤、洗涤、干燥后即得纯品，K+留在母液中，正确。" 
+    },
+    { 
+        id: 72, 
+        text: "用量热计测定反应热", 
+        imgUrl: "../../images/zzcctaf/72.png", 
+        answer: true, 
+        analysis: "隔热层可防止热量散失，温度计测定反应前后的温度，玻璃搅拌棒可使反应完全反应，图中中和反应的反应热测定装置合理。" 
+    },
+    { 
+        id: 73, 
+        text: "分离乙酸乙酯和饱和食盐水", 
+        imgUrl: "../../images/zzcctaf/73.png", 
+        answer: true, 
+        analysis: "乙酸乙酯与饱和食盐水不互溶，饱和水盐水在下，乙酸乙酯在上，可通过分液进行分离，正确。" 
+    },
+    { 
+        id: 74, 
+        text: "在铁片上镀镍", 
+        imgUrl: "../../images/zzcctaf/74.png", 
+        answer: false, 
+        analysis: "在铁片上镀镍，待渡金属做阴极，镀层金属做阳极，图中两个电极放反，不能达到实验目的，错误。" 
+    },
+    { 
+        id: 75, 
+        text: "转移热蒸发皿至陶土网", 
+        imgUrl: "../../images/zzcctaf/75.png", 
+        answer: true, 
+        analysis: "转移热蒸发皿至陶土网，需要用坩埚钳夹取蒸发皿，操作合理。" 
+    },
+    { 
+        id: 76, 
+        text: "制备", 
+        imgUrl: "../../images/zzcctaf/76.png", 
+        answer: false, 
+        analysis: "和固体混合物加热制取氨气，试管口要略向下倾斜，错误。" 
+    },
+    { 
+        id: 77, 
+        text: "配制溶液", 
+        imgUrl: "../../images/zzcctaf/77.png", 
+        answer: false, 
+        analysis: "配制溶液，应在烧杯中溶解KCl固体，错误。" 
+    },
+    { 
+        id: 78, 
+        text: "探究Na与反应", 
+        imgUrl: "../../images/zzcctaf/78.png", 
+        answer: false, 
+        analysis: "金属钠与水反应剧烈，不能在试管中进行，应在烧杯中进行，且烧杯不能盛满水，错误。" 
+    },
+    { 
+        id: 79, 
+        text: "探究温度对化学平衡的影响", 
+        imgUrl: "../../images/zzcctaf/79.png", 
+        answer: true, 
+        analysis: "两个烧杯中分别盛有热水和冰水，可以通过观察气体的颜色深浅来探究温度对2NO2(红棕色)N2O4(无色)平衡的影响，正确。" 
+    },
+    { 
+        id: 80, 
+        text: "用量筒量取10.00mL盐酸", 
+        imgUrl: "../../images/zzcctaf/80.png", 
+        answer: false, 
+        analysis: "筒量精确度为0.1mL，取10.00mL盐酸只能用酸式滴定管，错误。" 
+    },
+    { 
+        id: 81, 
+        text: "用瓷坩埚加热熔化NaOH固体", 
+        imgUrl: "../../images/zzcctaf/81.png", 
+        answer: false, 
+        analysis: "瓷坩埚与熔化NaOH会反应，因此用铁坩埚加热熔化NaOH固体，故B错误。" 
+    },
+    { 
+        id: 82, 
+        text: "用分液漏斗分离乙酸异戊酯和水的混合物", 
+        imgUrl: "../../images/zzcctaf/82.png", 
+        answer: true, 
+        analysis: "乙酸异戊酯和水是不相溶的两种液体，因此可用分液漏斗分离乙酸异戊酯和水的混合物，正确。" 
+    },
+    { 
+        id: 83, 
+        text: "配制一定温度的NaCl饱和溶液，用温度计测温并搅拌", 
+        imgUrl: "../../images/zzcctaf/83.png", 
+        answer: false, 
+        analysis: "不能用温度计搅拌溶液，错误。" 
+    },
+    { 
+        id: 84, 
+        text: "配制5000mL0.1000mol.L-1Na2CO3溶液", 
+        imgUrl: "../../images/zzcctaf/84.png", 
+        answer: false, 
+        analysis: "配制50.00mL0.1000mol.L-1Na2CO3溶液需要用容量瓶，不能使用量筒配置溶液，错误。" 
+    },
+    { 
+        id: 85, 
+        text: "除去Cl2中的HCl", 
+        imgUrl: "../../images/zzcctaf/85.png", 
+        answer: true, 
+        analysis: "除去氯气中的氯化氢气体使用饱和氯化钠溶液，可以吸收氯化氢气体，根据氯气在水中的反应：Cl2+H2O⇌H++Cl-+HClO，饱和氯化钠溶液中的氯离子使氯气溶于水的平衡逆向移动，降低氯气在水中的溶解度，洗气瓶长进短出，利于除杂，正确。" 
+    },
+    { 
+        id: 86, 
+        text: "蒸馏用冷凝管", 
+        imgUrl: "../../images/zzcctaf/86.png", 
+        answer: false, 
+        analysis: "蒸馏要使用直形冷凝管，不能使用球形冷凝管，错误。" 
+    },
+    { 
+        id: 87, 
+        text: "盛装Na2SiO3溶液的试剂瓶", 
+        imgUrl: "../../images/zzcctaf/87.png", 
+        answer: false, 
+        analysis: "硅酸钠溶液呈碱性，硅酸钠溶液是一种矿物胶，能将玻璃塞与试剂瓶的瓶口粘在一起，盛装Na2SiO3溶液的试剂瓶不能使用玻璃塞，应使用橡胶塞，错误。" 
+    },
+    { 
+        id: 88, 
+        text: "碱式滴定管排气泡", 
+        imgUrl: "../../images/zzcctaf/88.png", 
+        answer: true, 
+        analysis: "碱式滴定管排气泡时，把橡皮管向上弯曲，出口上斜，轻轻挤压玻璃珠附近的橡皮管可以使溶液从尖嘴涌出，气泡即可随之排出，正确。" 
+    },
+    { 
+        id: 89, 
+        text: "溶液加热", 
+        imgUrl: "../../images/zzcctaf/89.png", 
+        answer: false, 
+        analysis: "用试管加热溶液时，试管夹应夹在距离管口的处，错误。" 
+    },
+    { 
+        id: 90, 
+        text: "试剂存放", 
+        imgUrl: "../../images/zzcctaf/90.png", 
+        answer: false, 
+        analysis: "实验室中，盐酸和NaOH要分开存放，有机物和无机物要分开存放，错误。" 
+    },
+    { 
+        id: 91, 
+        text: "溶液滴加", 
+        imgUrl: "../../images/zzcctaf/91.png", 
+        answer: false, 
+        analysis: "用滴管滴加溶液时，滴管不能伸入试管内部，应悬空滴加，错误。" 
+    },
+    { 
+        id: 92, 
+        text: "图1：喷泉实验", 
+        imgUrl: "../../images/zzcctaf/92.png", 
+        answer: true, 
+        analysis: "NH3极易溶于水，溶于水后圆底烧瓶内压强减小，从而产生喷泉，正确。" 
+    },
+    { 
+        id: 93, 
+        text: "图2：干燥NH3", 
+        imgUrl: "../../images/zzcctaf/93.png", 
+        answer: false, 
+        analysis: "P2O5为酸性氧化物，NH3具有碱性，两者可以发生反应，故不可以用P2O5干燥NH3，错误。" 
+    },
+    { 
+        id: 94, 
+        text: "图3：收集NH3", 
+        imgUrl: "../../images/zzcctaf/94.png", 
+        answer: true, 
+        analysis: "NH3的密度比空气小，可采用向下排空气法收集，正确。" 
+    },
+    { 
+        id: 95, 
+        text: "图4：制备NH3", 
+        imgUrl: "../../images/zzcctaf/95.png", 
+        answer: true, 
+        analysis: "CaO与浓氨水混合后与水反应并放出大量的热，促使NH3挥发，可用此装置制备NH3，正确。" 
+    },
+    { 
+        id: 96, 
+        text: "装置甲气体干燥", 
+        imgUrl: "../../images/zzcctaf/96.png", 
+        answer: true, 
+        analysis: "由图可知，装置甲可用于干燥反应生成的氢气，正确。" 
+    },
+    { 
+        id: 97, 
+        text: "装置乙固液分离", 
+        imgUrl: "../../images/zzcctaf/97.png", 
+        answer: false, 
+        analysis: "由图可知，装置乙固液分离的过滤操作中缺少玻璃棒引流，错误。" 
+    },
+    { 
+        id: 98, 
+        text: "装置丙Cl2制备", 
+        imgUrl: "../../images/zzcctaf/98.png", 
+        answer: false, 
+        analysis: "二氧化锰与浓盐酸共热反应制备氯气，由图可知，装置丙中缺少酒精灯加热，不能用于制备氯气，错误。" 
+    },
+    { 
+        id: 99, 
+        text: "装置丁pH测试", 
+        imgUrl: "../../images/zzcctaf/99.png", 
+        answer: false, 
+        analysis: "测定溶液pH时，应将溶液滴在pH试纸中央，不能插入溶液中，则装置丁不能用于pH测试，错误。" 
+    },
+    { 
+        id: 100, 
+        text: "钠的燃烧", 
+        imgUrl: "../../images/zzcctaf/100.png", 
+        answer: false, 
+        analysis: "钠燃烧温度在400℃以上，玻璃表面皿不耐高温，故钠燃烧通常载体为坩埚或者燃烧匙，错误。" 
+    },
+    { 
+        id: 101, 
+        text: "由海水制取蒸馏水", 
+        imgUrl: "../../images/zzcctaf/101.png", 
+        answer: true, 
+        analysis: "实验室用海水制取蒸馏水用蒸馏的方法制备，蒸馏时用到蒸馏烧瓶、酒精灯、冷凝管、牛角管、锥形瓶等仪器，注意温度计水银球应处在蒸馏烧瓶的支管口附近，冷凝管应从下口进水，上口出水，正确。" 
+    },
+    { 
+        id: 102, 
+        text: "萃取碘水中的碘", 
+        imgUrl: "../../images/zzcctaf/102.png", 
+        answer: true, 
+        analysis: "碘在水中的溶解度很小，在四氯化碳中的溶解度很大，可以用四氯化碳萃取碘水中的碘，四氯化碳的密度大于水，存在于下层，正确。" 
+    },
+    { 
+        id: 103, 
+        text: "分离粗盐中的不溶物", 
+        imgUrl: "../../images/zzcctaf/103.png", 
+        answer: true, 
+        analysis: "粗盐中含有较多的可溶性杂质和不溶性杂质，将粗盐溶与水形成溶液，用过滤的方法将不溶于水的杂质除去，正确。" 
+    },
+    { 
+        id: 104, 
+        text: "由FeCl3 · 6H2O制取无水FeCl3固体", 
+        imgUrl: "../../images/zzcctaf/104.png", 
+        answer: false, 
+        analysis: "直接加热会促进FeCl3 · 6H2O水解，生成的HCl易挥发，得到氢氧化铁，继续加热会使氢氧化铁分解产生氧化铁，得不到FeCl3固体，错误。" 
+    },
+    { 
+        id: 105, 
+        text: "①、④不可加热", 
+        imgUrl: "../../images/zzcctaf/105.png", 
+        answer: false, 
+        analysis: "锥形瓶可以加热，但需要加石棉网，容量瓶不能加热，说法错误。" 
+    },
+    { 
+        id: 106, 
+        text: "②、④不可用作反应容器", 
+        imgUrl: "../../images/zzcctaf/106.png", 
+        answer: true, 
+        analysis: "酸式滴定管用于量取一定体积的溶液，容量瓶只能用于配制一定物质的量浓度的溶液，都不能作反应容器，正确。" 
+    },
+    { 
+        id: 107, 
+        text: "③、⑤可用于物质分离", 
+        imgUrl: "../../images/zzcctaf/107.png", 
+        answer: true, 
+        analysis: "蒸馏烧瓶用于蒸馏操作，分离相互溶解的液体，分液漏斗用于分液操作，分离相互不溶解的液体，两者均可用于物质分离，正确。" 
+    },
+    { 
+        id: 108, 
+        text: "②、④、⑤使用前需检漏", 
+        imgUrl: "../../images/zzcctaf/108.png", 
+        answer: true, 
+        analysis: "酸式滴定管带有旋塞、容量瓶带有瓶塞、分液漏斗带有瓶塞和旋塞，使用前均需检查是否漏水，正确。" 
+    }
+];
+
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+const totalQuestions = 40; // 每次答题抽取40题
+
+// DOM元素获取
+const scoreEl = document.getElementById("score");
+const remainEl = document.getElementById("remaining");
+const qContentEl = document.getElementById("question-content");
+const qImgContainerEl = document.getElementById("question-img-container");
+const btnRight = document.getElementById("btn-correct");
+const btnWrong = document.getElementById("btn-wrong");
+const feedbackEl = document.getElementById("feedback");
+const nextBtn = document.getElementById("next-btn");
+const resultScreen = document.getElementById("result-screen");
+const restartBtn = document.getElementById("restart-btn");
+
+// 初始化游戏
+function initGame() {
+    currentIndex = 0;
+    score = 0;
+    scoreEl.textContent = score;
+    remainEl.textContent = totalQuestions;
+    // 随机打乱题库并取指定数量题目
+    currentQuestions = [...questionBank].sort(()=>Math.random()-0.5).slice(0,totalQuestions);
+    // 显示答题区，隐藏结果区
+    resultScreen.style.display = "none";
+    document.getElementById("game-container").style.display = "block";
+    // 加载第一题
+    loadQuestion(currentIndex);
+}
+
+// 加载题目
+function loadQuestion(index) {
+    // 所有题目答完，显示结果
+    if(index >= currentQuestions.length){
+        showResult();
+        return;
+    }
+    
+    const q = currentQuestions[index];
+    // 设置题目文字
+    qContentEl.textContent = q.text;
+    
+    // 设置题目图片（优化：无图片时显示提示）
+    if(q.imgUrl && q.imgUrl.trim() !== ""){
+        qImgContainerEl.innerHTML = `<img src="${q.imgUrl}" alt="实验图片-${q.id}">`;
+        qImgContainerEl.style.display = "block";
+    } else {
+        qImgContainerEl.innerHTML = '<div class="no-image">暂无实验图片</div>';
+        qImgContainerEl.style.display = "block";
+    }
+    
+    // 重置反馈和按钮状态
+    feedbackEl.className = "feedback";
+    feedbackEl.textContent = "";
+    nextBtn.style.display = "none";
+    btnRight.disabled = false;
+    btnWrong.disabled = false;
+}
+
+// 检查答案
+function checkAnswer(userAns) {
+    const q = currentQuestions[currentIndex];
+    // 禁用答题按钮
+    btnRight.disabled = true;
+    btnWrong.disabled = true;
+    
+    // 判断答案并更新得分
+    if(userAns === q.answer){
+        score++;
+        scoreEl.textContent = score;
+        feedbackEl.textContent = "✅ 回答正确！" + q.analysis;
+        feedbackEl.className = "feedback correct";
+    } else {
+        feedbackEl.textContent = "❌ 错误！解析：" + q.analysis;
+        feedbackEl.className = "feedback wrong";
+    }
+    
+    // 更新剩余题目数
+    remainEl.textContent = totalQuestions - currentIndex - 1;
+    // 显示下一题按钮
+    nextBtn.style.display = "block";
+}
+
+// 显示答题结果
+function showResult() {
+    document.getElementById("game-container").style.display = "none";
+    resultScreen.style.display = "block";
+    // 计算正确率
+    const rate = ((score/totalQuestions)*100).toFixed(1);
+    document.getElementById("result-message").textContent = 
+        `共${totalQuestions}题，答对${score}题，正确率${rate}%`;
+}
+
+// 事件绑定
+btnRight.addEventListener("click",()=>checkAnswer(true));
+btnWrong.addEventListener("click",()=>checkAnswer(false));
+nextBtn.addEventListener("click",()=>{
+    currentIndex++;
+    loadQuestion(currentIndex);
+});
+restartBtn.addEventListener("click",initGame);
+
+// 回车键快速进入下一题
+document.addEventListener("keydown",(e)=>{
+    if(e.key === "Enter" && nextBtn.style.display === "block"){
+        currentIndex++;
+        loadQuestion(currentIndex);
+    }
+});
+
+// 页面加载完成后初始化游戏
+window.onload = initGame;
+</script>
+</body>
+</html>

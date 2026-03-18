@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4285f4;
+        }
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 8px 15px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .back-btn:hover {
+            background-color: #3367d6;
+        }
+        h1 {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        #score-board {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+        #score-board span {
+            font-weight: bold;
+            color: #4285f4;
+        }
+        #question-area {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .question-box {
+            font-size: 20px;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 4px solid #4285f4;
+            background: #f8f9fa;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+        #answer-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .answer-btn {
+            flex: 1;
+            padding: 15px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .correct-btn {
+            background-color: #34a853;
+            color: white;
+        }
+        .wrong-btn {
+            background-color: #ea4335;
+            color: white;
+        }
+        .feedback {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 16px;
+        }
+        .feedback.correct {
+            display: block;
+            background: #e6f4ea;
+            color: #2d8d46;
+            border: 1px solid #34a853;
+        }
+        .feedback.wrong {
+            display: block;
+            background: #fce8e6;
+            color: #d93025;
+            border: 1px solid #ea4335;
+        }
+        .next-btn {
+            width: 100%;
+            padding: 12px 0;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result-screen {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #restart-btn {
+            padding: 12px 30px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .answer-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        @media (max-width:600px) {
+            #answer-buttons {flex-direction:column;gap:10px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='skill_training.html'">返回首页</button>
+            <h1>试剂存放与实验安全正误判断</h1>
+        </header>
+
+        <main>
+            <div id="game-container">
+                <div id="score-board">
+                    <div>得分: <span id="score">0</span></div>
+                    <div>剩余题目: <span id="remaining">30</span></div>
+                </div>
+
+                <div id="question-area">
+                    <div id="question-text" class="question-box"></div>
+                    <div id="answer-buttons">
+                        <button id="btn-correct" class="answer-btn correct-btn">√ 正确</button>
+                        <button id="btn-wrong" class="answer-btn wrong-btn">× 错误</button>
+                    </div>
+                    <div id="feedback" class="feedback"></div>
+                    <button id="next-btn" class="next-btn" style="display:none;">下一题 →</button>
+                </div>
+            </div>
+
+            <div id="result-screen" style="display:none;">
+                <h2>答题完成！</h2>
+                <p id="result-message"></p>
+                <button id="restart-btn">重新开始</button>
+            </div>
+        </main>
+    </div>
+
+<script>
+const questionBank = [
+    { id: 1, text: "2025·山东卷：液溴加水封保存在广口试剂瓶中", answer: false, analysis: "液溴是液体，应保存在细口瓶中。" },
+    { id: 2, text: "2025·山东卷：硝酸银溶液保存在棕色细口试剂瓶中", answer: true, analysis: "硝酸银见光易分解，棕色瓶避光。" },
+    { id: 3, text: "2025·山东卷：高锰酸钾与苯酚存放在同一药品柜中", answer: false, analysis: "强氧化剂与还原剂不能同柜。" },
+    { id: 4, text: "2025·山东卷：金属锂保存在煤油中", answer: false, analysis: "锂密度比煤油小，应保存在石蜡中。" },
+    { id: 5, text: "2025·河北卷：酸碱废液直接排放", answer: false, analysis: "需中和处理达标后排放。" },
+    { id: 6, text: "2025·河北卷：实验时需佩戴护目镜", answer: true, analysis: "防止试剂溅入眼睛。" },
+    { id: 7, text: "2025·河北卷：加热操作要防止烫伤", answer: true, analysis: "规范操作，安全第一。" },
+    { id: 8, text: "2025·河北卷：乙醇阴凉通风远离火种存放", answer: true, analysis: "乙醇易燃，必须防火。" },
+    { id: 9, text: "2025·浙江卷：盐酸沾皮肤先水冲再NaHCO3冲洗", answer: true, analysis: "强酸标准处理方法。" },
+    { id:10, text: "2025·浙江卷：氯气尾气用NaOH吸收", answer: true, analysis: "氯气与碱反应，无毒排放。" },
+    { id:11, text: "2025·浙江卷：水银洒落无需处理", answer: false, analysis: "水银有毒，必须用硫粉处理。" },
+    { id:12, text: "2025·浙江卷：硫化钠可处理废水中铅离子", answer: true, analysis: "生成PbS沉淀，去除重金属。" },
+    { id:13, text: "2024·黑吉辽卷：点燃氢气前要验纯", answer: true, analysis: "不纯氢气点燃易爆炸。" },
+    { id:14, text: "2024·黑吉辽卷：金属钾着火用湿抹布灭", answer: false, analysis: "钾与水反应，应用沙土。" },
+    { id:15, text: "2024·黑吉辽卷：水银洒落用硫粉处理", answer: true, analysis: "Hg+S=HgS，无毒。" },
+    { id:16, text: "2024·黑吉辽卷：苯酚沾皮肤用乙醇再水冲洗", answer: true, analysis: "苯酚易溶于乙醇。" },
+    { id:17, text: "2024·河北卷：硫酸钡有毒", answer: false, analysis: "硫酸钡不溶于水，无毒，可作钡餐。" },
+    { id:18, text: "2024·河北卷：钠与水反应不能近距离俯视", answer: true, analysis: "反应剧烈，易飞溅。" },
+    { id:19, text: "2024·河北卷：火焰标志是易燃品", answer: true, analysis: "易燃品警示标志。" },
+    { id:20, text: "2024·河北卷：硝酸有腐蚀性和挥发性", answer: true, analysis: "使用时注意防护通风。" },
+    { id:21, text: "2024·湖南卷：烫伤先冷水再涂药膏", answer: true, analysis: "标准轻微烫伤处理。" },
+    { id:22, text: "2024·湖南卷：浓硫酸溅皮肤直接用NaHCO3冲", answer: false, analysis: "必须先大量水冲洗。" },
+    { id:23, text: "2024·湖南卷：苯酚沾手先乙醇再水", answer: true, analysis: "正确处理方式。" },
+    { id:24, text: "2024·湖南卷：酒精灯失火用湿抹布盖灭", answer: true, analysis: "隔绝空气灭火。" },
+    { id:25, text: "2023·山东卷：眼睛溅酸用碳酸钠冲洗", answer: false, analysis: "碱性太强，应用碳酸氢钠。" },
+    { id:26, text: "2023·山东卷：碱溅皮肤先水冲再硼酸", answer: true, analysis: "强碱正确处理。" },
+    { id:27, text: "2023·山东卷：电器起火先断电再CO2灭火", answer: true, analysis: "安全规范操作。" },
+    { id:28, text: "2023·山东卷：活泼金属着火用石棉布灭", answer: true, analysis: "不能用水或CO2。" },
+    { id:29, text: "2020·山东卷：白磷保存在冷水中", answer: true, analysis: "白磷着火点低，水封防自燃。" },
+    { id:30, text: "2020·山东卷：浓硫酸可干燥SO2", answer: true, analysis: "不反应，可干燥。" },
+    { id:31, text: "2020·山东卷：蒸发皿可直接加热", answer: true, analysis: "可直接用酒精灯加热。" },
+    { id:32, text: "2020·山东卷：CO2灭火器灭钾火", answer: false, analysis: "钾燃烧产物与CO2反应助燃。" },
+    { id:33, text: "2023·河北卷：浓硝酸放棕色瓶", answer: true, analysis: "见光易分解。" },
+    { id:34, text: "2023·河北卷：NaOH溶液用玻璃塞", answer: false, analysis: "会粘住瓶塞，应用橡胶塞。" },
+    { id:35, text: "2023·河北卷：高锰酸钾与乙醇不同柜", answer: true, analysis: "强氧化与易燃挥发物禁同柜。" },
+    { id:36, text: "2023·河北卷：金属钠保存在煤油中", answer: true, analysis: "隔绝空气和水。" },
+    { id:37, text: "2022·山东卷：浓硝酸放棕色细口瓶", answer: true, analysis: "液体+避光。" },
+    { id:38, text: "2022·山东卷：NaOH固体放塑料瓶", answer: true, analysis: "腐蚀玻璃，塑料更安全。" },
+    { id:39, text: "2022·山东卷：CCl4放塑料瓶", answer: false, analysis: "有机溶剂会溶解塑料。" },
+    { id:40, text: "2022·山东卷：高锰酸钾固体放棕色广口瓶", answer: true, analysis: "固体避光保存。" }
+];
+
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+const totalQuestions = 30;
+
+const scoreEl = document.getElementById("score");
+const remainEl = document.getElementById("remaining");
+const qTextEl = document.getElementById("question-text");
+const btnRight = document.getElementById("btn-correct");
+const btnWrong = document.getElementById("btn-wrong");
+const feedbackEl = document.getElementById("feedback");
+const nextBtn = document.getElementById("next-btn");
+const resultScreen = document.getElementById("result-screen");
+const restartBtn = document.getElementById("restart-btn");
+
+function initGame() {
+    currentIndex = 0;
+    score = 0;
+    scoreEl.textContent = score;
+    remainEl.textContent = totalQuestions;
+    currentQuestions = [...questionBank].sort(()=>Math.random()-0.5).slice(0,totalQuestions);
+    resultScreen.style.display = "none";
+    document.getElementById("game-container").style.display = "block";
+    loadQuestion(0);
+}
+
+function loadQuestion(index) {
+    if(index >= currentQuestions.length){
+        showResult();
+        return;
+    }
+    const q = currentQuestions[index];
+    qTextEl.textContent = q.text;
+    feedbackEl.className = "feedback";
+    feedbackEl.textContent = "";
+    nextBtn.style.display = "none";
+    btnRight.disabled = false;
+    btnWrong.disabled = false;
+}
+
+function checkAnswer(userAns) {
+    const q = currentQuestions[currentIndex];
+    btnRight.disabled = true;
+    btnWrong.disabled = true;
+    if(userAns === q.answer){
+        score++;
+        scoreEl.textContent = score;
+        feedbackEl.textContent = "✅ 回答正确！";
+        feedbackEl.className = "feedback correct";
+    } else {
+        feedbackEl.textContent = "❌ 错误！解析：" + q.analysis;
+        feedbackEl.className = "feedback wrong";
+    }
+    remainEl.textContent = totalQuestions - currentIndex - 1;
+    nextBtn.style.display = "block";
+}
+
+function showResult() {
+    document.getElementById("game-container").style.display = "none";
+    resultScreen.style.display = "block";
+    const rate = ((score/totalQuestions)*100).toFixed(1);
+    document.getElementById("result-message").textContent = 
+        `共30题，答对${score}题，正确率${rate}%`;
+}
+
+btnRight.addEventListener("click",()=>checkAnswer(true));
+btnWrong.addEventListener("click",()=>checkAnswer(false));
+nextBtn.addEventListener("click",()=>{
+    currentIndex++;
+    loadQuestion(currentIndex);
+});
+restartBtn.addEventListener("click",initGame);
+document.addEventListener("keydown",(e)=>{
+    if(e.key === "Enter" && nextBtn.style.display === "block"){
+        currentIndex++;
+        loadQuestion(currentIndex);
+    }
+});
+
+window.onload = initGame;
+</script>
+</body>
+</html>

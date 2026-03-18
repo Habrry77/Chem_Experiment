@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中化学实验基础学习系统</title>
+    <style>
+        /* 核心样式：确保footer固定在底部 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%; /* 让页面高度占满视口 */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* 垂直排列内容 */
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        main {
+            flex: 1; /* 让main占满除header和footer外的所有空间 */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 基础样式美化 */
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative; /* 为返回按钮定位做准备 */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 返回按钮样式 */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .module {
+            margin: 20px 0;
+        }
+
+        .module-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .module-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #3498db;
+            border-radius: 3px;
+        }
+
+        /* 核心轮播容器样式 */
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            gap: 20px;
+        }
+
+        /* 箭头按钮样式 */
+        .carousel-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .carousel-arrow:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        /* 卡片容器样式 */
+        .cards-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* 通用卡片样式 */
+        .carousel-card {
+            border-radius: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        /* 小卡片样式 */
+        .carousel-card.small {
+            width: 20%;
+            padding: 15px 10px;
+            opacity: 0.7;
+            transform: scale(0.9);
+        }
+
+        /* 大卡片样式（居中） */
+        .carousel-card.large {
+            width: 30%;
+            padding: 30px 20px;
+            opacity: 1;
+            transform: scale(1);
+            border-color: #3498db;
+            background-color: white;
+        }
+
+        /* 卡片图片容器 */
+        .card-image {
+            margin-bottom: 15px;
+            height: 120px;
+            background-color: #f5f5f5;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* 大卡片图片容器 */
+        .carousel-card.large .card-image {
+            height: 180px;
+            background-color: #e9ecef;
+        }
+
+        .card-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        /* 卡片标题 */
+        .carousel-card h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            transition: color 0.3s ease;
+        }
+
+        .carousel-card.large h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .carousel-card:hover h4 {
+            color: #3498db;
+        }
+
+        /* 卡片描述 */
+        .carousel-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .carousel-card.large p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* 卡片按钮/链接 */
+        .card-link {
+            padding: 10px 20px;
+            font-size: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .carousel-card.large .card-link {
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+
+        .card-link:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1200px) {
+            .carousel-card.small {
+                width: 22%;
+            }
+            .carousel-card.large {
+                width: 35%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            .carousel-card.small {
+                width: 25%;
+                padding: 10px 5px;
+            }
+            .carousel-card.large {
+                width: 40%;
+                padding: 20px 15px;
+            }
+            .card-image {
+                height: 80px;
+            }
+            .carousel-card.large .card-image {
+                height: 120px;
+            }
+            .carousel-card h4 {
+                font-size: 16px;
+            }
+            .carousel-card.large h4 {
+                font-size: 18px;
+            }
+            .back-btn {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+            }
+            .header {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部区域：包含返回按钮 -->
+    <header class="header">
+        <!-- 返回按钮：点击跳转到菜单页 -->
+        <button class="back-btn" onclick="window.location.href='../../index.html'">返回</button>
+        <h1 class="main-title">高中化学实验基础学习系统</h1>
+        <p class="subtitle">掌握化学实验基本操作，提升科学探究能力</p>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main>
+        <section class="module" id="interactive-module">
+            <h2 class="module-title">高中化学实验基础知识梳理</h2>
+            <div class="module-content">
+                <!-- 轮播卡片容器 -->
+                <div class="carousel-container">
+                    <!-- 左箭头 -->
+                    <button class="carousel-arrow left-arrow">&lt;</button>
+                    
+                    <!-- 卡片区域 -->
+                    <div class="cards-wrapper" id="cardsWrapper">
+                        <!-- 卡片1 -->
+                        <div class="carousel-card small" data-index="0" data-link="tools/tools.html">
+                            <div class="card-image">
+                                <img src="../../images/biaoqian/2.1.1.png" alt="实验模拟">
+                            </div>
+                            <h4>化学实验仪器的识别与使用</h4>
+                            <p></p>
+                            <a href="tools/tools.html" class="card-link">开始学习</a>
+                        </div>
+                        <!-- 卡片2 -->
+                        <div class="carousel-card small" data-index="1" data-link="operations/operations.html">
+                            <div class="card-image">
+                                <img src="../../images/biaoqian/2.1.2.png" alt="仪器识别">
+                            </div>
+                            <h4>常考化学实验的基本操作</h4>
+                            <p></p>
+                            <a href="operations/operations.html" class="card-link">开始学习</a>
+                        </div>
+                        <!-- 卡片3（默认大卡片） -->
+                        <div class="carousel-card large" data-index="2" data-link="safety/safety.html">
+                            <div class="card-image">
+                                <img src="../../images/biaoqian/2.1.3.png" alt="步骤排序">
+                            </div>
+                            <h4>化学试剂的存放与实验安全</h4>
+                            <p></p>
+                            <a href="safety/safety.html" class="card-link">开始学习</a>
+                        </div>
+                        <!-- 卡片4 -->
+                        <div class="carousel-card small" data-index="3" data-link="separation/separation.html">
+                            <div class="card-image">
+                                <img src="../../images/biaoqian/2.1.4.png" alt="步骤排序">
+                            </div>
+                            <h4>物质分离提纯的方法与装置</h4>
+                            <p></p>
+                            <a href="separation/separation.html" class="card-link">开始学习</a>
+                        </div>
+                        <!-- 卡片5 -->
+                        <div class="carousel-card small" data-index="4" data-link="identification/identification.html">
+                            <div class="card-image">
+                                <img src="../../images/biaoqian/2.1.5.png" alt="必做实验汇总">
+                            </div>
+                            <h4>物质的检验、鉴别和推断</h4>
+                            <p></p>
+                            <a href="identification/identification.html" class="card-link">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 右箭头 -->
+                    <button class="carousel-arrow right-arrow">&gt;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部区域 -->
+    <footer class="footer">
+        <p>© 2026 高中化学实验基础学习系统 - 版权所有</p>
+    </footer>
+
+    <script>
+        // 获取DOM元素
+        const cardsWrapper = document.getElementById('cardsWrapper');
+        const cards = document.querySelectorAll('.carousel-card');
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        let activeIndex = 2; // 默认中间卡片为激活状态
+
+        // 更新卡片样式
+        function updateCards() {
+            cards.forEach((card, index) => {
+                // 移除所有样式类
+                card.classList.remove('small', 'large');
+                // 激活的卡片设为大卡片，其余为小卡片
+                if (index === activeIndex) {
+                    card.classList.add('large');
+                } else {
+                    card.classList.add('small');
+                }
+            });
+        }
+
+        // 左切换
+        function moveLeft() {
+            activeIndex--;
+            // 循环切换：到最左则回到最后
+            if (activeIndex < 0) {
+                activeIndex = cards.length - 1;
+            }
+            updateCards();
+        }
+
+        // 右切换
+        function moveRight() {
+            activeIndex++;
+            // 循环切换：到最右则回到最前
+            if (activeIndex >= cards.length) {
+                activeIndex = 0;
+            }
+            updateCards();
+        }
+
+        // 点击左箭头
+        leftArrow.addEventListener('click', moveLeft);
+        // 点击右箭头
+        rightArrow.addEventListener('click', moveRight);
+
+        // 键盘方向键控制
+        document.addEventListener('keydown', (e) => {
+            // 左箭头键
+            if (e.key === 'ArrowLeft') {
+                moveLeft();
+            }
+            // 右箭头键
+            else if (e.key === 'ArrowRight') {
+                moveRight();
+            }
+            // 回车键：打开当前激活卡片的链接
+            else if (e.key === 'Enter') {
+                const activeCard = document.querySelector('.carousel-card.large');
+                const link = activeCard.getAttribute('data-link');
+                window.location.href = link;
+            }
+        });
+
+        // 点击卡片切换到该卡片（变大）
+        cards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                // 如果点击的不是当前激活的卡片，则切换
+                if (index !== activeIndex) {
+                    activeIndex = index;
+                    updateCards();
+                } else {
+                    // 点击激活的卡片：打开链接
+                    const link = card.getAttribute('data-link');
+                    window.location.href = link;
+                }
+            });
+        });
+
+        // 初始化卡片样式
+        updateCards();
+    </script>
+</body>
+</html>

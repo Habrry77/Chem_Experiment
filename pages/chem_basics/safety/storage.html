@@ -82,7 +82,7 @@
             margin-top: 30px;
         }
         
-        /* 操作卡片样式 */
+        /* 操作卡片样式 - 移除图片区域相关样式 */
         .operation-card {
             background: white;
             border-radius: 10px;
@@ -97,28 +97,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        /* 操作图片容器 */
-        .operation-image {
-            width: 100%;
-            height: 200px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .operation-image img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        /* 操作信息 */
+        /* 操作信息 - 优化无图片时的布局 */
         .operation-info {
             padding: 20px;
         }
@@ -127,21 +106,22 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: #667eea;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
         
-        /* 详细信息 */
+        /* 详细信息 - 调整默认显示，优化交互 */
         .operation-details {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease;
             margin-top: 15px;
-            padding: 0 10px;
-            border-top: 1px solid #eee;
+            padding: 0 5px;
         }
         
         .operation-card:hover .operation-details {
-            max-height: 400px;
-            padding: 15px 10px;
+            max-height: 800px;
+            padding: 5px;
         }
         
         .operation-details p {
@@ -239,9 +219,6 @@
 
         <!-- 1. 易挥发试剂 -->
         <div class="operation-card">
-            <div class="operation-image">
-                易挥发试剂存放示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>易挥发试剂</h3>
                 <div class="operation-details">
@@ -253,16 +230,13 @@
                         <li>远离火源和热源，防止挥发气体燃烧</li>
                     </ul>
                     <p><strong>注意事项：</strong>取用后立即盖紧瓶塞，避免敞口放置。</p>
-                    <button class="audio-button" onclick="playAudio('易挥发试剂：浓盐酸、浓硝酸、液溴、苯等。密封阴凉保存，液溴水封，棕色瓶，远离火源。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '易挥发试剂：浓盐酸、浓硝酸、液溴、苯等。密封阴凉保存，液溴水封，棕色瓶，远离火源。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 2. 易潮解/易吸水试剂 -->
         <div class="operation-card">
-            <div class="operation-image">
-                易潮解/易吸水试剂存放示意图
-            </div>
             <div class="operation-info">
                 <h3>易潮解/易吸水试剂</h3>
                 <div class="operation-details">
@@ -274,16 +248,13 @@
                         <li>潮湿环境可放入干燥器保存</li>
                     </ul>
                     <p><strong>注意事项：</strong>取用后立即盖紧，防止吸水变质。</p>
-                    <button class="audio-button" onclick="playAudio('易潮解试剂：氢氧化钠、氧化钙、浓硫酸等。密封干燥保存，固体广口瓶，液体细口瓶。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '易潮解试剂：氢氧化钠、氧化钙、浓硫酸等。密封干燥保存，固体广口瓶，液体细口瓶。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 3. 见光易分解试剂 -->
         <div class="operation-card">
-            <div class="operation-image">
-                见光易分解试剂存放示意图
-            </div>
             <div class="operation-info">
                 <h3>见光易分解试剂</h3>
                 <div class="operation-details">
@@ -295,16 +266,13 @@
                         <li>过氧化氢需低温避光保存</li>
                     </ul>
                     <p><strong>注意事项：</strong>定期检查，变质立即更换。</p>
-                    <button class="audio-button" onclick="playAudio('见光易分解：硝酸银、浓硝酸、氯水、高锰酸钾。棕色瓶，冷暗处保存，避光。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '见光易分解：硝酸银、浓硝酸、氯水、高锰酸钾。棕色瓶，冷暗处保存，避光。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 4. 强氧化性试剂 -->
         <div class="operation-card">
-            <div class="operation-image">
-                强氧化性试剂存放示意图
-            </div>
             <div class="operation-info">
                 <h3>强氧化性试剂</h3>
                 <div class="operation-details">
@@ -316,16 +284,13 @@
                         <li>强氧化剂与酸分开，防止反应</li>
                     </ul>
                     <p><strong>注意事项：</strong>分类存放，防氧化还原反应。</p>
-                    <button class="audio-button" onclick="playAudio('强氧化剂：高锰酸钾、氯酸钾、浓硫酸、硝酸。单独存放，远离易燃物、有机物。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '强氧化剂：高锰酸钾、氯酸钾、浓硫酸、硝酸。单独存放，远离易燃物、有机物。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 5. 强碱试剂 -->
         <div class="operation-card">
-            <div class="operation-image">
-                强碱试剂存放示意图
-            </div>
             <div class="operation-info">
                 <h3>强碱试剂</h3>
                 <div class="operation-details">
@@ -337,16 +302,13 @@
                         <li>密封防CO₂，防止变质</li>
                     </ul>
                     <p><strong>注意事项：</strong>防止与玻璃粘连，防变质。</p>
-                    <button class="audio-button" onclick="playAudio('强碱：氢氧化钠、氢氧化钾。橡胶塞密封，不能用玻璃塞，防止粘瓶。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '强碱：氢氧化钠、氢氧化钾。橡胶塞密封，不能用玻璃塞，防止粘瓶。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 6. 易燃易爆试剂 -->
         <div class="operation-card">
-            <div class="operation-image">
-                易燃易爆试剂存放示意图
-            </div>
             <div class="operation-info">
                 <h3>易燃易爆试剂</h3>
                 <div class="operation-details">
@@ -358,16 +320,13 @@
                         <li>实验室温度不超过30℃</li>
                     </ul>
                     <p><strong>注意事项：</strong>限量存放，取用规范，防自燃。</p>
-                    <button class="audio-button" onclick="playAudio('易燃易爆：白磷、钠、钾、酒精。白磷水封，钠钾煤油封，远离火源热源。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '易燃易爆：白磷、钠、钾、酒精。白磷水封，钠钾煤油封，远离火源热源。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 7. 特殊腐蚀品 -->
         <div class="operation-card">
-            <div class="operation-image">
-                特殊腐蚀品存放示意图
-            </div>
             <div class="operation-info">
                 <h3>特殊腐蚀品</h3>
                 <div class="operation-details">
@@ -379,16 +338,13 @@
                         <li>单独存放，配备防护用品</li>
                     </ul>
                     <p><strong>注意事项：</strong>剧毒强腐蚀，规范管理，防泄漏。</p>
-                    <button class="audio-button" onclick="playAudio('特殊腐蚀品：HF、苯酚、液溴。HF塑料瓶，液溴水封，单独存放，注意防护。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '特殊腐蚀品：HF、苯酚、液溴。HF塑料瓶，液溴水封，单独存放，注意防护。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 8. 试剂存放通用原则 -->
         <div class="operation-card">
-            <div class="operation-image">
-                试剂存放通用原则示意图
-            </div>
             <div class="operation-info">
                 <h3>存放通用原则</h3>
                 <div class="operation-details">
@@ -400,7 +356,7 @@
                         <li>定期检查，过期变质及时处理</li>
                     </ul>
                     <p><strong>注意事项：</strong>遵循实验室安全规范，杜绝混放。</p>
-                    <button class="audio-button" onclick="playAudio('试剂存放通用原则：酸碱分放、氧化还原分放、标签清晰、定期检查、剧毒双人双锁。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '试剂存放通用原则：酸碱分放、氧化还原分放、标签清晰、定期检查、剧毒双人双锁。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -413,8 +369,8 @@
 </div>
 
 <script>
-    // 语音播放功能
-    function playAudio(text) {
+    // 修复语音播放功能（解决event.target兼容性问题）
+    function playAudio(button, text) {
         if (window.speechSynthesis.speaking) {
             window.speechSynthesis.cancel();
         }
@@ -427,14 +383,27 @@
 
         window.speechSynthesis.speak(speech);
 
-        const button = event.target;
         const originalText = button.textContent;
         button.textContent = '播放中...';
 
+        // 语音播放完成回调
         speech.onend = function () {
             button.textContent = originalText;
         };
+
+        // 语音播放出错处理
+        speech.onerror = function () {
+            button.textContent = '播放失败';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 1500);
+        };
     }
+
+    // 给卡片添加 tabindex 支持键盘交互
+    document.querySelectorAll('.operation-card').forEach(card => {
+        card.setAttribute('tabindex', '0');
+    });
 </script>
 </body>
 </html>

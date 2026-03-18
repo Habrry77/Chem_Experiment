@@ -101,21 +101,19 @@
         .operation-image {
             width: 100%;
             height: 200px;
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
+            border-bottom: 1px solid #eee;
         }
         
         .operation-image img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            padding: 10px;
         }
         
         /* 操作信息 */
@@ -173,15 +171,21 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
         
         .audio-button:hover {
             background: #5a6fd8;
+            transform: translateY(-2px);
         }
         
         .audio-button:active {
             transform: scale(0.95);
+        }
+        
+        .audio-button.loading {
+            background: #999;
+            cursor: not-allowed;
         }
         
         /* 底部版权 */
@@ -224,6 +228,10 @@
             .operation-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .operation-image {
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -239,7 +247,7 @@
         <!-- 1. 过滤 -->
         <div class="operation-card">
             <div class="operation-image">
-                过滤操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/guolv.png" alt="过滤操作示意图">
             </div>
             <div class="operation-info">
                 <h3>过滤</h3>
@@ -254,7 +262,7 @@
                         <li>洗涤沉淀：向漏斗中加蒸馏水至浸没沉淀，待水滤出后重复2-3次</li>
                     </ul>
                     <p><strong>适用场景：</strong>粗盐提纯、除去溶液中的泥沙等不溶性杂质</p>
-                    <button class="audio-button" onclick="playAudio('过滤：分离不溶性固体与液体，装置有漏斗、烧杯、玻璃棒；操作要点一贴二低三靠，适用于粗盐提纯等。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '过滤：分离不溶性固体与液体，装置有漏斗、烧杯、玻璃棒；操作要点一贴二低三靠，适用于粗盐提纯等。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -262,7 +270,7 @@
         <!-- 2. 蒸发 -->
         <div class="operation-card">
             <div class="operation-image">
-                蒸发操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/zhengfa1.png" alt="蒸发操作示意图">
             </div>
             <div class="operation-info">
                 <h3>蒸发</h3>
@@ -277,7 +285,7 @@
                         <li>热的蒸发皿用坩埚钳夹取，放在石棉网上冷却</li>
                     </ul>
                     <p><strong>适用场景：</strong>从食盐水提取NaCl晶体、蒸发浓缩溶液</p>
-                    <button class="audio-button" onclick="playAudio('蒸发：加热挥发溶剂得固体，装置有蒸发皿、玻璃棒、酒精灯；液体不超2/3，搅拌防飞溅，大量固体时停火。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '蒸发：加热挥发溶剂得固体，装置有蒸发皿、玻璃棒、酒精灯；液体不超2/3，搅拌防飞溅，大量固体时停火。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -285,7 +293,7 @@
         <!-- 3. 蒸馏 -->
         <div class="operation-card">
             <div class="operation-image">
-                蒸馏操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/zhengliu.png" alt="蒸馏操作示意图">
             </div>
             <div class="operation-info">
                 <h3>蒸馏</h3>
@@ -300,7 +308,7 @@
                         <li>加热温度不超过混合物中最高沸点</li>
                     </ul>
                     <p><strong>适用场景：</strong>自来水制取蒸馏水、分离酒精和水的混合物</p>
-                    <button class="audio-button" onclick="playAudio('蒸馏：利用沸点不同分离互溶液体，装置有蒸馏烧瓶、冷凝管；加沸石防暴沸，温度计在支管口，冷却水下进上出。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '蒸馏：利用沸点不同分离互溶液体，装置有蒸馏烧瓶、冷凝管；加沸石防暴沸，温度计在支管口，冷却水下进上出。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -308,7 +316,7 @@
         <!-- 4. 萃取分液 -->
         <div class="operation-card">
             <div class="operation-image">
-                萃取分液操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/cuiqu.png" alt="萃取分液操作示意图">
             </div>
             <div class="operation-info">
                 <h3>萃取分液</h3>
@@ -323,7 +331,7 @@
                         <li>分液操作：先打开上口玻璃塞，再打开下口活塞，下层液体下口放出，上层液体上口倒出</li>
                     </ul>
                     <p><strong>适用场景：</strong>用CCl₄萃取碘水中的碘、提取溴水中的溴</p>
-                    <button class="audio-button" onclick="playAudio('萃取分液：利用溶解度不同提取溶质，萃取剂互不相溶；振荡放气，静置分层，下层下出上层上倒。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '萃取分液：利用溶解度不同提取溶质，萃取剂互不相溶；振荡放气，静置分层，下层下出上层上倒。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -331,7 +339,7 @@
         <!-- 5. 升华 -->
         <div class="operation-card">
             <div class="operation-image">
-                升华操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/shenghua.png" alt="升华操作示意图">
             </div>
             <div class="operation-info">
                 <h3>升华</h3>
@@ -346,7 +354,7 @@
                         <li>烧杯口与蒸发皿之间用棉团密封，防止蒸气逸出</li>
                     </ul>
                     <p><strong>适用场景：</strong>分离碘与NaCl的混合物、提纯干冰</p>
-                    <button class="audio-button" onclick="playAudio('升华：固态直接变气态，装置有烧杯、蒸发皿；加热使物质升华，冷水凝华，适用于分离碘和氯化钠。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '升华：固态直接变气态，装置有烧杯、蒸发皿；加热使物质升华，冷水凝华，适用于分离碘和氯化钠。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -354,7 +362,7 @@
         <!-- 6. 渗析 -->
         <div class="operation-card">
             <div class="operation-image">
-                渗析操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/shenxi.png" alt="渗析操作示意图">
             </div>
             <div class="operation-info">
                 <h3>渗析</h3>
@@ -369,7 +377,7 @@
                         <li>渗析过程可适当搅拌蒸馏水，加快渗析速率</li>
                     </ul>
                     <p><strong>适用场景：</strong>提纯Fe(OH)₃胶体、除去淀粉胶体中的NaCl</p>
-                    <button class="audio-button" onclick="playAudio('渗析：半透膜分离胶体与小分子，装置有半透膜袋、烧杯；胶体装袋浸蒸馏水中，换水至无杂质，适用于提纯氢氧化铁胶体。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '渗析：半透膜分离胶体与小分子，装置有半透膜袋、烧杯；胶体装袋浸蒸馏水中，换水至无杂质，适用于提纯氢氧化铁胶体。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -377,7 +385,7 @@
         <!-- 7. 洗气 -->
         <div class="operation-card">
             <div class="operation-image">
-                洗气操作与装置示意图（此处替换为实际图片）
+                <img src="../../../images/biaoqian/xiqi.png" alt="洗气操作示意图">
             </div>
             <div class="operation-info">
                 <h3>洗气</h3>
@@ -392,7 +400,7 @@
                         <li>多个洗气瓶串联：按除杂顺序连接（先除易溶杂质，后除难溶杂质）</li>
                     </ul>
                     <p><strong>适用场景：</strong>用饱和食盐水除Cl₂中的HCl、用NaOH溶液除CO中的CO₂</p>
-                    <button class="audio-button" onclick="playAudio('洗气：除去气体杂质，装置为洗气瓶；洗液不与主气体反应，进气长进短出，适用于除氯气中的氯化氢。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '洗气：除去气体杂质，装置为洗气瓶；洗液不与主气体反应，进气长进短出，适用于除氯气中的氯化氢。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -404,28 +412,57 @@
 </div>
 
 <script>
-    // 语音播放功能
-    function playAudio(text) {
+    // 语音播放功能 - 优化版
+    function playAudio(button, text) {
+        // 停止正在播放的语音
         if (window.speechSynthesis.speaking) {
             window.speechSynthesis.cancel();
         }
 
+        // 设置按钮状态
+        const originalText = button.textContent;
+        button.textContent = '播放中...';
+        button.classList.add('loading');
+
+        // 创建语音实例
         const speech = new SpeechSynthesisUtterance();
         speech.text = text;
         speech.lang = 'zh-CN';
-        speech.rate = 0.9;
-        speech.pitch = 1;
+        speech.rate = 0.9;    // 语速
+        speech.pitch = 1.0;   // 音调
+        speech.volume = 1.0;  // 音量
 
-        window.speechSynthesis.speak(speech);
-
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = '播放中...';
-
+        // 语音播放结束后恢复按钮状态
         speech.onend = function () {
             button.textContent = originalText;
+            button.classList.remove('loading');
         };
+
+        // 播放出错时恢复按钮状态
+        speech.onerror = function () {
+            button.textContent = '播放失败';
+            button.classList.remove('loading');
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 1500);
+        };
+
+        // 开始播放
+        window.speechSynthesis.speak(speech);
     }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 兼容不同浏览器的语音合成API
+        if (!window.speechSynthesis) {
+            const audioButtons = document.querySelectorAll('.audio-button');
+            audioButtons.forEach(btn => {
+                btn.textContent = '浏览器不支持语音播放';
+                btn.disabled = true;
+                btn.style.background = '#ccc';
+            });
+        }
+    });
 </script>
 </body>
 </html>

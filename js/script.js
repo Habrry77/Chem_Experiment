@@ -67,6 +67,25 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.onclick = function() { checkAnswer(); };
         nextBtn.onclick = function() { nextQuestion(); };
         restartBtn.onclick = restartGame;
+
+        // ========== 新增：键盘事件绑定 ==========
+        // 监听Enter键：提交答案 或 切换下一题
+        document.addEventListener('keydown', function(e) {
+            // 按下Enter键（keyCode 13 或 key 'Enter'）
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                // 阻止默认行为（避免页面刷新）
+                e.preventDefault();
+                
+                // 如果下一题按钮显示，则按Enter触发下一题
+                if (nextBtn.style.display !== 'none') {
+                    nextQuestion();
+                } 
+                // 否则触发提交答案（且提交按钮未禁用）
+                else if (!submitBtn.disabled) {
+                    checkAnswer();
+                }
+            }
+        });
     }
 
     // 打乱题目顺序
@@ -97,6 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
         feedbackElement.className = '';
         nextBtn.style.display = 'none';
         submitBtn.disabled = false;
+        
+        // 自动聚焦输入框，提升体验
+        answerInput.focus();
     }
 
     // 检查答案

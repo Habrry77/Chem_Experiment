@@ -82,7 +82,7 @@
             margin-top: 30px;
         }
         
-        /* 操作卡片样式 */
+        /* 操作卡片样式 - 移除图片区域相关样式 */
         .operation-card {
             background: white;
             border-radius: 10px;
@@ -97,28 +97,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        /* 操作图片容器 */
-        .operation-image {
-            width: 100%;
-            height: 200px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .operation-image img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        /* 操作信息 */
+        /* 操作信息 - 优化无图片时的布局 */
         .operation-info {
             padding: 20px;
         }
@@ -127,21 +106,22 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: #667eea;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
         
-        /* 详细信息 */
+        /* 详细信息 - 调整默认显示，优化交互 */
         .operation-details {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease;
             margin-top: 15px;
-            padding: 0 10px;
-            border-top: 1px solid #eee;
+            padding: 0 5px;
         }
         
         .operation-card:hover .operation-details {
-            max-height: 400px;
-            padding: 15px 10px;
+            max-height: 800px;
+            padding: 5px;
         }
         
         .operation-details p {
@@ -159,6 +139,13 @@
         }
         
         .operation-details li {
+            margin-bottom: 5px;
+        }
+        
+        /* 嵌套列表样式优化 */
+        .operation-details ul ul {
+            padding-left: 15px;
+            margin-top: 5px;
             margin-bottom: 5px;
         }
         
@@ -238,9 +225,6 @@
     <div class="operation-grid">
         <!-- 1. 实验室安全守则 -->
         <div class="operation-card">
-            <div class="operation-image">
-                实验室安全守则示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>实验室安全守则</h3>
                 <div class="operation-details">
@@ -253,16 +237,13 @@
                         <li>实验结束后清理台面，关闭水电、通风设备</li>
                     </ul>
                     <p><strong>注意事项：</strong>遵守实验室管理制度，服从老师指导。</p>
-                    <button class="audio-button" onclick="playAudio('实验室安全守则：穿实验服戴防护眼镜，禁止饮食吸烟，预习实验流程，按规程操作，结束后清理台面。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '实验室安全守则：穿实验服戴防护眼镜，禁止饮食吸烟，预习实验流程，按规程操作，结束后清理台面。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 2. 常见危险试剂使用安全 -->
         <div class="operation-card">
-            <div class="operation-image">
-                危险试剂使用安全示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>危险试剂使用安全</h3>
                 <div class="operation-details">
@@ -275,16 +256,13 @@
                         <li>易爆试剂：轻拿轻放，避免撞击/震动，限量取用</li>
                     </ul>
                     <p><strong>注意事项：</strong>危险试剂取用需双人复核，做好防护。</p>
-                    <button class="audio-button" onclick="playAudio('危险试剂使用：强酸强碱戴手套，酸入水稀释；有毒试剂通风橱操作；易燃试剂远离火源；易爆试剂轻拿轻放。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '危险试剂使用：强酸强碱戴手套，酸入水稀释；有毒试剂通风橱操作；易燃试剂远离火源；易爆试剂轻拿轻放。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 3. 实验事故预防 -->
         <div class="operation-card">
-            <div class="operation-image">
-                实验事故预防示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>实验事故预防</h3>
                 <div class="operation-details">
@@ -297,16 +275,13 @@
                         <li>腐蚀/烫伤：戴防护用品，正确使用加热设备</li>
                     </ul>
                     <p><strong>注意事项：</strong>定期检查实验设备，及时更换老化器材。</p>
-                    <button class="audio-button" onclick="playAudio('实验事故预防：清理易燃物防火灾，控温降压防爆炸，通风操作防中毒，戴防护品防腐蚀烫伤。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '实验事故预防：清理易燃物防火灾，控温降压防爆炸，通风操作防中毒，戴防护品防腐蚀烫伤。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 4. 火灾应急处理 -->
         <div class="operation-card">
-            <div class="operation-image">
-                火灾应急处理示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>火灾应急处理</h3>
                 <div class="operation-details">
@@ -319,16 +294,13 @@
                         <li>衣物着火：就地打滚灭火，禁止奔跑</li>
                     </ul>
                     <p><strong>注意事项：</strong>火势扩大立即撤离并报警。</p>
-                    <button class="audio-button" onclick="playAudio('火灾处理：有机溶剂着火用干粉灭火器，金属着火用沙土，电器着火先断电，衣物着火就地打滚。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '火灾处理：有机溶剂着火用干粉灭火器，金属着火用沙土，电器着火先断电，衣物着火就地打滚。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 5. 化学灼伤处理 -->
         <div class="operation-card">
-            <div class="operation-image">
-                化学灼伤处理示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>化学灼伤处理</h3>
                 <div class="operation-details">
@@ -341,16 +313,13 @@
                         <li>眼睛灼伤：立即用洗眼器冲洗，边冲边转动眼球，及时就医</li>
                     </ul>
                     <p><strong>注意事项：</strong>严重灼伤立即就医，保留试剂标签。</p>
-                    <button class="audio-button" onclick="playAudio('化学灼伤处理：酸灼伤冲水洗涂碳酸氢钠，碱灼伤冲水洗涂硼酸，溴灼伤用酒精洗，眼睛灼伤用洗眼器冲洗。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '化学灼伤处理：酸灼伤冲水洗涂碳酸氢钠，碱灼伤冲水洗涂硼酸，溴灼伤用酒精洗，眼睛灼伤用洗眼器冲洗。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 6. 中毒急救 -->
         <div class="operation-card">
-            <div class="operation-image">
-                中毒急救示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>中毒急救</h3>
                 <div class="operation-details">
@@ -367,16 +336,13 @@
                         </li>
                     </ul>
                     <p><strong>注意事项：</strong>所有中毒情况均需及时送医，告知毒物类型。</p>
-                    <button class="audio-button" onclick="playAudio('中毒急救：吸入中毒移通风处，皮肤接触清水冲，误食腐蚀性毒物喝牛奶，非腐蚀性催吐，均需及时就医。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '中毒急救：吸入中毒移通风处，皮肤接触清水冲，误食腐蚀性毒物喝牛奶，非腐蚀性催吐，均需及时就医。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 7. 实验废液处理 -->
         <div class="operation-card">
-            <div class="operation-image">
-                实验废液处理示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>实验废液处理</h3>
                 <div class="operation-details">
@@ -389,16 +355,13 @@
                         <li>有毒废液：单独标记，按危废处理规范处置</li>
                     </ul>
                     <p><strong>注意事项：</strong>禁止将不同类型废液混合，防止反应产生危险。</p>
-                    <button class="audio-button" onclick="playAudio('废液处理：酸碱废液中和排放，含重金属废液沉淀，有机废液分类收集，有毒废液按危废处理。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '废液处理：酸碱废液中和排放，含重金属废液沉淀，有机废液分类收集，有毒废液按危废处理。')">播放语音</button>
                 </div>
             </div>
         </div>
 
         <!-- 8. 实验室逃生与救援 -->
         <div class="operation-card">
-            <div class="operation-image">
-                实验室逃生与救援示意图（此处替换为实际图片）
-            </div>
             <div class="operation-info">
                 <h3>实验室逃生与救援</h3>
                 <div class="operation-details">
@@ -411,7 +374,7 @@
                         <li>事故报告：准确说明事故地点、类型、伤亡情况</li>
                     </ul>
                     <p><strong>注意事项：</strong>定期参加应急演练，掌握基本救援技能。</p>
-                    <button class="audio-button" onclick="playAudio('逃生救援：熟悉逃生路线，事故时撤离报警，救援先保自身安全，撤离捂口鼻低姿前行。')">播放语音</button>
+                    <button class="audio-button" onclick="playAudio(this, '逃生救援：熟悉逃生路线，事故时撤离报警，救援先保自身安全，撤离捂口鼻低姿前行。')">播放语音</button>
                 </div>
             </div>
         </div>
@@ -423,8 +386,8 @@
 </div>
 
 <script>
-    // 语音播放功能
-    function playAudio(text) {
+    // 修复语音播放功能（解决event.target兼容性问题）
+    function playAudio(button, text) {
         if (window.speechSynthesis.speaking) {
             window.speechSynthesis.cancel();
         }
@@ -437,14 +400,42 @@
 
         window.speechSynthesis.speak(speech);
 
-        const button = event.target;
         const originalText = button.textContent;
         button.textContent = '播放中...';
 
+        // 语音播放完成回调
         speech.onend = function () {
             button.textContent = originalText;
         };
+
+        // 语音播放出错处理
+        speech.onerror = function () {
+            button.textContent = '播放失败';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 1500);
+        };
     }
+
+    // Tab键交互优化
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            const cards = document.querySelectorAll('.operation-card');
+            cards.forEach(card => {
+                card.addEventListener('focus', function() {
+                    this.classList.add('hover');
+                });
+                card.addEventListener('blur', function() {
+                    this.classList.remove('hover');
+                });
+            });
+        }
+    });
+
+    // 给卡片添加 tabindex 支持键盘交互
+    document.querySelectorAll('.operation-card').forEach(card => {
+        card.setAttribute('tabindex', '0');
+    });
 </script>
 </body>
 </html>

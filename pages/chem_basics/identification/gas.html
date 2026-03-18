@@ -82,7 +82,7 @@
             margin-top: 30px;
         }
         
-        /* 操作卡片样式 */
+        /* 操作卡片样式 - 移除图片区域相关样式 */
         .operation-card {
             background: white;
             border-radius: 10px;
@@ -97,28 +97,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        /* 操作图片容器 */
-        .operation-image {
-            width: 100%;
-            height: 200px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .operation-image img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        /* 操作信息 */
+        /* 操作信息 - 优化无图片时的布局 */
         .operation-info {
             padding: 20px;
         }
@@ -127,21 +106,22 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: #667eea;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
         
-        /* 详细信息 */
+        /* 详细信息 - 调整默认显示，优化交互 */
         .operation-details {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease;
             margin-top: 15px;
-            padding: 0 10px;
-            border-top: 1px solid #eee;
+            padding: 0 5px;
         }
         
         .operation-card:hover .operation-details {
-            max-height: 400px;
-            padding: 15px 10px;
+            max-height: 800px;
+            padding: 5px;
         }
         
         .operation-details p {
@@ -238,9 +218,6 @@
         <div class="operation-grid">
             <!-- 氧气检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氧气检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氧气（O₂）的检验</h3>
                     <div class="operation-details">
@@ -252,16 +229,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>带火星的木条复燃，证明是氧气</p>
                         <p><strong>注意事项：</strong>木条要伸入集气瓶内部，避免瓶口氧气浓度低导致误判；注意集气瓶不要密封过紧。</p>
-                        <button class="audio-button" onclick="playAudio('氧气的检验，使用带火星的木条进行操作。操作方法：将带火星的木条伸入盛有待测气体的集气瓶中，观察木条的变化情况。现象与结论：带火星的木条复燃，证明是氧气。注意事项：木条要伸入集气瓶内部，避免瓶口氧气浓度低导致误判；注意集气瓶不要密封过紧。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氧气的检验，使用带火星的木条进行操作。操作方法：将带火星的木条伸入盛有待测气体的集气瓶中，观察木条的变化情况。现象与结论：带火星的木条复燃，证明是氧气。注意事项：木条要伸入集气瓶内部，避免瓶口氧气浓度低导致误判；注意集气瓶不要密封过紧。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 氢气检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氢气检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氢气（H₂）的检验</h3>
                     <div class="operation-details">
@@ -274,16 +248,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>产生淡蓝色火焰，伴有轻微的"噗"声，证明是氢气；若有尖锐爆鸣声，说明氢气不纯</p>
                         <p><strong>注意事项：</strong>点燃前必须验纯；在通风处进行操作，防止氢气泄漏积聚。</p>
-                        <button class="audio-button" onclick="playAudio('氢气的检验，使用酒精灯和小试管进行操作。操作方法：收集一小试管待测气体，用拇指堵住试管口；将试管口靠近酒精灯火焰，移开拇指点火；观察燃烧现象和声音。现象与结论：产生淡蓝色火焰，伴有轻微的噗声，证明是氢气；若有尖锐爆鸣声，说明氢气不纯。注意事项：点燃前必须验纯；在通风处进行操作，防止氢气泄漏积聚。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氢气的检验，使用酒精灯和小试管进行操作。操作方法：收集一小试管待测气体，用拇指堵住试管口；将试管口靠近酒精灯火焰，移开拇指点火；观察燃烧现象和声音。现象与结论：产生淡蓝色火焰，伴有轻微的噗声，证明是氢气；若有尖锐爆鸣声，说明氢气不纯。注意事项：点燃前必须验纯；在通风处进行操作，防止氢气泄漏积聚。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 二氧化碳检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    二氧化碳检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>二氧化碳（CO₂）的检验</h3>
                     <div class="operation-details">
@@ -295,16 +266,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>澄清石灰水变浑浊，继续通入过量CO₂，浑浊又变澄清，证明是二氧化碳</p>
                         <p><strong>注意事项：</strong>SO₂也能使澄清石灰水变浑浊，需排除干扰；石灰水要现配现用，防止变质。</p>
-                        <button class="audio-button" onclick="playAudio('二氧化碳的检验，使用澄清石灰水进行操作。操作方法：将待测气体通入澄清石灰水中，观察溶液的变化情况。现象与结论：澄清石灰水变浑浊，继续通入过量二氧化碳，浑浊又变澄清，证明是二氧化碳。注意事项：二氧化硫也能使澄清石灰水变浑浊，需排除干扰；石灰水要现配现用，防止变质。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '二氧化碳的检验，使用澄清石灰水进行操作。操作方法：将待测气体通入澄清石灰水中，观察溶液的变化情况。现象与结论：澄清石灰水变浑浊，继续通入过量二氧化碳，浑浊又变澄清，证明是二氧化碳。注意事项：二氧化硫也能使澄清石灰水变浑浊，需排除干扰；石灰水要现配现用，防止变质。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 一氧化碳检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    一氧化碳检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>一氧化碳（CO）的检验</h3>
                     <div class="operation-details">
@@ -317,16 +285,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>黑色氧化铜变红，澄清石灰水变浑浊，证明是一氧化碳</p>
                         <p><strong>注意事项：</strong>CO有毒，需在通风橱中操作；尾气必须点燃处理，防止污染空气。</p>
-                        <button class="audio-button" onclick="playAudio('一氧化碳的检验，使用酒精灯、氧化铜、澄清石灰水进行操作。操作方法：将待测气体通过灼热的氧化铜粉末；将反应后的气体通入澄清石灰水；观察氧化铜和石灰水的变化。现象与结论：黑色氧化铜变红，澄清石灰水变浑浊，证明是一氧化碳。注意事项：一氧化碳有毒，需在通风橱中操作；尾气必须点燃处理，防止污染空气。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '一氧化碳的检验，使用酒精灯、氧化铜、澄清石灰水进行操作。操作方法：将待测气体通过灼热的氧化铜粉末；将反应后的气体通入澄清石灰水；观察氧化铜和石灰水的变化。现象与结论：黑色氧化铜变红，澄清石灰水变浑浊，证明是一氧化碳。注意事项：一氧化碳有毒，需在通风橱中操作；尾气必须点燃处理，防止污染空气。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 氨气检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氨气检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氨气（NH₃）的检验</h3>
                     <div class="operation-details">
@@ -342,16 +307,13 @@
                             <li>产生白烟，证明是氨气</li>
                         </ul>
                         <p><strong>注意事项：</strong>试纸必须润湿；氨气极易溶于水，检验时不要将试纸伸入瓶内。</p>
-                        <button class="audio-button" onclick="playAudio('氨气的检验有两种方法：方法一使用湿润的红色石蕊试纸，将红色石蕊试纸用蒸馏水润湿，将润湿的试纸靠近待测气体瓶口，试纸变蓝色，证明是氨气；方法二使用浓盐酸，将蘸有浓盐酸的玻璃棒靠近待测气体瓶口，产生白烟，证明是氨气。注意事项：试纸必须润湿；氨气极易溶于水，检验时不要将试纸伸入瓶内。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氨气的检验有两种方法：方法一使用湿润的红色石蕊试纸，将红色石蕊试纸用蒸馏水润湿，将润湿的试纸靠近待测气体瓶口，试纸变蓝色，证明是氨气；方法二使用浓盐酸，将蘸有浓盐酸的玻璃棒靠近待测气体瓶口，产生白烟，证明是氨气。注意事项：试纸必须润湿；氨气极易溶于水，检验时不要将试纸伸入瓶内。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 氯气检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氯气检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氯气（Cl₂）的检验</h3>
                     <div class="operation-details">
@@ -364,16 +326,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>试纸变蓝色，证明是氯气</p>
                         <p><strong>注意事项：</strong>氯气有毒且有强腐蚀性，操作时需佩戴防护用具；在通风橱中进行操作；多余氯气用NaOH溶液吸收。</p>
-                        <button class="audio-button" onclick="playAudio('氯气的检验，使用湿润的淀粉-KI试纸进行操作。操作方法：将淀粉-KI试纸用蒸馏水润湿；将润湿的试纸靠近待测气体瓶口；观察试纸颜色变化。现象与结论：试纸变蓝色，证明是氯气。注意事项：氯气有毒且有强腐蚀性，操作时需佩戴防护用具；在通风橱中进行操作；多余氯气用氢氧化钠溶液吸收。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氯气的检验，使用湿润的淀粉-KI试纸进行操作。操作方法：将淀粉-KI试纸用蒸馏水润湿；将润湿的试纸靠近待测气体瓶口；观察试纸颜色变化。现象与结论：试纸变蓝色，证明是氯气。注意事项：氯气有毒且有强腐蚀性，操作时需佩戴防护用具；在通风橱中进行操作；多余氯气用氢氧化钠溶液吸收。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 二氧化硫检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    二氧化硫检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>二氧化硫（SO₂）的检验</h3>
                     <div class="operation-details">
@@ -386,16 +345,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>品红溶液褪色，加热后又恢复红色，证明是二氧化硫</p>
                         <p><strong>注意事项：</strong>SO₂有毒，操作时需在通风橱中进行；Cl₂也能使品红褪色但加热不恢复，需注意区分。</p>
-                        <button class="audio-button" onclick="playAudio('二氧化硫的检验，使用品红溶液进行操作。操作方法：将待测气体通入品红溶液中，观察溶液颜色变化；将褪色后的溶液加热，观察是否恢复红色。现象与结论：品红溶液褪色，加热后又恢复红色，证明是二氧化硫。注意事项：二氧化硫有毒，操作时需在通风橱中进行；氯气也能使品红褪色但加热不恢复，需注意区分。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '二氧化硫的检验，使用品红溶液进行操作。操作方法：将待测气体通入品红溶液中，观察溶液颜色变化；将褪色后的溶液加热，观察是否恢复红色。现象与结论：品红溶液褪色，加热后又恢复红色，证明是二氧化硫。注意事项：二氧化硫有毒，操作时需在通风橱中进行；氯气也能使品红褪色但加热不恢复，需注意区分。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 氯化氢检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    氯化氢检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>氯化氢（HCl）的检验</h3>
                     <div class="operation-details">
@@ -411,16 +367,13 @@
                             <li>产生白烟，证明是HCl</li>
                         </ul>
                         <p><strong>注意事项：</strong>HCl极易溶于水且有腐蚀性，操作时避免直接接触；多余HCl用NaOH溶液吸收。</p>
-                        <button class="audio-button" onclick="playAudio('氯化氢的检验有两种方法：方法一使用湿润的蓝色石蕊试纸，将蓝色石蕊试纸用蒸馏水润湿，将润湿的试纸靠近待测气体瓶口，试纸变红，证明有氯化氢；方法二使用浓氨水，将蘸有浓氨水的玻璃棒靠近待测气体瓶口，产生白烟，证明是氯化氢。注意事项：氯化氢极易溶于水且有腐蚀性，操作时避免直接接触；多余氯化氢用氢氧化钠溶液吸收。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '氯化氢的检验有两种方法：方法一使用湿润的蓝色石蕊试纸，将蓝色石蕊试纸用蒸馏水润湿，将润湿的试纸靠近待测气体瓶口，试纸变红，证明有氯化氢；方法二使用浓氨水，将蘸有浓氨水的玻璃棒靠近待测气体瓶口，产生白烟，证明是氯化氢。注意事项：氯化氢极易溶于水且有腐蚀性，操作时避免直接接触；多余氯化氢用氢氧化钠溶液吸收。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 甲烷检验 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    甲烷检验操作示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>甲烷（CH₄）的检验</h3>
                     <div class="operation-details">
@@ -433,16 +386,13 @@
                         </ul>
                         <p><strong>现象与结论：</strong>产生淡蓝色火焰，烧杯内壁有水雾，石灰水变浑浊，证明是甲烷</p>
                         <p><strong>注意事项：</strong>点燃前需验纯；甲烷燃烧产物只有CO₂和H₂O，可与其他烃类气体区分。</p>
-                        <button class="audio-button" onclick="playAudio('甲烷的检验，使用酒精灯、干冷烧杯、澄清石灰水进行操作。操作方法：点燃待测气体，在火焰上方罩一干冷烧杯；观察烧杯内壁现象，迅速倒转烧杯加入澄清石灰水；振荡后观察石灰水变化。现象与结论：产生淡蓝色火焰，烧杯内壁有水雾，石灰水变浑浊，证明是甲烷。注意事项：点燃前需验纯；甲烷燃烧产物只有二氧化碳和水，可与其他烃类气体区分。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '甲烷的检验，使用酒精灯、干冷烧杯、澄清石灰水进行操作。操作方法：点燃待测气体，在火焰上方罩一干冷烧杯；观察烧杯内壁现象，迅速倒转烧杯加入澄清石灰水；振荡后观察石灰水变化。现象与结论：产生淡蓝色火焰，烧杯内壁有水雾，石灰水变浑浊，证明是甲烷。注意事项：点燃前需验纯；甲烷燃烧产物只有二氧化碳和水，可与其他烃类气体区分。')">播放语音</button>
                     </div>
                 </div>
             </div>
             
             <!-- 气体检验基本原则 -->
             <div class="operation-card">
-                <div class="operation-image">
-                    气体检验安全规范示意图（此处替换为实际图片）
-                </div>
                 <div class="operation-info">
                     <h3>气体检验基本原则</h3>
                     <div class="operation-details">
@@ -451,7 +401,7 @@
                         <p><strong>规范性原则：</strong>严格按照操作步骤进行，试剂需现配现用</p>
                         <p><strong>环保性原则：</strong>有毒有害尾气需进行吸收处理，不能直接排放</p>
                         <p><strong>核心要求：</strong>检验前先观察气体的颜色、气味等物理性质，再进行化学检验；多种气体共存时需按顺序检验。</p>
-                        <button class="audio-button" onclick="playAudio('气体检验需遵循四大基本原则：安全性原则，有毒、易燃气体需在通风橱中操作，点燃前必须验纯；唯一性原则，选择该气体特有的检验方法，排除干扰气体影响；规范性原则，严格按照操作步骤进行，试剂需现配现用；环保性原则，有毒有害尾气需进行吸收处理，不能直接排放。核心要求：检验前先观察气体的颜色、气味等物理性质，再进行化学检验；多种气体共存时需按顺序检验。')">播放语音</button>
+                        <button class="audio-button" onclick="playAudio(this, '气体检验需遵循四大基本原则：安全性原则，有毒、易燃气体需在通风橱中操作，点燃前必须验纯；唯一性原则，选择该气体特有的检验方法，排除干扰气体影响；规范性原则，严格按照操作步骤进行，试剂需现配现用；环保性原则，有毒有害尾气需进行吸收处理，不能直接排放。核心要求：检验前先观察气体的颜色、气味等物理性质，再进行化学检验；多种气体共存时需按顺序检验。')">播放语音</button>
                     </div>
                 </div>
             </div>
@@ -464,8 +414,8 @@
     </div>
     
     <script>
-        // 语音播放功能
-        function playAudio(text) {
+        // 修复语音播放功能（解决event.target兼容性问题）
+        function playAudio(button, text) {
             if (window.speechSynthesis.speaking) {
                 window.speechSynthesis.cancel();
             }
@@ -478,12 +428,19 @@
             
             window.speechSynthesis.speak(speech);
             
-            const button = event.target;
             const originalText = button.textContent;
             button.textContent = '播放中...';
             
             speech.onend = function() {
                 button.textContent = originalText;
+            };
+            
+            // 语音播放出错处理
+            speech.onerror = function() {
+                button.textContent = '播放失败';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
             };
         }
         
